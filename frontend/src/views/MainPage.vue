@@ -13,6 +13,7 @@
         </div>
         <p class="hero-date elegant">June 04, 2026 &bull; Thursday</p>
         <p class="hero-tagline elegant">"Two souls, one heart"</p>
+        <p class="hero-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
       </div>
       <div class="scroll-indicator">
         <div class="scroll-arrow"></div>
@@ -282,6 +283,7 @@
         <div class="footer-hearts">♡ ♡ ♡</div>
         <p class="footer-names cursive">MJ & Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
+        <p class="footer-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
         <div class="footer-divider"></div>
         <p class="footer-made">Made with ♡ by <strong>JC Lopez</strong></p>
         <p class="footer-copy">&copy; 2026 All rights reserved</p>
@@ -524,6 +526,15 @@ onUnmounted(() => {
   font-size: 1.1rem;
   color: var(--text-light);
   font-style: italic;
+}
+
+.hero-hashtag {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 1.5px;
+  margin-top: 10px;
+  font-weight: 600;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .scroll-indicator {
@@ -1076,6 +1087,14 @@ onUnmounted(() => {
   font-size: 1rem;
   color: var(--text-light);
   letter-spacing: 2px;
+}
+.footer-hashtag {
+  font-size: 1rem;
+  color: var(--pastel-gold);
+  letter-spacing: 1px;
+  margin-top: 8px;
+  font-weight: 600;
+  opacity: 0.85;
 }
 .footer-divider {
   width: 60px;
