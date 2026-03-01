@@ -1,0 +1,19 @@
+# See https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: wedding-rsvp-api
+    runtime: node
+    region: singapore  # Change to your preferred region
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SUPABASE_URL
+        value: https://gyiygwwbrcbhqepsqhyz.supabase.co
+      - key: SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5aXlnd3dicmNiaHFlcHNxaHl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzNDM0MzMsImV4cCI6MjA4NzkxOTQzM30.qRNnlyRcXJ3wIAP9wOSY8I2_51eIs5r8ytyJhwmlM1k
+      - key: ALLOWED_ORIGINS
+        value: https://your-wedding-site.vercel.app
+      - key: PORT
+        value: 3001

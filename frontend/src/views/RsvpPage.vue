@@ -26,7 +26,7 @@
           </transition>
 
           <!-- Form -->
-          <form v-if="!submitted" @submit.prevent="submitRsvp" class="rsvp-form">
+          <form v-if="!submitted" @submit.prevent="handleSubmit" class="rsvp-form">
             <!-- Full Name -->
             <div class="form-group">
               <label class="form-label elegant">Full Name <span class="required">*</span></label>
@@ -149,7 +149,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { supabase } from '../supabase'
+import { submitRsvp } from '../api'
 
 const submitted = ref(false)
 const loading = ref(false)
@@ -166,25 +166,22 @@ const form = reactive({
   message: ''
 })
 
-const submitRsvp = async () => {
+const handleSubmit = async () => {
   errorMsg.value = ''
   loading.value = true
 
   try {
-    const { error } = await supabase.from('rsvp_responses').insert([
-      {
-        full_name: form.fullName,
-        email: form.email || null,
-        phone: form.phone || null,
-        attending: form.attending === 'yes',
-        guest_count: form.attending === 'yes' ? parseInt(form.guestCount) : 0,
-        dietary_restrictions: form.dietary || null,
-        song_request: form.songRequest || null,
-        message: form.message || null
-      }
-    ])
+    await submitRsvp({
+      fullName: form.fullName,
+      email: form.email || null,
+      phone: form.phone || null,
+      attending: form.attending,
+      guestCount: form.attending === 'yes' ? parseInt(form.guestCount) : 0,
+      dietary: form.dietary || null,
+      songRequest: form.songRequest || null,
+      message: form.message || null,
+    })
 
-    if (error) throw error
     submitted.value = true
   } catch (err) {
     console.error('RSVP Error:', err)
@@ -396,7 +393,7 @@ const resetForm = () => {
 .fade-enter-active, .fade-leave-active { transition: opacity 0.5s; }
 .fade-enter-from, .fade-leave-to { opacity: 0; }
 
-/* Footer (same as main) */
+/* Footer */
 .footer {
   background: var(--pastel-cream);
   padding: 48px 20px 24px;

@@ -7,18 +7,18 @@ const routes = [
   {
     path: '/',
     name: 'Landing',
-    component: LandingPage
+    component: LandingPage,
   },
   {
     path: '/home',
     name: 'Home',
-    component: MainPage
+    component: MainPage,
   },
   {
     path: '/rsvp',
     name: 'RSVP',
-    component: RsvpPage
-  }
+    component: RsvpPage,
+  },
 ]
 
 const router = createRouter({
@@ -29,7 +29,7 @@ const router = createRouter({
       return { el: to.hash, behavior: 'smooth' }
     }
     return { top: 0, behavior: 'smooth' }
-  }
+  },
 })
 
 export default router

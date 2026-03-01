@@ -235,7 +235,6 @@ const storyTimeline = ref([
 ])
 
 // ===== GALLERY =====
-// Replace these with your actual prenup photo paths (put images in public/photos/)
 const galleryPhotos = ref([
   { src: '/photos/prenup-1.jpg', alt: 'Prenup Photo 1', size: 'wide' },
   { src: '/photos/prenup-2.jpg', alt: 'Prenup Photo 2', size: '' },
@@ -245,7 +244,6 @@ const galleryPhotos = ref([
   { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6', size: 'wide' },
 ])
 
-// Set to your YouTube embed URL or leave empty to hide
 const videoUrl = ref('') // e.g. 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
 
 // Lightbox
@@ -310,7 +308,6 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  /* Replace with your hero/prenup image */
   background: linear-gradient(135deg, var(--pastel-blush), var(--pastel-lavender), var(--pastel-peach));
   background-size: cover;
   background-position: center;

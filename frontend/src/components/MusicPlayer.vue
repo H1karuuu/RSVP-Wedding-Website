@@ -14,7 +14,6 @@ const isPlaying = ref(false)
 let audio = null
 
 onMounted(() => {
-  // Create audio element — place your music file in public/music/bg-music.mp3
   audio = new Audio('/music/bg-music.mp3')
   audio.loop = true
   audio.volume = 0.3
