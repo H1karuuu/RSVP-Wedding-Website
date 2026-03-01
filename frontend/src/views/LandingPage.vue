@@ -1,8 +1,21 @@
 <template>
   <div class="landing-page" @click="handleClick">
-    <!-- Floating Petals Background -->
+    <!-- Floating Sparkles Background -->
     <div class="petals-container">
-      <div class="petal" v-for="i in 12" :key="i" :style="petalStyle(i)"></div>
+      <div class="petal" v-for="i in 15" :key="i" :style="petalStyle(i)"></div>
+    </div>
+
+    <!-- Decorative Photo Frames -->
+    <div class="photo-frames" :class="{ faded: envelopeOpened }">
+      <div class="photo-frame frame-1">
+        <img src="/photos/couple-1.jpg" alt="MJ & Ryan" />
+      </div>
+      <div class="photo-frame frame-2">
+        <img src="/photos/couple-2.jpg" alt="MJ & Ryan" />
+      </div>
+      <div class="photo-frame frame-3">
+        <img src="/photos/couple-3.jpg" alt="MJ & Ryan" />
+      </div>
     </div>
 
     <!-- Envelope Container -->
@@ -18,7 +31,7 @@
           <div class="card-divider">
             <span class="divider-ornament">✦</span>
           </div>
-          <h1 class="card-names cursive">Groom & Bride</h1>
+          <h1 class="card-names cursive">MJ & Ryan</h1>
           <p class="card-date elegant">June 04, 2026</p>
           <div class="card-rings">💍</div>
         </div>
@@ -89,7 +102,69 @@ const petalStyle = (i) => ({
   cursor: pointer;
 }
 
-/* ===== PETALS ===== */
+/* ===== PHOTO FRAMES ===== */
+.photo-frames {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+.photo-frames.faded {
+  opacity: 0.3;
+}
+.photo-frame {
+  position: absolute;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(30, 60, 100, 0.12);
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  opacity: 0.55;
+  transition: opacity 0.5s;
+}
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.frame-1 {
+  width: 140px;
+  height: 180px;
+  top: 8%;
+  left: 5%;
+  transform: rotate(-8deg);
+  animation: floatFrame1 6s ease-in-out infinite;
+}
+.frame-2 {
+  width: 120px;
+  height: 150px;
+  top: 12%;
+  right: 6%;
+  transform: rotate(6deg);
+  animation: floatFrame2 7s ease-in-out infinite;
+}
+.frame-3 {
+  width: 130px;
+  height: 130px;
+  bottom: 15%;
+  left: 8%;
+  transform: rotate(4deg);
+  border-radius: 50%;
+  animation: floatFrame3 5s ease-in-out infinite;
+}
+@keyframes floatFrame1 {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50% { transform: rotate(-8deg) translateY(-10px); }
+}
+@keyframes floatFrame2 {
+  0%, 100% { transform: rotate(6deg) translateY(0); }
+  50% { transform: rotate(6deg) translateY(-8px); }
+}
+@keyframes floatFrame3 {
+  0%, 100% { transform: rotate(4deg) translateY(0); }
+  50% { transform: rotate(4deg) translateY(-12px); }
+}
+
+/* ===== SPARKLES ===== */
 .petals-container {
   position: absolute;
   inset: 0;
@@ -102,8 +177,9 @@ const petalStyle = (i) => ({
   animation: petalFall linear infinite;
 }
 .petal::after {
-  content: '🌸';
+  content: '✦';
   font-size: inherit;
+  color: var(--pastel-gold);
 }
 @keyframes petalFall {
   0% {
@@ -125,14 +201,15 @@ const petalStyle = (i) => ({
   height: 220px;
   margin-bottom: 30px;
   perspective: 800px;
+  z-index: 2;
 }
 
 .envelope-back {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #e8d5c4, #d4bfae);
+  background: linear-gradient(135deg, #a8c4de, #8bafc8);
   border-radius: 6px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 40px rgba(30, 60, 100, 0.15);
 }
 
 .envelope-front {
@@ -141,7 +218,7 @@ const petalStyle = (i) => ({
   left: 0;
   right: 0;
   height: 55%;
-  background: linear-gradient(180deg, #f0ddd0, #e8cdbf);
+  background: linear-gradient(180deg, #c8ddef, #b8d0e5);
   border-radius: 0 0 6px 6px;
   z-index: 3;
 }
@@ -155,7 +232,7 @@ const petalStyle = (i) => ({
   height: 0;
   border-left: 160px solid transparent;
   border-right: 160px solid transparent;
-  border-top: 80px solid #f0ddd0;
+  border-top: 80px solid #c8ddef;
   z-index: 2;
   transform: translateY(-100%);
 }
@@ -167,7 +244,7 @@ const petalStyle = (i) => ({
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(180deg, #f5e6da, #eed8c8);
+  background: linear-gradient(180deg, #d5e4f0, #c0d4e8);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   z-index: 4;
   transform-origin: top center;
@@ -185,11 +262,11 @@ const petalStyle = (i) => ({
   left: 8%;
   right: 8%;
   height: 85%;
-  background: linear-gradient(135deg, #fffaf5, #fff5ee);
+  background: linear-gradient(135deg, #fafcff, #f0f5fa);
   border-radius: 4px;
   z-index: 2;
   transition: transform 0.8s ease-in-out 0.4s;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgba(30, 60, 100, 0.08);
   overflow: hidden;
 }
 .card.risen {
@@ -245,6 +322,7 @@ const petalStyle = (i) => ({
   font-style: italic;
   animation: pulse 2s ease-in-out infinite;
   transition: opacity 0.5s;
+  z-index: 2;
 }
 .tap-text.hidden {
   opacity: 0;
@@ -269,6 +347,7 @@ const petalStyle = (i) => ({
   display: flex;
   align-items: center;
   gap: 8px;
+  z-index: 2;
 }
 .arrow {
   display: inline-block;
@@ -287,6 +366,12 @@ const petalStyle = (i) => ({
   transform: translateY(20px);
 }
 
+@media (max-width: 768px) {
+  .frame-1 { width: 100px; height: 130px; }
+  .frame-2 { width: 90px; height: 110px; }
+  .frame-3 { width: 90px; height: 90px; }
+}
+
 @media (max-width: 480px) {
   .envelope-wrapper {
     width: 280px;
@@ -300,5 +385,8 @@ const petalStyle = (i) => ({
   .card-names {
     font-size: 1.6rem;
   }
+  .frame-1 { width: 80px; height: 100px; top: 5%; left: 3%; }
+  .frame-2 { width: 70px; height: 90px; top: 8%; right: 3%; }
+  .frame-3 { width: 70px; height: 70px; bottom: 12%; left: 5%; }
 }
 </style>

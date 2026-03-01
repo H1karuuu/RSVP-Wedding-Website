@@ -78,37 +78,6 @@
               </div>
             </div>
 
-            <!-- Number of Guests -->
-            <div class="form-group" v-if="form.attending === 'yes'">
-              <label class="form-label elegant">Number of Guests (including yourself) <span class="required">*</span></label>
-              <select v-model="form.guestCount" class="form-input form-select" required>
-                <option value="" disabled>Select number of guests</option>
-                <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-              </select>
-            </div>
-
-            <!-- Dietary Restrictions -->
-            <div class="form-group" v-if="form.attending === 'yes'">
-              <label class="form-label elegant">Dietary Restrictions</label>
-              <input
-                v-model="form.dietary"
-                type="text"
-                class="form-input"
-                placeholder="Any allergies or dietary restrictions?"
-              />
-            </div>
-
-            <!-- Song Request -->
-            <div class="form-group" v-if="form.attending === 'yes'">
-              <label class="form-label elegant">Song Request 🎵</label>
-              <input
-                v-model="form.songRequest"
-                type="text"
-                class="form-input"
-                placeholder="What song gets you on the dance floor?"
-              />
-            </div>
-
             <!-- Message -->
             <div class="form-group">
               <label class="form-label elegant">Message for the Couple</label>
@@ -137,7 +106,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-hearts">♡ ♡ ♡</div>
-        <p class="footer-names cursive">Groom & Bride</p>
+        <p class="footer-names cursive">MJ & Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
         <div class="footer-divider"></div>
         <p class="footer-made">Made with ♡ by <strong>JC Lopez</strong></p>
@@ -160,9 +129,6 @@ const form = reactive({
   email: '',
   phone: '',
   attending: '',
-  guestCount: 1,
-  dietary: '',
-  songRequest: '',
   message: ''
 })
 
@@ -176,9 +142,9 @@ const handleSubmit = async () => {
       email: form.email || null,
       phone: form.phone || null,
       attending: form.attending,
-      guestCount: form.attending === 'yes' ? parseInt(form.guestCount) : 0,
-      dietary: form.dietary || null,
-      songRequest: form.songRequest || null,
+      guestCount: 1,
+      dietary: null,
+      songRequest: null,
       message: form.message || null,
     })
 
@@ -197,9 +163,6 @@ const resetForm = () => {
   form.email = ''
   form.phone = ''
   form.attending = ''
-  form.guestCount = 1
-  form.dietary = ''
-  form.songRequest = ''
   form.message = ''
 }
 </script>

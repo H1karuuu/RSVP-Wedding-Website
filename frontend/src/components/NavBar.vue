@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar" :class="{ scrolled: isScrolled, open: menuOpen }">
     <div class="nav-container">
-      <router-link to="/home" class="nav-logo cursive">J &amp; P</router-link>
+      <router-link to="/home" class="nav-logo cursive">MJ &amp; R</router-link>
 
       <!-- Hamburger -->
       <button class="hamburger" @click="toggleMenu" :class="{ active: menuOpen }" aria-label="Menu">
@@ -53,7 +53,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
   z-index: 1000;
   padding: 16px 0;
   transition: all 0.4s ease;
-  background: rgba(253, 246, 236, 0.85);
+  background: rgba(240, 244, 248, 0.85);
   backdrop-filter: blur(12px);
 }
 .navbar.scrolled {

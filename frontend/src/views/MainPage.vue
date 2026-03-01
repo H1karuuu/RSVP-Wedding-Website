@@ -5,7 +5,7 @@
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-subtitle elegant">Together with their families</p>
-        <h1 class="hero-names cursive">Groom & Bride</h1>
+        <h1 class="hero-names cursive">MJ & Ryan</h1>
         <div class="hero-divider">
           <span class="ornament">—</span>
           <span class="ornament-center">♡</span>
@@ -156,6 +156,115 @@
       </div>
     </section>
 
+    <!-- ===== WEDDING ENTOURAGE SECTION ===== -->
+    <section id="entourage" class="entourage-section fade-in-section" ref="entourageSection">
+      <div class="container">
+        <h2 class="section-title">Wedding Entourage</h2>
+        <p class="section-subtitle">The people who will stand by us on our special day</p>
+
+        <!-- Primary Sponsors -->
+        <div class="entourage-group">
+          <h3 class="entourage-group-title cursive">Our Principal Sponsors</h3>
+          <p class="entourage-group-subtitle elegant">To witness our union...</p>
+          <div class="sponsors-grid">
+            <div class="sponsor-column">
+              <div class="sponsor-name elegant" v-for="sponsor in principalSponsors.male" :key="sponsor">Mr. {{ sponsor }}</div>
+            </div>
+            <div class="sponsor-column">
+              <div class="sponsor-name elegant" v-for="sponsor in principalSponsors.female" :key="sponsor">Mrs. {{ sponsor }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary Sponsors -->
+        <div class="entourage-group">
+          <h3 class="entourage-group-title cursive">Our Secondary Sponsors</h3>
+          <p class="entourage-group-subtitle elegant">To assist us in our needs...</p>
+
+          <!-- Best Man & Maid of Honor -->
+          <div class="entourage-pair">
+            <div class="entourage-role-card">
+              <h4 class="role-title">Best Man</h4>
+              <p class="role-name elegant">{{ bestMan }}</p>
+            </div>
+            <div class="entourage-role-card">
+              <h4 class="role-title">Maid of Honor</h4>
+              <p class="role-name elegant">{{ maidOfHonor }}</p>
+            </div>
+          </div>
+
+          <p class="entourage-caption elegant">To guide us on our way...</p>
+
+          <!-- Groomsmen & Bridesmaids -->
+          <div class="entourage-pair">
+            <div class="entourage-role-card">
+              <h4 class="role-title">Groomsmen</h4>
+              <p class="role-name elegant" v-for="name in groomsmen" :key="name">Mr. {{ name }}</p>
+            </div>
+            <div class="entourage-role-card">
+              <h4 class="role-title">Bridesmaids</h4>
+              <p class="role-name elegant" v-for="name in bridesmaids" :key="name">Ms. {{ name }}</p>
+            </div>
+          </div>
+
+          <!-- Candle, Veil, Cord -->
+          <div class="entourage-trio">
+            <div class="entourage-role-card">
+              <h4 class="role-title">Candle</h4>
+              <p class="entourage-caption elegant">To light up our path...</p>
+              <p class="role-name elegant" v-for="name in candle" :key="name">{{ name }}</p>
+            </div>
+            <div class="entourage-role-card">
+              <h4 class="role-title">Veil</h4>
+              <p class="entourage-caption elegant">To clothe us as one...</p>
+              <p class="role-name elegant" v-for="name in veil" :key="name">{{ name }}</p>
+            </div>
+            <div class="entourage-role-card">
+              <h4 class="role-title">Cord</h4>
+              <p class="entourage-caption elegant">To bind us together...</p>
+              <p class="role-name elegant" v-for="name in cord" :key="name">{{ name }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Symbol Bearers -->
+        <div class="entourage-group">
+          <h3 class="entourage-group-title cursive">Our Symbol Bearers</h3>
+          <p class="entourage-group-subtitle elegant">To carry our symbols of Love, Treasure, and Faith...</p>
+          <div class="bearers-grid">
+            <div class="bearer-item" v-for="bearer in symbolBearers" :key="bearer.role">
+              <h4 class="role-title">{{ bearer.role }}</h4>
+              <p class="role-name elegant">{{ bearer.name }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DRESS CODE SECTION ===== -->
+    <section id="dress-code" class="dresscode-section fade-in-section" ref="dresscodeSection">
+      <div class="container">
+        <h2 class="section-title">Dress Code</h2>
+        <p class="section-subtitle">Kindly adhere to our wedding color palette</p>
+
+        <div class="dresscode-palette">
+          <div
+            class="palette-swatch"
+            v-for="color in dressCodeColors"
+            :key="color.hex"
+            :style="{ background: color.hex }"
+          >
+            <span class="swatch-name" :style="{ color: color.textColor }">{{ color.name }}</span>
+          </div>
+        </div>
+
+        <div class="dresscode-notes">
+          <p class="elegant dresscode-note">Please wear attire in the shades shown above.</p>
+          <p class="elegant dresscode-note">Formal / Semi-formal attire is preferred.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== RSVP CTA SECTION ===== -->
     <section class="rsvp-cta-section fade-in-section" ref="rsvpCtaSection">
       <div class="container rsvp-cta-content">
@@ -171,7 +280,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-hearts">♡ ♡ ♡</div>
-        <p class="footer-names cursive">Groom & Bride</p>
+        <p class="footer-names cursive">MJ & Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
         <div class="footer-divider"></div>
         <p class="footer-made">Made with ♡ by <strong>JC Lopez</strong></p>
@@ -269,6 +378,55 @@ const prevPhoto = () => {
 // ===== MAP URLS =====
 const ceremonyMapUrl = 'https://maps.google.com/?q=Church+Name+Here'
 const receptionMapUrl = 'https://maps.google.com/?q=Reception+Venue+Name'
+
+// ===== WEDDING ENTOURAGE =====
+const principalSponsors = ref({
+  male: [
+    'Name Here', 'Name Here', 'Name Here',
+    'Name Here', 'Name Here', 'Name Here',
+    'Name Here', 'Name Here', 'Name Here',
+    'Name Here', 'Name Here'
+  ],
+  female: [
+    'Name Here', 'Name Here', 'Name Here',
+    'Name Here', 'Name Here', 'Name Here',
+    'Name Here', 'Name Here', 'Name Here',
+    'Name Here', 'Name Here'
+  ]
+})
+
+const bestMan = ref('Name Here')
+const maidOfHonor = ref('Name Here')
+
+const groomsmen = ref([
+  'Name Here', 'Name Here', 'Name Here',
+  'Name Here', 'Name Here', 'Name Here'
+])
+
+const bridesmaids = ref([
+  'Name Here', 'Name Here', 'Name Here',
+  'Name Here', 'Name Here', 'Name Here'
+])
+
+const candle = ref(['Mr. Name Here', 'Ms. Name Here'])
+const veil = ref(['Mr. Name Here', 'Ms. Name Here'])
+const cord = ref(['Mr. Name Here', 'Ms. Name Here'])
+
+const symbolBearers = ref([
+  { role: 'Bible Bearer', name: 'Name Here' },
+  { role: 'Ring Bearer', name: 'Name Here' },
+  { role: 'Coin Bearer', name: 'Name Here' }
+])
+
+// ===== DRESS CODE =====
+const dressCodeColors = ref([
+  { name: 'Dusty Blue', hex: '#7096c4', textColor: '#fff' },
+  { name: 'Powder Blue', hex: '#b0cce1', textColor: '#2a4a6b' },
+  { name: 'Navy', hex: '#2c3e6b', textColor: '#fff' },
+  { name: 'Silver', hex: '#c0c8d0', textColor: '#2a3a4a' },
+  { name: 'Ivory', hex: '#f5f0e8', textColor: '#4a5568' },
+  { name: 'Champagne', hex: '#e8dcc8', textColor: '#4a4035' }
+])
 
 // ===== INTERSECTION OBSERVER FOR FADE-IN =====
 let observer
@@ -737,6 +895,166 @@ onUnmounted(() => {
   background: var(--pastel-cream);
 }
 
+/* ===== WEDDING ENTOURAGE ===== */
+.entourage-section {
+  padding: var(--section-padding);
+  background: linear-gradient(180deg, #fff, var(--pastel-cream), #fff);
+}
+
+.entourage-group {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.entourage-group-title {
+  font-size: 2.2rem;
+  color: var(--text-accent);
+  margin-bottom: 4px;
+}
+
+.entourage-group-subtitle {
+  font-size: 1rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin-bottom: 24px;
+}
+
+.entourage-caption {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  font-style: italic;
+  margin: 20px 0 8px;
+}
+
+.sponsors-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.sponsor-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sponsor-name {
+  font-size: 1rem;
+  color: var(--text-medium);
+  padding: 4px 0;
+}
+
+.entourage-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 700px;
+  margin: 16px auto;
+}
+
+.entourage-trio {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  max-width: 750px;
+  margin: 24px auto;
+}
+
+.entourage-role-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 20px;
+  box-shadow: 0 4px 18px rgba(30, 60, 100, 0.06);
+  text-align: center;
+}
+
+.role-title {
+  font-family: var(--font-cursive);
+  font-size: 1.5rem;
+  color: var(--text-accent);
+  margin-bottom: 12px;
+}
+
+.role-name {
+  font-size: 1rem;
+  color: var(--text-medium);
+  line-height: 1.8;
+}
+
+.bearers-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.bearer-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 4px 18px rgba(30, 60, 100, 0.06);
+  text-align: center;
+  min-width: 160px;
+}
+
+/* ===== DRESS CODE ===== */
+.dresscode-section {
+  padding: var(--section-padding);
+  background: var(--pastel-cream);
+  text-align: center;
+}
+
+.dresscode-palette {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.palette-swatch {
+  width: 100px;
+  height: 120px;
+  border-radius: 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(30, 60, 100, 0.1);
+  transition: transform 0.3s ease;
+  cursor: default;
+}
+.palette-swatch:hover {
+  transform: translateY(-4px);
+}
+
+.swatch-name {
+  font-family: var(--font-elegant);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dresscode-notes {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.dresscode-note {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
 /* ===== FOOTER ===== */
 .footer {
   background: var(--pastel-cream);
@@ -788,6 +1106,10 @@ onUnmounted(() => {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-item.wide { grid-column: span 2; }
   .qr-grid { gap: 24px; }
+  .entourage-trio { grid-template-columns: 1fr; }
+  .entourage-pair { grid-template-columns: 1fr; }
+  .sponsors-grid { grid-template-columns: 1fr; gap: 8px 0; }
+  .palette-swatch { width: 80px; height: 100px; }
 }
 
 @media (max-width: 480px) {
@@ -799,5 +1121,7 @@ onUnmounted(() => {
   .gallery-item.wide { grid-column: span 1; aspect-ratio: 1; }
   .gallery-item.tall { grid-row: span 1; aspect-ratio: 1; }
   .details-grid { grid-template-columns: 1fr; }
+  .bearers-grid { flex-direction: column; align-items: center; }
+  .palette-swatch { width: 70px; height: 90px; }
 }
 </style>

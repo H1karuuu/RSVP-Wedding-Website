@@ -2,23 +2,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Pastel Palette */
-  --pastel-pink: #f8e8e8;
-  --pastel-rose: #f2d1d1;
-  --pastel-blush: #fce4ec;
-  --pastel-peach: #fdebd3;
-  --pastel-cream: #fdf6ec;
-  --pastel-sage: #d4e6d4;
-  --pastel-lavender: #e8dff0;
-  --pastel-blue: #dce8f0;
-  --pastel-gold: #d4a574;
-  --pastel-mauve: #c9a0b0;
+  /* Blue Pastel Palette */
+  --pastel-pink: #e6eef6;
+  --pastel-rose: #c9d8e8;
+  --pastel-blush: #dae4f0;
+  --pastel-peach: #d0dfe8;
+  --pastel-cream: #f0f4f8;
+  --pastel-sage: #b8cede;
+  --pastel-lavender: #cdd8ea;
+  --pastel-blue: #bfd0e2;
+  --pastel-gold: #5a7fa5;
+  --pastel-mauve: #7096c4;
 
   /* Text Colors */
-  --text-dark: #3d2c2c;
-  --text-medium: #5a4545;
-  --text-light: #7a6565;
-  --text-accent: #8b6e5a;
+  --text-dark: #1e2d3d;
+  --text-medium: #3d556e;
+  --text-light: #6b8299;
+  --text-accent: #3a6b96;
 
   /* Fonts */
   --font-cursive: 'Great Vibes', cursive;
