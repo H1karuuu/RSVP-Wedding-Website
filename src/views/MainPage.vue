@@ -1,0 +1,806 @@
+<template>
+  <div class="main-page">
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero-section">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-subtitle elegant">Together with their families</p>
+        <h1 class="hero-names cursive">Groom & Bride</h1>
+        <div class="hero-divider">
+          <span class="ornament">—</span>
+          <span class="ornament-center">♡</span>
+          <span class="ornament">—</span>
+        </div>
+        <p class="hero-date elegant">June 04, 2026 &bull; Thursday</p>
+        <p class="hero-tagline elegant">"Two souls, one heart"</p>
+      </div>
+      <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- ===== COUNTDOWN SECTION ===== -->
+    <section class="countdown-section" ref="countdownSection">
+      <div class="container">
+        <h2 class="section-title">Save the Date</h2>
+        <p class="section-subtitle">Counting down to our forever</p>
+        <div class="countdown-grid">
+          <div class="countdown-item" v-for="item in countdownItems" :key="item.label">
+            <div class="countdown-number">{{ item.value }}</div>
+            <div class="countdown-label">{{ item.label }}</div>
+          </div>
+        </div>
+        <p class="countdown-date elegant">June 04, 2026</p>
+      </div>
+    </section>
+
+    <!-- ===== OUR STORY SECTION ===== -->
+    <section id="our-story" class="story-section fade-in-section" ref="storySection">
+      <div class="container">
+        <h2 class="section-title">Our Love Story</h2>
+        <p class="section-subtitle">A journey that led us to forever</p>
+
+        <div class="timeline">
+          <div class="timeline-item" v-for="(event, index) in storyTimeline" :key="index">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3 class="timeline-title cursive">{{ event.title }}</h3>
+              <p class="timeline-date elegant">{{ event.date }}</p>
+              <p class="timeline-desc">{{ event.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GALLERY SECTION ===== -->
+    <section id="gallery" class="gallery-section fade-in-section" ref="gallerySection">
+      <div class="container">
+        <h2 class="section-title">Our Moments</h2>
+        <p class="section-subtitle">Prenup photos &amp; memories</p>
+
+        <div class="gallery-grid">
+          <div
+            class="gallery-item"
+            v-for="(photo, index) in galleryPhotos"
+            :key="index"
+            :class="photo.size"
+            @click="openLightbox(index)"
+          >
+            <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+            <div class="gallery-overlay">
+              <span class="gallery-zoom">✦</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Embed Placeholder -->
+        <div class="video-section" v-if="videoUrl">
+          <h3 class="cursive video-title">Our Prenup Video</h3>
+          <div class="video-wrapper">
+            <iframe
+              :src="videoUrl"
+              frameborder="0"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <transition name="fade">
+      <div class="lightbox" v-if="lightboxOpen" @click="closeLightbox">
+        <button class="lightbox-close" @click="closeLightbox">&times;</button>
+        <button class="lightbox-prev" @click.stop="prevPhoto">‹</button>
+        <img :src="galleryPhotos[lightboxIndex]?.src" class="lightbox-img" @click.stop />
+        <button class="lightbox-next" @click.stop="nextPhoto">›</button>
+      </div>
+    </transition>
+
+    <!-- ===== WEDDING DETAILS SECTION ===== -->
+    <section id="details" class="details-section fade-in-section" ref="detailsSection">
+      <div class="container">
+        <h2 class="section-title">Wedding Details</h2>
+        <p class="section-subtitle">We would be honored by your presence</p>
+
+        <div class="details-grid">
+          <!-- Ceremony -->
+          <div class="detail-card">
+            <div class="detail-icon">⛪</div>
+            <h3 class="detail-title cursive">Ceremony</h3>
+            <p class="detail-time elegant">2:00 PM</p>
+            <p class="detail-venue">Church Name Here</p>
+            <p class="detail-address">123 Church Street, City, Province</p>
+            <a
+              href="https://maps.google.com/?q=Church+Name+Here"
+              target="_blank"
+              class="btn-outline detail-btn"
+            >
+              View Map
+            </a>
+          </div>
+
+          <!-- Reception -->
+          <div class="detail-card">
+            <div class="detail-icon">🥂</div>
+            <h3 class="detail-title cursive">Reception</h3>
+            <p class="detail-time elegant">5:00 PM</p>
+            <p class="detail-venue">Reception Venue Name</p>
+            <p class="detail-address">456 Venue Road, City, Province</p>
+            <a
+              href="https://maps.google.com/?q=Reception+Venue+Name"
+              target="_blank"
+              class="btn-outline detail-btn"
+            >
+              View Map
+            </a>
+          </div>
+        </div>
+
+        <!-- QR Codes -->
+        <div class="qr-section">
+          <h3 class="cursive qr-title">Scan for Directions</h3>
+          <div class="qr-grid">
+            <div class="qr-item">
+              <QrcodeVue :value="ceremonyMapUrl" :size="150" level="M" />
+              <p class="qr-label elegant">Ceremony</p>
+            </div>
+            <div class="qr-item">
+              <QrcodeVue :value="receptionMapUrl" :size="150" level="M" />
+              <p class="qr-label elegant">Reception</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RSVP CTA SECTION ===== -->
+    <section class="rsvp-cta-section fade-in-section" ref="rsvpCtaSection">
+      <div class="container rsvp-cta-content">
+        <h2 class="section-title" style="color: #fff;">RSVP</h2>
+        <p class="rsvp-cta-text elegant">Kindly let us know if you can make it to our special day</p>
+        <router-link to="/rsvp" class="btn-primary rsvp-cta-btn">
+          Respond Now
+        </router-link>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-hearts">♡ ♡ ♡</div>
+        <p class="footer-names cursive">Groom & Bride</p>
+        <p class="footer-date elegant">June 04, 2026</p>
+        <div class="footer-divider"></div>
+        <p class="footer-made">Made with ♡ by <strong>JC Lopez</strong></p>
+        <p class="footer-copy">&copy; 2026 All rights reserved</p>
+      </div>
+    </footer>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import QrcodeVue from 'qrcode.vue'
+
+// ===== COUNTDOWN =====
+const weddingDate = new Date('2026-06-04T14:00:00')
+const now = ref(new Date())
+let countdownInterval
+
+const countdownItems = computed(() => {
+  const diff = weddingDate - now.value
+  if (diff <= 0) return [
+    { value: '0', label: 'Days' },
+    { value: '0', label: 'Hours' },
+    { value: '0', label: 'Minutes' },
+    { value: '0', label: 'Seconds' }
+  ]
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+  return [
+    { value: String(days).padStart(2, '0'), label: 'Days' },
+    { value: String(hours).padStart(2, '0'), label: 'Hours' },
+    { value: String(minutes).padStart(2, '0'), label: 'Minutes' },
+    { value: String(seconds).padStart(2, '0'), label: 'Seconds' }
+  ]
+})
+
+// ===== OUR STORY TIMELINE =====
+const storyTimeline = ref([
+  {
+    title: 'How We Met',
+    date: 'Month, Year',
+    description: 'Write your story here — how did you two first meet? Replace this text with your own love story.'
+  },
+  {
+    title: 'First Date',
+    date: 'Month, Year',
+    description: 'Describe your first date together. Where did you go? What made it special?'
+  },
+  {
+    title: 'The Proposal',
+    date: 'Month, Year',
+    description: 'Tell the story of the proposal. How did it happen? Was it a surprise?'
+  },
+  {
+    title: 'The Wedding',
+    date: 'June 04, 2026',
+    description: 'And the journey continues… We can\'t wait to celebrate our love with you!'
+  }
+])
+
+// ===== GALLERY =====
+// Replace these with your actual prenup photo paths (put images in public/photos/)
+const galleryPhotos = ref([
+  { src: '/photos/prenup-1.jpg', alt: 'Prenup Photo 1', size: 'wide' },
+  { src: '/photos/prenup-2.jpg', alt: 'Prenup Photo 2', size: '' },
+  { src: '/photos/prenup-3.jpg', alt: 'Prenup Photo 3', size: '' },
+  { src: '/photos/prenup-4.jpg', alt: 'Prenup Photo 4', size: 'tall' },
+  { src: '/photos/prenup-5.jpg', alt: 'Prenup Photo 5', size: '' },
+  { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6', size: 'wide' },
+])
+
+// Set to your YouTube embed URL or leave empty to hide
+const videoUrl = ref('') // e.g. 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
+
+// Lightbox
+const lightboxOpen = ref(false)
+const lightboxIndex = ref(0)
+
+const openLightbox = (index) => {
+  lightboxIndex.value = index
+  lightboxOpen.value = true
+  document.body.style.overflow = 'hidden'
+}
+const closeLightbox = () => {
+  lightboxOpen.value = false
+  document.body.style.overflow = ''
+}
+const nextPhoto = () => {
+  lightboxIndex.value = (lightboxIndex.value + 1) % galleryPhotos.value.length
+}
+const prevPhoto = () => {
+  lightboxIndex.value = (lightboxIndex.value - 1 + galleryPhotos.value.length) % galleryPhotos.value.length
+}
+
+// ===== MAP URLS =====
+const ceremonyMapUrl = 'https://maps.google.com/?q=Church+Name+Here'
+const receptionMapUrl = 'https://maps.google.com/?q=Reception+Venue+Name'
+
+// ===== INTERSECTION OBSERVER FOR FADE-IN =====
+let observer
+
+onMounted(() => {
+  countdownInterval = setInterval(() => {
+    now.value = new Date()
+  }, 1000)
+
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    },
+    { threshold: 0.15 }
+  )
+
+  document.querySelectorAll('.fade-in-section').forEach((el) => {
+    observer.observe(el)
+  })
+})
+
+onUnmounted(() => {
+  clearInterval(countdownInterval)
+  if (observer) observer.disconnect()
+})
+</script>
+
+<style scoped>
+/* ===== HERO ===== */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* Replace with your hero/prenup image */
+  background: linear-gradient(135deg, var(--pastel-blush), var(--pastel-lavender), var(--pastel-peach));
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  text-align: center;
+  padding-top: 80px;
+}
+/* If you add a background image, uncomment below: */
+/* .hero-section { background-image: url('/photos/hero-bg.jpg'); } */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 20px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-medium);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.hero-names {
+  font-size: 4.5rem;
+  color: var(--text-accent);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: var(--pastel-mauve);
+}
+.ornament { font-size: 1.2rem; opacity: 0.6; }
+.ornament-center { font-size: 1.4rem; }
+
+.hero-date {
+  font-size: 1.4rem;
+  color: var(--text-medium);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollBounce 2s ease infinite;
+}
+.scroll-arrow {
+  width: 24px;
+  height: 24px;
+  border-right: 2px solid var(--text-light);
+  border-bottom: 2px solid var(--text-light);
+  transform: rotate(45deg);
+  opacity: 0.5;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+/* ===== COUNTDOWN ===== */
+.countdown-section {
+  padding: var(--section-padding);
+  background: var(--pastel-cream);
+  text-align: center;
+}
+
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.countdown-item {
+  background: linear-gradient(135deg, #fff, var(--pastel-pink));
+  border-radius: 16px;
+  padding: 24px 20px;
+  min-width: 100px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.countdown-number {
+  font-family: var(--font-elegant);
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--text-accent);
+  line-height: 1;
+}
+
+.countdown-label {
+  font-family: var(--font-elegant);
+  font-size: 0.85rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 6px;
+}
+
+.countdown-date {
+  font-size: 1.3rem;
+  color: var(--text-medium);
+  letter-spacing: 3px;
+}
+
+/* ===== OUR STORY ===== */
+.story-section {
+  padding: var(--section-padding);
+  background: linear-gradient(180deg, var(--pastel-cream), #fff, var(--pastel-cream));
+}
+
+.timeline {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--pastel-mauve), var(--pastel-gold));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+}
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-dot {
+  position: absolute;
+  left: -34px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--pastel-mauve);
+  border-radius: 50%;
+  border: 3px solid var(--pastel-cream);
+  box-shadow: 0 0 0 3px var(--pastel-mauve);
+}
+
+.timeline-content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.timeline-title {
+  font-size: 1.8rem;
+  color: var(--text-accent);
+  margin-bottom: 4px;
+}
+
+.timeline-date {
+  font-size: 0.9rem;
+  color: var(--pastel-gold);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.timeline-desc {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  line-height: 1.7;
+}
+
+/* ===== GALLERY ===== */
+.gallery-section {
+  padding: var(--section-padding);
+  background: var(--pastel-pink);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 1;
+}
+.gallery-item.wide {
+  grid-column: span 2;
+  aspect-ratio: 2/1;
+}
+.gallery-item.tall {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(139, 110, 90, 0.0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.gallery-item:hover .gallery-overlay {
+  background: rgba(139, 110, 90, 0.2);
+}
+.gallery-zoom {
+  color: #fff;
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s;
+}
+.gallery-item:hover .gallery-zoom {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Video */
+.video-title {
+  font-size: 2rem;
+  color: var(--text-accent);
+  text-align: center;
+  margin-bottom: 20px;
+}
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+.video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+  object-fit: contain;
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 2.5rem;
+  color: #fff;
+  background: none;
+}
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  color: #fff;
+  background: none;
+  padding: 10px;
+}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+/* ===== DETAILS ===== */
+.details-section {
+  padding: var(--section-padding);
+  background: linear-gradient(180deg, var(--pastel-cream), #fff);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.detail-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s;
+}
+.detail-card:hover {
+  transform: translateY(-4px);
+}
+
+.detail-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.detail-title {
+  font-size: 2rem;
+  color: var(--text-accent);
+  margin-bottom: 8px;
+}
+
+.detail-time {
+  font-size: 1.2rem;
+  color: var(--pastel-gold);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.detail-venue {
+  font-family: var(--font-elegant);
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.detail-address {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.detail-btn {
+  display: inline-block;
+  font-size: 0.95rem;
+  padding: 10px 28px;
+}
+
+/* QR Codes */
+.qr-section {
+  text-align: center;
+  margin-top: 20px;
+}
+.qr-title {
+  font-size: 2rem;
+  color: var(--text-accent);
+  margin-bottom: 24px;
+}
+.qr-grid {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.qr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.qr-label {
+  font-size: 1rem;
+  color: var(--text-medium);
+  letter-spacing: 1px;
+}
+
+/* ===== RSVP CTA ===== */
+.rsvp-cta-section {
+  padding: var(--section-padding);
+  background: linear-gradient(135deg, var(--pastel-mauve), var(--pastel-gold));
+  text-align: center;
+}
+.rsvp-cta-text {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 28px;
+  font-style: italic;
+}
+.rsvp-cta-btn {
+  background: #fff;
+  color: var(--text-accent);
+  font-weight: 600;
+  display: inline-block;
+}
+.rsvp-cta-btn:hover {
+  background: var(--pastel-cream);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--pastel-cream);
+  padding: 48px 20px 24px;
+  text-align: center;
+}
+.footer-hearts {
+  font-size: 1.2rem;
+  color: var(--pastel-mauve);
+  margin-bottom: 12px;
+  letter-spacing: 8px;
+}
+.footer-names {
+  font-size: 2.5rem;
+  color: var(--text-accent);
+  margin-bottom: 4px;
+}
+.footer-date {
+  font-size: 1rem;
+  color: var(--text-light);
+  letter-spacing: 2px;
+}
+.footer-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--pastel-mauve);
+  margin: 20px auto;
+}
+.footer-made {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+.footer-made strong {
+  color: var(--text-accent);
+}
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  opacity: 0.7;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hero-names { font-size: 3rem; }
+  .countdown-grid { gap: 12px; }
+  .countdown-item { min-width: 80px; padding: 16px 12px; }
+  .countdown-number { font-size: 2.2rem; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item.wide { grid-column: span 2; }
+  .qr-grid { gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-names { font-size: 2.4rem; }
+  .hero-date { font-size: 1.1rem; }
+  .countdown-item { min-width: 70px; }
+  .countdown-number { font-size: 1.8rem; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .gallery-item.wide { grid-column: span 1; aspect-ratio: 1; }
+  .gallery-item.tall { grid-row: span 1; aspect-ratio: 1; }
+  .details-grid { grid-template-columns: 1fr; }
+}
+</style>
