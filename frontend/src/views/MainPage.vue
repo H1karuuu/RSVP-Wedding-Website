@@ -21,23 +21,47 @@
     </section>
 
     <!-- ===== COUNTDOWN SECTION ===== -->
-    <section class="countdown-section" ref="countdownSection">
+    <section id="save-the-date" class="countdown-section fade-in-section" ref="countdownSection">
       <div class="container">
         <h2 class="section-title">Save the Date</h2>
         <p class="section-subtitle">Counting down to our forever</p>
-        <div class="countdown-grid">
-          <div class="countdown-item" v-for="item in countdownItems" :key="item.label">
-            <div class="countdown-number">{{ item.value }}</div>
-            <div class="countdown-label">{{ item.label }}</div>
+
+        <div class="save-date-layout">
+          <div class="countdown-panel">
+            <p class="panel-kicker">Wedding Countdown</p>
+            <div class="countdown-grid">
+              <div class="countdown-item" v-for="item in countdownItems" :key="item.label">
+                <div class="countdown-number">{{ item.value }}</div>
+                <div class="countdown-label">{{ item.label }}</div>
+              </div>
+            </div>
+            <p class="countdown-date elegant">June 04, 2026</p>
+          </div>
+
+          <div class="calendar-panel">
+            <p class="panel-kicker">Calendar</p>
+            <h3 class="calendar-title elegant">{{ calendarMonthLabel }}</h3>
+            <div class="calendar-weekdays">
+              <span v-for="weekday in weekDays" :key="weekday">{{ weekday }}</span>
+            </div>
+            <div class="calendar-grid">
+              <span
+                v-for="(day, index) in calendarDays"
+                :key="`${day.value || 'empty'}-${index}`"
+                :class="['calendar-day', { muted: !day.value, wedding: day.value === 4 }]"
+              >
+                {{ day.value }}
+              </span>
+            </div>
+            <button class="btn-outline calendar-btn" type="button">Add to Calendar</button>
           </div>
         </div>
-        <p class="countdown-date elegant">June 04, 2026</p>
       </div>
     </section>
 
     <!-- ===== OUR STORY SECTION ===== -->
     <section id="our-story" class="story-section fade-in-section" ref="storySection">
-      <div class="container">
+      <div class="container story-shell">
         <h2 class="section-title">Our Love Story</h2>
         <p class="section-subtitle">A journey that led us to forever</p>
 
@@ -65,7 +89,7 @@
             class="gallery-item"
             v-for="(photo, index) in galleryPhotos"
             :key="index"
-            :class="photo.size"
+            :class="[photo.size, photo.layout]"
             @click="openLightbox(index)"
           >
             <img :src="photo.src" :alt="photo.alt" loading="lazy" />
@@ -108,15 +132,11 @@
 
         <div class="details-grid">
           <!-- Ceremony -->
-          <div class="detail-card">
+          <div class="detail-card ceremony-card">
             <div class="detail-body">
-              <div class="detail-photo-wrap">
-                <img class="detail-photo" src="/photos/prenup-2.jpg" alt="Ceremony photo" loading="lazy" />
-              </div>
               <div class="detail-content">
-                <div class="detail-icon">⛪</div>
-                <h3 class="detail-title cursive">Ceremony</h3>
-                <p class="detail-time elegant">2:00 PM</p>
+                <h3 class="detail-title split-title cursive"><span>C</span>eremony</h3>
+                <p class="detail-time elegant">2:00 PM Ceremony Start</p>
                 <p class="detail-venue">Church Name Here</p>
                 <p class="detail-address">123 Church Street, City, Province</p>
                 <a
@@ -131,15 +151,11 @@
           </div>
 
           <!-- Reception -->
-          <div class="detail-card">
+          <div class="detail-card reception-card">
             <div class="detail-body">
-              <div class="detail-photo-wrap">
-                <img class="detail-photo" src="/photos/prenup-3.jpg" alt="Reception photo" loading="lazy" />
-              </div>
               <div class="detail-content">
-                <div class="detail-icon">🥂</div>
-                <h3 class="detail-title cursive">Reception</h3>
-                <p class="detail-time elegant">5:00 PM</p>
+                <h3 class="detail-title split-title cursive"><span>R</span>eception</h3>
+                <p class="detail-time elegant">5:00 PM Reception Program</p>
                 <p class="detail-venue">Reception Venue Name</p>
                 <p class="detail-address">456 Venue Road, City, Province</p>
                 <a
@@ -294,7 +310,16 @@
     <section id="dress-code" class="dresscode-section fade-in-section" ref="dresscodeSection">
       <div class="container">
         <h2 class="section-title">Dress Code</h2>
-        <p class="section-subtitle">Kindly adhere to our wedding color palette</p>
+        <p class="section-subtitle">Guests: Ladies (Maxi Dress/Long Gown), Gentlemen (Barong/Black Slacks)</p>
+
+        <div class="dress-visualizer">
+          <div class="look-card" v-for="look in dressVisualizer" :key="look.label">
+            <img :src="look.image" :alt="look.label" loading="lazy" />
+            <p class="look-label elegant">{{ look.label }}</p>
+          </div>
+        </div>
+
+        <p class="dress-visualizer-note elegant">You can replace these with exact outfit peg photos anytime.</p>
 
         <div class="dresscode-palette">
           <div
@@ -309,7 +334,7 @@
 
         <div class="dresscode-notes">
           <p class="elegant dresscode-note">Please wear attire in the shades shown above.</p>
-          <p class="elegant dresscode-note">Formal / Semi-formal attire is preferred.</p>
+          <p class="elegant dresscode-note">For entourage attire pegs, the bride and groom will message separately.</p>
         </div>
       </div>
     </section>
@@ -369,6 +394,29 @@ const countdownItems = computed(() => {
   ]
 })
 
+const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+const calendarMonthLabel = 'June 2026'
+const calendarDays = computed(() => {
+  const firstDay = new Date('2026-06-01T00:00:00')
+  const daysInMonth = new Date(2026, 6, 0).getDate()
+  const startWeekday = firstDay.getDay()
+  const cells = []
+
+  for (let i = 0; i < startWeekday; i += 1) {
+    cells.push({ value: '' })
+  }
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    cells.push({ value: day })
+  }
+
+  while (cells.length % 7 !== 0) {
+    cells.push({ value: '' })
+  }
+
+  return cells
+})
+
 // ===== OUR STORY TIMELINE =====
 const storyTimeline = ref([
   {
@@ -395,16 +443,15 @@ const storyTimeline = ref([
 
 // ===== GALLERY =====
 const galleryPhotos = ref([
-  { src: '/photos/prenup-1.jpg', alt: 'Prenup Photo 1', size: 'wide' },
-  { src: '/photos/prenup-2.jpg', alt: 'Prenup Photo 2', size: '' },
-  { src: '/photos/prenup-3.jpg', alt: 'Prenup Photo 3', size: '' },
-  { src: '/photos/prenup-4.jpg', alt: 'Prenup Photo 4', size: 'tall' },
-  { src: '/photos/prenup-5.jpg', alt: 'Prenup Photo 5', size: '' },
-  { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6', size: 'wide' },
-  { src: '/photos/prenup-7.jpg', alt: 'Prenup Photo 7', size: '' },
-  { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8', size: '' },
-  { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9', size: '' },
-  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10', size: '' },
+  { src: '/photos/prenup-1.jpg', alt: 'Prenup Photo 1', size: '', layout: 'tile-a' },
+  { src: '/photos/prenup-2.jpg', alt: 'Prenup Photo 2', size: '', layout: 'tile-b' },
+  { src: '/photos/prenup-3.jpg', alt: 'Prenup Photo 3', size: '', layout: 'tile-c' },
+  { src: '/photos/prenup-4.jpg', alt: 'Prenup Photo 4', size: '', layout: 'tile-d' },
+  { src: '/photos/prenup-5.jpg', alt: 'Prenup Photo 5', size: '', layout: 'tile-e' },
+  { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6', size: '', layout: 'tile-center' },
+  { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8', size: '', layout: 'tile-f' },
+  { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9', size: '', layout: 'tile-g' },
+  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10', size: '', layout: 'tile-h' },
 ])
 
 const videoUrl = ref('') // e.g. 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
@@ -535,6 +582,12 @@ const dressCodeColors = ref([
   { name: 'Silver', hex: '#c0c8d0', textColor: '#2a3a4a' },
   { name: 'Ivory', hex: '#f5f0e8', textColor: '#4a5568' },
   { name: 'Champagne', hex: '#e8dcc8', textColor: '#4a4035' }
+])
+
+const dressVisualizer = ref([
+  { label: 'Ladies: Maxi Dress / Long Gown', image: '/photos/couple-1.jpg' },
+  { label: 'Gentlemen: Barong / Black Slacks', image: '/photos/couple-2.jpg' },
+  { label: 'Formal Garden Style Inspiration', image: '/photos/couple-3.jpg' }
 ])
 
 // ===== INTERSECTION OBSERVER FOR FADE-IN =====
@@ -698,8 +751,33 @@ onUnmounted(() => {
 /* ===== COUNTDOWN ===== */
 .countdown-section {
   padding: var(--section-padding);
-  background: var(--pastel-cream);
+  background:
+    linear-gradient(130deg, rgba(240, 244, 248, 0.9), rgba(240, 244, 248, 0.95)),
+    url('/photos/prenup-7.jpg') center/cover no-repeat;
   text-align: center;
+}
+
+.save-date-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: 24px;
+}
+
+.countdown-panel,
+.calendar-panel {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 8px 28px rgba(28, 60, 100, 0.12);
+}
+
+.panel-kicker {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-medium);
+  margin-bottom: 14px;
+  font-weight: 600;
 }
 
 .countdown-grid {
@@ -720,31 +798,88 @@ onUnmounted(() => {
 
 .countdown-number {
   font-family: var(--font-elegant);
-  font-size: 3rem;
-  font-weight: 600;
+  font-size: 3.2rem;
+  font-weight: 700;
   color: var(--text-accent);
   line-height: 1;
 }
 
 .countdown-label {
   font-family: var(--font-elegant);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--text-light);
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-top: 6px;
+  font-weight: 700;
 }
 
 .countdown-date {
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   color: var(--text-medium);
   letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.calendar-title {
+  font-size: 1.45rem;
+  color: var(--text-accent);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.calendar-weekdays span {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.calendar-day {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.calendar-day.muted {
+  opacity: 0;
+}
+
+.calendar-day.wedding {
+  background: var(--pastel-mauve);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(93, 132, 171, 0.35);
+}
+
+.calendar-btn {
+  margin-top: 16px;
+  font-size: 0.95rem;
 }
 
 /* ===== OUR STORY ===== */
 .story-section {
   padding: var(--section-padding);
-  background: linear-gradient(180deg, var(--pastel-cream), #fff, var(--pastel-cream));
+  background:
+    linear-gradient(180deg, rgba(240, 244, 248, 0.9), rgba(240, 244, 248, 0.95)),
+    url('/photos/prenup-7.jpg') center/cover fixed no-repeat;
+}
+
+.story-shell {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  padding: 28px 24px;
 }
 
 .timeline {
@@ -789,7 +924,7 @@ onUnmounted(() => {
 }
 
 .timeline-title {
-  font-size: 1.8rem;
+  font-size: 2.05rem;
   color: var(--text-accent);
   margin-bottom: 4px;
 }
@@ -802,9 +937,10 @@ onUnmounted(() => {
 }
 
 .timeline-desc {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--text-medium);
-  line-height: 1.7;
+  line-height: 1.75;
+  font-weight: 500;
 }
 
 /* ===== GALLERY ===== */
@@ -815,7 +951,8 @@ onUnmounted(() => {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 84px;
   gap: 16px;
   margin-bottom: 40px;
   align-items: start;
@@ -828,19 +965,19 @@ onUnmounted(() => {
   cursor: pointer;
   background: #fff;
   padding: 10px;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: auto;
+  box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
-.gallery-item:nth-child(1) {
-  grid-column: span 2;
-  grid-row: span 2;
-  aspect-ratio: 3 / 4;
-}
-.gallery-item.wide {
-  grid-column: span 1;
-}
-.gallery-item.tall {
-  grid-row: span 1;
-}
+
+.gallery-item.tile-a { grid-column: 1 / span 3; grid-row: 1 / span 3; }
+.gallery-item.tile-b { grid-column: 4 / span 3; grid-row: 1 / span 2; }
+.gallery-item.tile-c { grid-column: 7 / span 3; grid-row: 1 / span 2; }
+.gallery-item.tile-d { grid-column: 10 / span 3; grid-row: 1 / span 3; }
+.gallery-item.tile-e { grid-column: 4 / span 3; grid-row: 3 / span 2; }
+.gallery-item.tile-center { grid-column: 7 / span 3; grid-row: 3 / span 3; }
+.gallery-item.tile-f { grid-column: 1 / span 3; grid-row: 4 / span 2; }
+.gallery-item.tile-g { grid-column: 10 / span 3; grid-row: 4 / span 2; }
+.gallery-item.tile-h { grid-column: 4 / span 3; grid-row: 5 / span 1; }
 
 .gallery-item img {
   width: 100%;
@@ -942,7 +1079,7 @@ onUnmounted(() => {
 /* ===== DETAILS ===== */
 .details-section {
   padding: var(--section-padding);
-  background: linear-gradient(180deg, var(--pastel-cream), #fff);
+  background: linear-gradient(180deg, #f9fbfe, #eef3f8);
 }
 
 .details-grid {
@@ -953,70 +1090,82 @@ onUnmounted(() => {
 }
 
 .detail-card {
-  background: #fff;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(247, 251, 255, 0.98));
   border-radius: 16px;
-  padding: 24px;
+  padding: 28px;
   text-align: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 28px rgba(26, 61, 104, 0.1);
   transition: transform 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 .detail-card:hover {
   transform: translateY(-4px);
 }
 
-.detail-icon {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
+.ceremony-card::before,
+.reception-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.ceremony-card::before {
+  background: url('/photos/prenup-2.jpg') center/cover no-repeat;
+}
+
+.reception-card::before {
+  background: url('/photos/prenup-3.jpg') center/cover no-repeat;
 }
 
 .detail-body {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 18px;
-  align-items: center;
-}
-
-.detail-photo-wrap {
-  width: 100%;
-}
-
-.detail-photo {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 12px;
+  display: block;
 }
 
 .detail-content {
-  text-align: left;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 16px;
+  padding: 20px;
 }
 
 .detail-title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: var(--text-accent);
   margin-bottom: 8px;
 }
 
+.split-title span {
+  font-size: 3.1rem;
+  color: #2d5f94;
+}
+
 .detail-time {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   color: var(--pastel-gold);
   margin-bottom: 12px;
   letter-spacing: 2px;
+  font-weight: 700;
 }
 
 .detail-venue {
   font-family: var(--font-elegant);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   color: var(--text-dark);
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 4px;
 }
 
 .detail-address {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--text-light);
   margin-bottom: 20px;
   line-height: 1.5;
+  font-weight: 600;
 }
 
 .detail-btn {
@@ -1204,6 +1353,39 @@ onUnmounted(() => {
   text-align: center;
 }
 
+.dress-visualizer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.look-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(27, 58, 92, 0.1);
+}
+
+.look-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.look-label {
+  font-size: 1.02rem;
+  color: var(--text-medium);
+  padding: 12px;
+  font-weight: 700;
+}
+
+.dress-visualizer-note {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 18px;
+}
+
 .dresscode-palette {
   display: flex;
   justify-content: center;
@@ -1245,10 +1427,11 @@ onUnmounted(() => {
 }
 
 .dresscode-note {
-  font-size: 1rem;
+  font-size: 1.06rem;
   color: var(--text-light);
   margin-bottom: 8px;
   font-style: italic;
+  font-weight: 600;
 }
 
 /* ===== FOOTER ===== */
@@ -1304,19 +1487,26 @@ onUnmounted(() => {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero-names { font-size: 3rem; }
+  .save-date-layout { grid-template-columns: 1fr; }
   .countdown-grid { gap: 12px; }
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
-  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
-  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-  .gallery-item.wide { grid-column: span 1; }
-  .gallery-item.tall { min-height: unset; }
-  .detail-body { grid-template-columns: 1fr; }
-  .detail-content { text-align: center; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
+  .gallery-item,
+  .gallery-item.tile-a,
+  .gallery-item.tile-b,
+  .gallery-item.tile-c,
+  .gallery-item.tile-d,
+  .gallery-item.tile-e,
+  .gallery-item.tile-center,
+  .gallery-item.tile-f,
+  .gallery-item.tile-g,
+  .gallery-item.tile-h { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 3; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
   .sponsors-grid { grid-template-columns: 1fr; gap: 8px 0; }
+  .dress-visualizer { grid-template-columns: 1fr; }
   .palette-swatch { width: 80px; height: 100px; }
 }
 
@@ -1325,11 +1515,7 @@ onUnmounted(() => {
   .hero-date { font-size: 1.1rem; }
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; aspect-ratio: 4 / 3; }
-  .gallery-item,
-  .gallery-item.wide,
-  .gallery-item.tall { grid-column: span 1; grid-row: span 1; }
+  .gallery-grid { gap: 10px; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
   .palette-swatch { width: 70px; height: 90px; }
