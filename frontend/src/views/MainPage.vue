@@ -1376,18 +1376,19 @@ onUnmounted(() => {
 .bearer-item {
   background: #fff;
   border-radius: 16px;
-  padding: 16px 24px;
+  padding: 12px 22px;
   box-shadow: 0 4px 18px rgba(30, 60, 100, 0.06);
   text-align: center;
   width: 100%;
 }
 
 .bearer-item .role-title {
-  margin-bottom: 6px;
+  margin: 0 0 4px;
 }
 
 .bearer-item .role-name {
-  line-height: 1.5;
+  line-height: 1.35;
+  margin: 2px 0;
 }
 
 /* ===== DRESS CODE ===== */
