@@ -107,7 +107,7 @@ const sparkleStyle = (i) => ({
 
 .envelope-stage {
   position: absolute;
-  width: min(420px, 86vw);
+  width: min(520px, 92vw);
   aspect-ratio: 1 / 1;
   display: flex;
   align-items: flex-end;
@@ -159,12 +159,12 @@ const sparkleStyle = (i) => ({
 
 .floating-photo {
   position: absolute;
-  width: min(190px, 25vw);
+  width: min(220px, 28vw);
   border-radius: 18px;
   border: 6px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 16px 40px rgba(23, 45, 74, 0.18);
+  box-shadow: 0 20px 44px rgba(23, 45, 74, 0.24);
   overflow: hidden;
-  z-index: 2;
+  z-index: 6;
 }
 
 .floating-photo img {
@@ -175,21 +175,22 @@ const sparkleStyle = (i) => ({
 }
 
 .photo-left {
-  left: 8%;
-  top: 20%;
-  transform: rotate(-6deg);
+  left: 18%;
+  top: 28%;
+  transform: rotate(-8deg) translateY(-8px);
 }
 
 .photo-right {
-  right: 8%;
-  top: 30%;
-  transform: rotate(7deg);
+  right: 18%;
+  top: 31%;
+  transform: rotate(8deg) translateY(-8px);
 }
 
 .photo-center {
   left: 50%;
-  top: 16%;
-  transform: translateX(-50%) rotate(2deg);
+  top: 13%;
+  width: min(236px, 30vw);
+  transform: translateX(-50%) rotate(1.5deg) translateY(-16px);
 }
 
 .surprise-fade-enter-active,
@@ -298,45 +299,52 @@ const sparkleStyle = (i) => ({
 
 @media (max-width: 768px) {
   .envelope-stage {
-    width: min(340px, 86vw);
+    width: min(410px, 94vw);
+  }
+
+  .floating-photo {
+    width: min(170px, 32vw);
   }
 
   .photo-left {
-    left: -8px;
-    top: 14%;
+    left: 4%;
+    top: 24%;
   }
 
   .photo-right {
-    right: -8px;
-    top: 46%;
+    right: 4%;
+    top: 39%;
   }
 
   .photo-center {
-    top: 8%;
-    width: min(140px, 24vw);
+    top: 10%;
+    width: min(180px, 34vw);
   }
 }
 
 @media (max-width: 480px) {
   .envelope-stage {
-    width: min(300px, 84vw);
+    width: min(350px, 95vw);
   }
 
   .floating-photo {
-    width: 34vw;
-    opacity: 0.85;
+    width: 36vw;
+    opacity: 0.92;
   }
 
   .photo-left {
-    top: 12%;
+    left: 2%;
+    top: 24%;
   }
 
   .photo-right {
-    top: 53%;
+    right: 2%;
+    top: 42%;
   }
 
   .photo-center {
-    top: 10%;
+    top: 12%;
+    width: 42vw;
   }
 
   .invitation-popup {

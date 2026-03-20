@@ -1368,7 +1368,7 @@ onUnmounted(() => {
 .bearers-grid {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
   max-width: 700px;
   margin: 0 auto;
 }
@@ -1376,10 +1376,18 @@ onUnmounted(() => {
 .bearer-item {
   background: #fff;
   border-radius: 16px;
-  padding: 24px 28px;
+  padding: 16px 24px;
   box-shadow: 0 4px 18px rgba(30, 60, 100, 0.06);
   text-align: center;
   width: 100%;
+}
+
+.bearer-item .role-title {
+  margin-bottom: 6px;
+}
+
+.bearer-item .role-name {
+  line-height: 1.5;
 }
 
 /* ===== DRESS CODE ===== */

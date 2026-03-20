@@ -224,12 +224,12 @@ const resetForm = () => {
   margin: 26px auto 6px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  max-width: 820px;
+  gap: 14px;
+  max-width: 780px;
 }
 
 .strip-item {
-  border-radius: 18px;
+  border-radius: 14px;
   overflow: hidden;
   border: 4px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 12px 26px rgba(35, 68, 106, 0.16);
@@ -237,9 +237,19 @@ const resetForm = () => {
 
 .strip-item img {
   width: 100%;
-  aspect-ratio: 16 / 7;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
+}
+
+@media (max-width: 768px) {
+  .rsvp-photo-strip {
+    gap: 10px;
+  }
+
+  .strip-item {
+    border-width: 3px;
+  }
 }
 
 .rsvp-form-section {
