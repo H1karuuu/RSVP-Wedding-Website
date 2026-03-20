@@ -72,6 +72,20 @@
         <div class="envelope-front"></div>
       </div>
 
+      <transition name="popup-fade">
+        <div class="invitation-popup" v-if="showPhotoPopup" @click.stop>
+          <div class="popup-photos">
+            <div class="popup-photo" v-for="n in 3" :key="n">
+              <img :src="photoSrc(n)" :alt="`Memory ${n}`" @error="handleImgError" />
+            </div>
+          </div>
+          <button class="btn-primary proceed-btn" @click.stop="enterSite">
+            Proceed to Invitation
+            <span class="arrow">→</span>
+          </button>
+        </div>
+      </transition>
+
       <!-- Tap prompt -->
       <p class="tap-text" :class="{ hidden: envelopeOpened }">
         <span class="tap-icon">✉</span> Tap to open your invitation
@@ -105,13 +119,17 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const envelopeOpened = ref(false)
 const showEnterBtn = ref(false)
+const showPhotoPopup = ref(false)
 
 const handleClick = () => {
   if (!envelopeOpened.value) {
     envelopeOpened.value = true
     setTimeout(() => {
+      showPhotoPopup.value = true
+    }, 900)
+    setTimeout(() => {
       showEnterBtn.value = true
-    }, 1200)
+    }, 1300)
   }
 }
 
@@ -143,6 +161,34 @@ const sparkleStyle = (i) => ({
   flex-direction: column;
   background: var(--pastel-cream);
   overflow-x: hidden;
+  position: relative;
+}
+
+.landing-page::before,
+.landing-page::after {
+  content: '❀';
+  position: fixed;
+  top: 42%;
+  font-size: 2.1rem;
+  color: var(--pastel-mauve);
+  opacity: 0.2;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.landing-page::before {
+  left: 8px;
+  animation: floralSideFloat 5.5s ease-in-out infinite;
+}
+
+.landing-page::after {
+  right: 8px;
+  animation: floralSideFloat 5.5s ease-in-out infinite reverse;
+}
+
+@keyframes floralSideFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 /* ===== TOP ENVELOPE SECTION ===== */
@@ -283,6 +329,11 @@ const sparkleStyle = (i) => ({
   margin-bottom: 20px;
   perspective: 800px;
   z-index: 4;
+  transition: transform 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.envelope-wrapper.opened {
+  transform: translateY(-6px);
 }
 
 .envelope-back {
@@ -328,7 +379,7 @@ const sparkleStyle = (i) => ({
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   z-index: 4;
   transform-origin: top center;
-  transition: transform 0.8s ease-in-out;
+  transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .envelope-flap.opened {
   transform: rotateX(180deg);
@@ -345,12 +396,68 @@ const sparkleStyle = (i) => ({
   background: linear-gradient(135deg, #fffff8, #fafcff);
   border-radius: 6px;
   z-index: 2;
-  transition: transform 0.8s ease-in-out 0.4s;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
   box-shadow: 0 2px 12px rgba(30, 60, 100, 0.08);
   overflow: hidden;
 }
 .card.risen {
   transform: translateY(-85%);
+}
+
+.invitation-popup {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 18px;
+  padding: 14px 16px 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 18px 40px rgba(30, 60, 100, 0.18);
+}
+
+.popup-photos {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.popup-photo {
+  width: 92px;
+  height: 110px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 8px 18px rgba(30, 60, 100, 0.14);
+}
+
+.popup-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.proceed-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  padding: 12px 26px;
+}
+
+.popup-fade-enter-active,
+.popup-fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.popup-fade-enter-from,
+.popup-fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -46%);
 }
 
 .card-inner {
@@ -510,5 +617,15 @@ const sparkleStyle = (i) => ({
   .polaroid-3 { width: 65px; height: 80px; top: 22%; right: 1%; }
   .couple-names { font-size: 2.5rem; }
   .floral-corner { width: 80px; height: 80px; }
+  .invitation-popup {
+    width: 92%;
+    top: 56%;
+  }
+  .popup-photo {
+    width: 80px;
+    height: 96px;
+  }
+  .landing-page::before,
+  .landing-page::after { display: none; }
 }
 </style>

@@ -173,6 +173,33 @@ const resetForm = () => {
   padding-top: 80px;
   min-height: 100vh;
   background: var(--pastel-cream);
+  position: relative;
+}
+
+.rsvp-page::before,
+.rsvp-page::after {
+  content: '❀';
+  position: fixed;
+  top: 36%;
+  font-size: 2.1rem;
+  color: var(--pastel-mauve);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.rsvp-page::before {
+  left: 10px;
+  animation: floralPulse 5.5s ease-in-out infinite;
+}
+
+.rsvp-page::after {
+  right: 10px;
+  animation: floralPulse 5.5s ease-in-out infinite reverse;
+}
+
+@keyframes floralPulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 .rsvp-hero {
@@ -412,5 +439,7 @@ const resetForm = () => {
   .rsvp-card { padding: 32px 20px; }
   .radio-group { flex-direction: column; }
   .radio-option { min-width: unset; }
+  .rsvp-page::before,
+  .rsvp-page::after { display: none; }
 }
 </style>

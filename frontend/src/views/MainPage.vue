@@ -163,16 +163,30 @@
         <h2 class="section-title">Wedding Entourage</h2>
         <p class="section-subtitle">The people who will stand by us on our special day</p>
 
+        <div class="entourage-group">
+          <h3 class="entourage-group-title cursive">Immediate Family</h3>
+          <div class="entourage-pair">
+            <div class="entourage-role-card">
+              <h4 class="role-title">Groom Side</h4>
+              <p class="role-name elegant" v-for="member in groomFamily" :key="member.role + member.name">{{ member.role }}: {{ member.name }}</p>
+            </div>
+            <div class="entourage-role-card">
+              <h4 class="role-title">Bride Side</h4>
+              <p class="role-name elegant" v-for="member in brideFamily" :key="member.role + member.name">{{ member.role }}: {{ member.name }}</p>
+            </div>
+          </div>
+        </div>
+
         <!-- Primary Sponsors -->
         <div class="entourage-group">
           <h3 class="entourage-group-title cursive">Our Principal Sponsors</h3>
           <p class="entourage-group-subtitle elegant">To witness our union...</p>
           <div class="sponsors-grid">
             <div class="sponsor-column">
-              <div class="sponsor-name elegant" v-for="sponsor in principalSponsors.male" :key="sponsor">Mr. {{ sponsor }}</div>
+              <div class="sponsor-name elegant" v-for="sponsor in principalSponsors.left" :key="sponsor">{{ sponsor }}</div>
             </div>
             <div class="sponsor-column">
-              <div class="sponsor-name elegant" v-for="sponsor in principalSponsors.female" :key="sponsor">Mrs. {{ sponsor }}</div>
+              <div class="sponsor-name elegant" v-for="sponsor in principalSponsors.right" :key="sponsor">{{ sponsor }}</div>
             </div>
           </div>
         </div>
@@ -181,6 +195,10 @@
         <div class="entourage-group">
           <h3 class="entourage-group-title cursive">Our Secondary Sponsors</h3>
           <p class="entourage-group-subtitle elegant">To assist us in our needs...</p>
+
+          <div class="secondary-sponsor-grid">
+            <p class="role-name elegant" v-for="sponsor in secondarySponsors" :key="sponsor">{{ sponsor }}</p>
+          </div>
 
           <!-- Best Man & Maid of Honor -->
           <div class="entourage-pair">
@@ -233,10 +251,18 @@
           <h3 class="entourage-group-title cursive">Our Symbol Bearers</h3>
           <p class="entourage-group-subtitle elegant">To carry our symbols of Love, Treasure, and Faith...</p>
           <div class="bearers-grid">
-            <div class="bearer-item" v-for="bearer in symbolBearers" :key="bearer.role">
+            <div class="bearer-item" v-for="bearer in symbolBearers" :key="bearer.role + bearer.name">
               <h4 class="role-title">{{ bearer.role }}</h4>
               <p class="role-name elegant">{{ bearer.name }}</p>
             </div>
+          </div>
+        </div>
+
+        <div class="entourage-group">
+          <h3 class="entourage-group-title cursive">Additional Guests</h3>
+          <p class="entourage-group-subtitle elegant">Our cherished guests joining the celebration...</p>
+          <div class="guest-grid">
+            <p class="guest-name elegant" v-for="guest in guests" :key="guest">{{ guest }}</p>
           </div>
         </div>
       </div>
@@ -353,6 +379,10 @@ const galleryPhotos = ref([
   { src: '/photos/prenup-4.jpg', alt: 'Prenup Photo 4', size: 'tall' },
   { src: '/photos/prenup-5.jpg', alt: 'Prenup Photo 5', size: '' },
   { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6', size: 'wide' },
+  { src: '/photos/prenup-7.jpg', alt: 'Prenup Photo 7', size: '' },
+  { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8', size: '' },
+  { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9', size: '' },
+  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10', size: '' },
 ])
 
 const videoUrl = ref('') // e.g. 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
@@ -382,42 +412,108 @@ const ceremonyMapUrl = 'https://maps.google.com/?q=Church+Name+Here'
 const receptionMapUrl = 'https://maps.google.com/?q=Reception+Venue+Name'
 
 // ===== WEDDING ENTOURAGE =====
+const groomFamily = ref([
+  { role: 'Mother', name: 'Jeanne Lopez' },
+  { role: 'Father', name: 'Arnulfo Lopez' }
+])
+
+const brideFamily = ref([
+  { role: 'Mother', name: 'Concepcion Villa' },
+  { role: 'Brother', name: 'Rogelio Villa Jr' }
+])
+
 const principalSponsors = ref({
-  male: [
-    'Name Here', 'Name Here', 'Name Here',
-    'Name Here', 'Name Here', 'Name Here',
-    'Name Here', 'Name Here', 'Name Here',
-    'Name Here', 'Name Here'
+  left: [
+    'Teodora Robles',
+    'Victor Robles',
+    'Jerome Delos Santos',
+    'Nelda Delos Santos',
+    'Angel Almirañez',
+    'Alex Almirañez',
+    'Maan Zuñiga',
+    'Jimmy Zuñiga',
+    'Joel Zuñiga',
+    'Less Zuñiga'
   ],
-  female: [
-    'Name Here', 'Name Here', 'Name Here',
-    'Name Here', 'Name Here', 'Name Here',
-    'Name Here', 'Name Here', 'Name Here',
-    'Name Here', 'Name Here'
+  right: [
+    'Rolando Pasia',
+    'Vilma Lopez Pasia',
+    'Lilibeth Villa Antonio',
+    'Nestor Antonio',
+    'Arley Villa',
+    'Anthony Villa',
+    'Elizabeth Lanuza',
+    'John Jerold Lanuza',
+    'Arman Villa',
+    'Carme Salazar Villa'
   ]
 })
 
-const bestMan = ref('Name Here')
-const maidOfHonor = ref('Name Here')
+const secondarySponsors = ref([
+  'Era Ganabban',
+  'Rosa Paola Louise Sta. Ana',
+  'Jessica Zuñiga',
+  'Acmad Bacolod',
+  'Armando Ignacio',
+  'Jeffrey Cham',
+  'Mike Capuno'
+])
+
+const bestMan = ref('Arjay Lopez')
+const maidOfHonor = ref('Bernadeth Villa')
 
 const groomsmen = ref([
-  'Name Here', 'Name Here', 'Name Here',
-  'Name Here', 'Name Here', 'Name Here'
+  'JC Lopez',
+  'John Ernest',
+  'Gino Villa',
+  'Jared Zuñiga',
+  'Ace Lopez Almirañez',
+  'Cad Minbert Villa',
+  'Christian Jones Fermin',
+  'Kristian Quintana',
+  'Rafael Sulit',
+  'John Camille Pal',
+  'Rian Pinlac'
 ])
 
 const bridesmaids = ref([
-  'Name Here', 'Name Here', 'Name Here',
-  'Name Here', 'Name Here', 'Name Here'
+  'Leyan Cameron Villa',
+  'Julia Antonio',
+  'Gil Permejo',
+  'Anna Grace Tenefrancia',
+  'Claudine Andrea Teodosio',
+  'Patricia Igcasenza',
+  'Krizia Nicole Vargas',
+  'Kristine Delos Santos',
+  'Julliesel Ganela',
+  'Jennifer Lopez',
+  'Leimee Ann Vasquez'
 ])
 
-const candle = ref(['Mr. Name Here', 'Ms. Name Here'])
-const veil = ref(['Mr. Name Here', 'Ms. Name Here'])
-const cord = ref(['Mr. Name Here', 'Ms. Name Here'])
+const candle = ref(['John Ernest', 'Julia Antonio'])
+const veil = ref(['Arjay Lopez', 'Sharria Canciano'])
+const cord = ref(['JC Lopez', 'Leyan Cameron Villa'])
 
 const symbolBearers = ref([
-  { role: 'Bible Bearer', name: 'Name Here' },
-  { role: 'Ring Bearer', name: 'Name Here' },
-  { role: 'Coin Bearer', name: 'Name Here' }
+  { role: 'Bible Bearer', name: 'Zion Delos Santos' },
+  { role: 'Ring Bearer', name: 'Gabriel Canciano' },
+  { role: 'Coin Bearer', name: 'Achilles Villa' },
+  { role: 'Banner Bearer', name: 'Hughann Genesis Villa' },
+  { role: 'Banner Bearer', name: 'Toni Marie Villa' },
+  { role: 'Flower Girl', name: 'Yajra Lopez' },
+  { role: 'Flower Girl', name: 'Yeliza Lopez' },
+  { role: 'Flower Girl', name: 'Aya Piamonte' },
+  { role: 'Singer', name: 'Joseph Cabigon' }
+])
+
+const guests = ref([
+  'Belle Andreo Lopez', 'Angelina Zuñiga', 'Kaye Delos Santos', 'Kurt Delos Santos', 'Kim Delos Santos',
+  'Christopher Ramos', 'Milky Dumaran', 'Kim Tany Lerit', 'Dianne Garcia', 'Jaylyn Mozo', 'Jerome Tejerero',
+  'Queenie Villa', 'Juvy Lasaga', 'Tomas Villa', 'Nica Villa', 'Ryan Jayma', 'Ezekiel Gonzaga', 'Agow Padin',
+  'Delma Barotia', 'Vanessa Villarente', 'Ann Galang', 'Mylene Melendez', 'Gemma Villa', 'Paula Monichelle Hornido',
+  'Liezel Villa', 'JC Canciano', 'Nikki Lopez', 'Joana Mae Pinuela', 'Aileen Joyce Wong', 'Jamie Rodriguez',
+  'Kirsten Zuñiga', 'Ms. Myra Domino', 'Lovely Llanto', 'Nicole Ordillo', 'Jimboy Aseo', 'Elenita Villa',
+  'Marielle Bautista', 'Ralph Louise Bolisay', 'Arceli Villa', 'Josh David Villa', 'Ella Mae Pasia'
 ])
 
 // ===== DRESS CODE =====
@@ -461,6 +557,37 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.main-page {
+  position: relative;
+}
+
+.main-page::before,
+.main-page::after {
+  content: '❀';
+  position: fixed;
+  top: 160px;
+  font-size: 2.2rem;
+  color: var(--pastel-mauve);
+  opacity: 0.18;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.main-page::before {
+  left: 10px;
+  animation: floralFloat 6s ease-in-out infinite;
+}
+
+.main-page::after {
+  right: 10px;
+  animation: floralFloat 6s ease-in-out infinite reverse;
+}
+
+@keyframes floralFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
 /* ===== HERO ===== */
 .hero-section {
   min-height: 100vh;
@@ -687,21 +814,22 @@ onUnmounted(() => {
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  aspect-ratio: 1;
+  min-height: 240px;
 }
 .gallery-item.wide {
   grid-column: span 2;
-  aspect-ratio: 2/1;
+  min-height: 240px;
 }
 .gallery-item.tall {
   grid-row: span 2;
-  aspect-ratio: auto;
+  min-height: 500px;
 }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.5s ease;
 }
 .gallery-item:hover img {
@@ -937,6 +1065,14 @@ onUnmounted(() => {
   margin: 20px 0 8px;
 }
 
+.secondary-sponsor-grid {
+  max-width: 760px;
+  margin: 0 auto 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 20px;
+}
+
 .sponsors-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1010,6 +1146,20 @@ onUnmounted(() => {
   box-shadow: 0 4px 18px rgba(30, 60, 100, 0.06);
   text-align: center;
   min-width: 160px;
+}
+
+.guest-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 6px 16px;
+  text-align: left;
+}
+
+.guest-name {
+  color: var(--text-medium);
+  font-size: 0.95rem;
 }
 
 /* ===== DRESS CODE ===== */
@@ -1124,6 +1274,7 @@ onUnmounted(() => {
   .countdown-number { font-size: 2.2rem; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-item.wide { grid-column: span 2; }
+  .gallery-item.tall { min-height: 260px; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
@@ -1137,10 +1288,13 @@ onUnmounted(() => {
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
   .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .gallery-item.wide { grid-column: span 1; aspect-ratio: 1; }
-  .gallery-item.tall { grid-row: span 1; aspect-ratio: 1; }
+  .gallery-item,
+  .gallery-item.wide,
+  .gallery-item.tall { min-height: 160px; grid-column: span 1; grid-row: span 1; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
   .palette-swatch { width: 70px; height: 90px; }
+  .main-page::before,
+  .main-page::after { display: none; }
 }
 </style>
