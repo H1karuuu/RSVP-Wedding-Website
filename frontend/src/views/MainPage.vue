@@ -271,18 +271,20 @@
           <h3 class="entourage-group-title cursive">Our Symbol Bearers</h3>
           <p class="entourage-group-subtitle elegant">To carry our symbols of Love, Treasure, and Faith...</p>
           <div class="bearers-grid">
-            <div class="bearer-item" v-for="bearer in symbolBearers" :key="bearer.role + bearer.name">
+            <div class="bearer-item" v-for="bearer in symbolBearers" :key="bearer.role">
               <h4 class="role-title">{{ bearer.role }}</h4>
-              <p class="role-name elegant">{{ bearer.name }}</p>
+              <p class="role-name elegant" v-for="name in bearer.names" :key="bearer.role + name">{{ name }}</p>
             </div>
           </div>
         </div>
 
         <div class="entourage-group">
-          <h3 class="entourage-group-title cursive">Additional Guests</h3>
-          <p class="entourage-group-subtitle elegant">Our cherished guests joining the celebration...</p>
-          <div class="guest-grid">
-            <p class="guest-name elegant" v-for="guest in guests" :key="guest">{{ guest }}</p>
+          <h3 class="entourage-group-title cursive">Singer</h3>
+          <div class="bestman-row">
+            <div class="entourage-role-card">
+              <h4 class="role-title">Singer</h4>
+              <p class="role-name elegant">{{ singer }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -516,26 +518,14 @@ const veil = ref(['Arjay Lopez', 'Sharria Canciano'])
 const cord = ref(['JC Lopez', 'Leyan Cameron Villa'])
 
 const symbolBearers = ref([
-  { role: 'Bible Bearer', name: 'Zion Delos Santos' },
-  { role: 'Ring Bearer', name: 'Gabriel Canciano' },
-  { role: 'Coin Bearer', name: 'Achilles Villa' },
-  { role: 'Banner Bearer', name: 'Hughann Genesis Villa' },
-  { role: 'Banner Bearer', name: 'Toni Marie Villa' },
-  { role: 'Flower Girl', name: 'Yajra Lopez' },
-  { role: 'Flower Girl', name: 'Yeliza Lopez' },
-  { role: 'Flower Girl', name: 'Aya Piamonte' },
-  { role: 'Singer', name: 'Joseph Cabigon' }
+  { role: 'Banner', names: ['Hughann Genesis Villa', 'Toni Marie Villa'] },
+  { role: 'Flower', names: ['Yajra Lopez', 'Yeliza Lopez', 'Aya Piamonte'] },
+  { role: 'Bible', names: ['Zion Delos Santos'] },
+  { role: 'Coin', names: ['Achilles Villa'] },
+  { role: 'Ring', names: ['Gabriel Canciano'] }
 ])
 
-const guests = ref([
-  'Belle Andreo Lopez', 'Angelina Zuñiga', 'Kaye Delos Santos', 'Kurt Delos Santos', 'Kim Delos Santos',
-  'Christopher Ramos', 'Milky Dumaran', 'Kim Tany Lerit', 'Dianne Garcia', 'Jaylyn Mozo', 'Jerome Tejerero',
-  'Queenie Villa', 'Juvy Lasaga', 'Tomas Villa', 'Nica Villa', 'Ryan Jayma', 'Ezekiel Gonzaga', 'Agow Padin',
-  'Delma Barotia', 'Vanessa Villarente', 'Ann Galang', 'Mylene Melendez', 'Gemma Villa', 'Paula Monichelle Hornido',
-  'Liezel Villa', 'JC Canciano', 'Nikki Lopez', 'Joana Mae Pinuela', 'Aileen Joyce Wong', 'Jamie Rodriguez',
-  'Kirsten Zuñiga', 'Ms. Myra Domino', 'Lovely Llanto', 'Nicole Ordillo', 'Jimboy Aseo', 'Elenita Villa',
-  'Marielle Bautista', 'Ralph Louise Bolisay', 'Arceli Villa', 'Josh David Villa', 'Ella Mae Pasia'
-])
+const singer = ref('Joseph Cabigon')
 
 // ===== DRESS CODE =====
 const dressCodeColors = ref([
@@ -828,6 +818,7 @@ onUnmounted(() => {
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 40px;
+  align-items: start;
 }
 
 .gallery-item {
@@ -837,6 +828,7 @@ onUnmounted(() => {
   cursor: pointer;
   background: #fff;
   padding: 10px;
+  aspect-ratio: 4 / 3;
 }
 .gallery-item.wide {
   grid-column: span 1;
@@ -847,11 +839,12 @@ onUnmounted(() => {
 
 .gallery-item img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
   object-position: center;
   transition: transform 0.5s ease;
   border-radius: 8px;
+  background: #fff;
 }
 .gallery-item:hover img {
   transform: scale(1.05);
@@ -1198,20 +1191,6 @@ onUnmounted(() => {
   box-shadow: 0 4px 18px rgba(30, 60, 100, 0.06);
   text-align: center;
   min-width: 160px;
-}
-
-.guest-grid {
-  max-width: 900px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 6px 16px;
-  text-align: left;
-}
-
-.guest-name {
-  color: var(--text-medium);
-  font-size: 0.95rem;
 }
 
 /* ===== DRESS CODE ===== */

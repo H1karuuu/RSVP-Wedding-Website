@@ -27,25 +27,6 @@
         <div class="sparkle" v-for="i in 10" :key="i" :style="sparkleStyle(i)"></div>
       </div>
 
-      <!-- Polaroid Photos scattered around envelope -->
-      <div class="polaroid-photos" :class="{ 'photos-aside': envelopeOpened }">
-        <div class="polaroid polaroid-1">
-          <div class="polaroid-inner">
-            <img :src="photoSrc(1)" alt="MJ&Ryan" @error="handleImgError" />
-          </div>
-        </div>
-        <div class="polaroid polaroid-2">
-          <div class="polaroid-inner">
-            <img :src="photoSrc(2)" alt="MJ&Ryan" @error="handleImgError" />
-          </div>
-        </div>
-        <div class="polaroid polaroid-3">
-          <div class="polaroid-inner">
-            <img :src="photoSrc(3)" alt="MJ&Ryan" @error="handleImgError" />
-          </div>
-        </div>
-      </div>
-
       <!-- Envelope -->
       <div class="envelope-wrapper" :class="{ opened: envelopeOpened }">
         <!-- Envelope Back -->
@@ -74,11 +55,6 @@
 
       <transition name="popup-fade">
         <div class="invitation-popup" v-if="showPhotoPopup" @click.stop>
-          <div class="popup-photos">
-            <div class="popup-photo" :class="`popup-photo-${index + 1}`" v-for="(n, index) in [1, 2, 3]" :key="n">
-              <img :src="photoSrc(n)" :alt="`Memory ${n}`" @error="handleImgError" />
-            </div>
-          </div>
           <button class="btn-primary proceed-btn" @click.stop="enterSite">
             Proceed to Invitation
             <span class="arrow">→</span>
@@ -92,23 +68,6 @@
       </p>
     </section>
 
-    <!-- ===== BOTTOM SECTION: Names + Enter ===== -->
-    <section class="names-section" :class="{ visible: envelopeOpened }">
-      <div class="names-content">
-        <div class="names-ornament">— ✦ —</div>
-        <h1 class="couple-names cursive">MJ&Ryan</h1>
-        <p class="wedding-date elegant">June 04, 2026 &bull; Thursday</p>
-        <p class="wedding-tagline elegant">"Two hearts, one love"</p>
-        <p class="wedding-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
-
-        <transition name="fade-up">
-          <button v-if="showEnterBtn" class="enter-btn btn-primary" @click.stop="enterSite">
-            Open Invitation
-            <span class="arrow">→</span>
-          </button>
-        </transition>
-      </div>
-    </section>
   </div>
 </template>
 
@@ -118,7 +77,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const envelopeOpened = ref(false)
-const showEnterBtn = ref(false)
 const showPhotoPopup = ref(false)
 
 const handleClick = () => {
@@ -127,22 +85,11 @@ const handleClick = () => {
     setTimeout(() => {
       showPhotoPopup.value = true
     }, 900)
-    setTimeout(() => {
-      showEnterBtn.value = true
-    }, 1300)
   }
 }
 
 const enterSite = () => {
   router.push('/home')
-}
-
-// Dynamic src so Vite won't try to resolve at build time
-const photoSrc = (n) => `/photos/couple-${n}.jpg`
-
-const handleImgError = (e) => {
-  // Hide broken image gracefully
-  e.target.parentElement.parentElement.style.opacity = '0'
 }
 
 const sparkleStyle = (i) => ({
@@ -194,7 +141,7 @@ const sparkleStyle = (i) => ({
 /* ===== TOP ENVELOPE SECTION ===== */
 .envelope-section {
   position: relative;
-  min-height: 75vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -243,84 +190,6 @@ const sparkleStyle = (i) => ({
   10% { opacity: 0.7; }
   90% { opacity: 0.7; }
   100% { transform: translateY(80vh) rotate(360deg); opacity: 0; }
-}
-
-/* ===== POLAROID PHOTOS ===== */
-.polaroid-photos {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  transition: all 0.8s ease;
-}
-.polaroid-photos.photos-aside {
-  opacity: 0.5;
-  transform: scale(0.95);
-}
-
-.polaroid {
-  position: absolute;
-  background: #fff;
-  padding: 6px 6px 24px 6px;
-  border-radius: 2px;
-  box-shadow: 0 4px 20px rgba(30, 60, 100, 0.15), 0 1px 4px rgba(0,0,0,0.08);
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-.polaroid-inner {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 1px;
-  background: var(--pastel-blue);
-}
-.polaroid-inner img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  background: #fff;
-  display: block;
-}
-
-.polaroid-1 {
-  width: 110px;
-  height: 130px;
-  top: 18%;
-  right: 8%;
-  transform: rotate(8deg);
-  animation: floatPolaroid1 5s ease-in-out infinite;
-  z-index: 6;
-}
-.polaroid-2 {
-  width: 100px;
-  height: 120px;
-  top: 12%;
-  right: 22%;
-  transform: rotate(-5deg);
-  animation: floatPolaroid2 6s ease-in-out infinite;
-  z-index: 7;
-}
-.polaroid-3 {
-  width: 90px;
-  height: 110px;
-  top: 30%;
-  right: 5%;
-  transform: rotate(-12deg);
-  animation: floatPolaroid3 7s ease-in-out infinite;
-  z-index: 5;
-}
-
-@keyframes floatPolaroid1 {
-  0%, 100% { transform: rotate(8deg) translateY(0); }
-  50% { transform: rotate(8deg) translateY(-6px); }
-}
-@keyframes floatPolaroid2 {
-  0%, 100% { transform: rotate(-5deg) translateY(0); }
-  50% { transform: rotate(-5deg) translateY(-8px); }
-}
-@keyframes floatPolaroid3 {
-  0%, 100% { transform: rotate(-12deg) translateY(0); }
-  50% { transform: rotate(-12deg) translateY(-5px); }
 }
 
 /* ===== ENVELOPE ===== */
@@ -408,57 +277,12 @@ const sparkleStyle = (i) => ({
 
 .invitation-popup {
   position: absolute;
-  top: 50%;
+  top: 64%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 12;
-  width: min(92vw, 540px);
+  width: auto;
   pointer-events: none;
-}
-
-.popup-photos {
-  position: relative;
-  height: 200px;
-}
-
-.popup-photo {
-  position: absolute;
-  width: 110px;
-  height: 130px;
-  background: #fff;
-  padding: 6px 6px 20px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 8px 18px rgba(30, 60, 100, 0.14);
-  animation: popOut 0.6s ease both;
-}
-
-.popup-photo-1 {
-  top: 30px;
-  left: 6%;
-  transform: rotate(-8deg);
-}
-
-.popup-photo-2 {
-  top: -8px;
-  left: 39%;
-  transform: rotate(2deg);
-  animation-delay: 0.08s;
-}
-
-.popup-photo-3 {
-  top: 34px;
-  right: 6%;
-  transform: rotate(9deg);
-  animation-delay: 0.16s;
-}
-
-.popup-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  background: #fff;
 }
 
 .proceed-btn {
@@ -467,7 +291,7 @@ const sparkleStyle = (i) => ({
   gap: 8px;
   font-size: 1rem;
   padding: 12px 26px;
-  margin: 8px auto 0;
+  margin: 0 auto;
   pointer-events: auto;
 }
 
@@ -479,17 +303,7 @@ const sparkleStyle = (i) => ({
 .popup-fade-enter-from,
 .popup-fade-leave-to {
   opacity: 0;
-  transform: translate(-50%, -42%);
-}
-
-@keyframes popOut {
-  0% {
-    opacity: 0;
-    transform: translateY(45px) scale(0.75);
-  }
-  100% {
-    opacity: 1;
-  }
+  transform: translate(-50%, -46%);
 }
 
 .card-inner {
@@ -554,90 +368,17 @@ const sparkleStyle = (i) => ({
   50% { transform: translateY(-5px); }
 }
 
-/* ===== BOTTOM NAMES SECTION ===== */
-.names-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px 60px;
-  background: var(--pastel-cream);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s ease 0.6s, transform 1s ease 0.6s;
-}
-.names-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.names-content {
-  text-align: center;
-}
-.names-ornament {
-  font-family: var(--font-elegant);
-  font-size: 1rem;
-  color: var(--pastel-gold);
-  letter-spacing: 6px;
-  margin-bottom: 12px;
-  opacity: 0.7;
-}
-.couple-names {
-  font-size: 4rem;
-  color: var(--text-accent);
-  line-height: 1.1;
-  margin-bottom: 12px;
-}
-.wedding-date {
-  font-size: 1.2rem;
-  color: var(--text-medium);
-  letter-spacing: 3px;
-  margin-bottom: 6px;
-}
-.wedding-tagline {
-  font-size: 1rem;
-  color: var(--text-light);
-  font-style: italic;
-  margin-bottom: 8px;
-}
-.wedding-hashtag {
-  font-size: 1.1rem;
-  color: var(--pastel-gold);
-  letter-spacing: 1px;
-  font-weight: 600;
-  margin-bottom: 24px;
-  opacity: 0.85;
-}
-
-/* Enter Button */
-.enter-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 2;
-}
 .arrow {
   display: inline-block;
   transition: transform 0.3s;
 }
-.enter-btn:hover .arrow {
+.proceed-btn:hover .arrow {
   transform: translateX(4px);
 }
 
-/* Transitions */
-.fade-up-enter-active { transition: all 0.8s ease; }
-.fade-up-enter-from { opacity: 0; transform: translateY(20px); }
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .envelope-section { min-height: 65vh; padding: 40px 16px 30px; }
-  .polaroid-1 { width: 90px; height: 105px; top: 10%; right: 5%; }
-  .polaroid-2 { width: 80px; height: 95px; top: 5%; right: 20%; }
-  .polaroid-3 { width: 75px; height: 90px; top: 25%; right: 2%; }
-  .couple-names { font-size: 3rem; }
-  .popup-photo { width: 96px; height: 116px; }
-  .popup-photo-1 { left: 2%; }
-  .popup-photo-2 { left: 37%; }
-  .popup-photo-3 { right: 2%; }
+  .envelope-section { min-height: 100vh; padding: 40px 16px 30px; }
 }
 
 @media (max-width: 480px) {
@@ -648,22 +389,10 @@ const sparkleStyle = (i) => ({
     border-top-width: 70px;
   }
   .card-names { font-size: 1.5rem; }
-  .polaroid-1 { width: 75px; height: 90px; top: 8%; right: 3%; }
-  .polaroid-2 { width: 70px; height: 85px; top: 2%; right: 18%; }
-  .polaroid-3 { width: 65px; height: 80px; top: 22%; right: 1%; }
-  .couple-names { font-size: 2.5rem; }
   .floral-corner { width: 80px; height: 80px; }
   .invitation-popup {
-    width: 92%;
-    top: 52%;
+    top: 68%;
   }
-  .popup-photos { height: 168px; }
-  .popup-photo {
-    width: 78px;
-    height: 98px;
-    padding: 4px 4px 14px;
-  }
-  .popup-photo-2 { left: 36%; top: 0; }
   .landing-page::before,
   .landing-page::after { display: none; }
 }
