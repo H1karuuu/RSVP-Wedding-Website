@@ -201,6 +201,7 @@ const sparkleStyle = (i) => ({
 .surprise-fade-leave-to {
   opacity: 0;
   transform: translateY(10px);
+}
 
 .sparkles-container {
   position: absolute;
