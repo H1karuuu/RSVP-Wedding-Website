@@ -815,7 +815,7 @@ onUnmounted(() => {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 40px;
   align-items: start;
@@ -829,6 +829,11 @@ onUnmounted(() => {
   background: #fff;
   padding: 10px;
   aspect-ratio: 4 / 3;
+}
+.gallery-item:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+  aspect-ratio: 3 / 4;
 }
 .gallery-item.wide {
   grid-column: span 1;
@@ -1177,9 +1182,8 @@ onUnmounted(() => {
 
 .bearers-grid {
   display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 20px;
   max-width: 700px;
   margin: 0 auto;
 }
@@ -1190,7 +1194,7 @@ onUnmounted(() => {
   padding: 24px 28px;
   box-shadow: 0 4px 18px rgba(30, 60, 100, 0.06);
   text-align: center;
-  min-width: 160px;
+  width: 100%;
 }
 
 /* ===== DRESS CODE ===== */
@@ -1303,7 +1307,8 @@ onUnmounted(() => {
   .countdown-grid { gap: 12px; }
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
   .gallery-item.wide { grid-column: span 1; }
   .gallery-item.tall { min-height: unset; }
   .detail-body { grid-template-columns: 1fr; }
@@ -1321,6 +1326,7 @@ onUnmounted(() => {
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
   .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; aspect-ratio: 4 / 3; }
   .gallery-item,
   .gallery-item.wide,
   .gallery-item.tall { grid-column: span 1; grid-row: span 1; }

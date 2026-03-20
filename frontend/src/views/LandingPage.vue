@@ -260,10 +260,10 @@ const sparkleStyle = (i) => ({
 /* Card */
 .card {
   position: absolute;
-  top: 20%;
+  top: 55%;
   left: 8%;
   right: 8%;
-  height: 85%;
+  height: 65%;
   background: linear-gradient(135deg, #fffff8, #fafcff);
   border-radius: 6px;
   z-index: 6;
@@ -272,7 +272,7 @@ const sparkleStyle = (i) => ({
   overflow: hidden;
 }
 .card.risen {
-  transform: translateY(-100%);
+  transform: translateY(-130%);
 }
 
 .invitation-popup {
