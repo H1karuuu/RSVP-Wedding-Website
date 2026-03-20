@@ -4,6 +4,12 @@
     <section class="rsvp-hero">
       <h1 class="section-title">RSVP</h1>
       <p class="section-subtitle">We would love to celebrate with you!</p>
+
+      <div class="rsvp-photo-strip">
+        <div class="strip-item" v-for="photo in rsvpStripPhotos" :key="photo.src">
+          <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+        </div>
+      </div>
     </section>
 
     <!-- Form Section -->
@@ -133,6 +139,12 @@ const form = reactive({
   message: ''
 })
 
+const rsvpStripPhotos = [
+  { src: '/photos/couple-1.jpg', alt: 'RSVP memory 1' },
+  { src: '/photos/couple-2.jpg', alt: 'RSVP memory 2' },
+  { src: '/photos/couple-3.jpg', alt: 'RSVP memory 3' },
+]
+
 const handleSubmit = async () => {
   errorMsg.value = ''
   loading.value = true
@@ -206,6 +218,28 @@ const resetForm = () => {
   padding: 60px 20px 20px;
   text-align: center;
   background: linear-gradient(135deg, var(--pastel-blush), var(--pastel-lavender));
+}
+
+.rsvp-photo-strip {
+  margin: 26px auto 6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 820px;
+}
+
+.strip-item {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 26px rgba(35, 68, 106, 0.16);
+}
+
+.strip-item img {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  display: block;
 }
 
 .rsvp-form-section {
@@ -436,6 +470,11 @@ const resetForm = () => {
 }
 
 @media (max-width: 480px) {
+  .rsvp-photo-strip {
+    grid-template-columns: 1fr;
+    max-width: 92%;
+  }
+
   .rsvp-card { padding: 32px 20px; }
   .radio-group { flex-direction: column; }
   .radio-option { min-width: unset; }

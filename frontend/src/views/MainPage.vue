@@ -20,63 +20,65 @@
       </div>
     </section>
 
-    <!-- ===== COUNTDOWN SECTION ===== -->
-    <section id="save-the-date" class="countdown-section fade-in-section" ref="countdownSection">
-      <div class="container">
-        <h2 class="section-title">Save the Date</h2>
-        <p class="section-subtitle">Counting down to our forever</p>
+    <div class="forever-background">
+      <!-- ===== COUNTDOWN SECTION ===== -->
+      <section id="save-the-date" class="countdown-section fade-in-section" ref="countdownSection">
+        <div class="container">
+          <h2 class="section-title">Save the Date</h2>
+          <p class="section-subtitle">Counting down to our forever</p>
 
-        <div class="save-date-layout">
-          <div class="countdown-panel">
-            <p class="panel-kicker">Wedding Countdown</p>
-            <div class="countdown-grid">
-              <div class="countdown-item" v-for="item in countdownItems" :key="item.label">
-                <div class="countdown-number">{{ item.value }}</div>
-                <div class="countdown-label">{{ item.label }}</div>
+          <div class="save-date-layout">
+            <div class="countdown-panel">
+              <p class="panel-kicker">Wedding Countdown</p>
+              <div class="countdown-grid">
+                <div class="countdown-item" v-for="item in countdownItems" :key="item.label">
+                  <div class="countdown-number">{{ item.value }}</div>
+                  <div class="countdown-label">{{ item.label }}</div>
+                </div>
+              </div>
+              <p class="countdown-date elegant">June 04, 2026</p>
+            </div>
+
+            <div class="calendar-panel">
+              <p class="panel-kicker">Calendar</p>
+              <h3 class="calendar-title elegant">{{ calendarMonthLabel }}</h3>
+              <div class="calendar-weekdays">
+                <span v-for="weekday in weekDays" :key="weekday">{{ weekday }}</span>
+              </div>
+              <div class="calendar-grid">
+                <span
+                  v-for="(day, index) in calendarDays"
+                  :key="`${day.value || 'empty'}-${index}`"
+                  :class="['calendar-day', { muted: !day.value, wedding: day.value === 4 }]"
+                >
+                  {{ day.value }}
+                </span>
+              </div>
+              <button class="btn-outline calendar-btn" type="button">Add to Calendar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== OUR STORY SECTION ===== -->
+      <section id="our-story" class="story-section fade-in-section" ref="storySection">
+        <div class="container story-shell">
+          <h2 class="section-title">Our Love Story</h2>
+          <p class="section-subtitle">A journey that led us to forever</p>
+
+          <div class="timeline">
+            <div class="timeline-item" v-for="(event, index) in storyTimeline" :key="index">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <h3 class="timeline-title cursive">{{ event.title }}</h3>
+                <p class="timeline-date elegant">{{ event.date }}</p>
+                <p class="timeline-desc">{{ event.description }}</p>
               </div>
             </div>
-            <p class="countdown-date elegant">June 04, 2026</p>
-          </div>
-
-          <div class="calendar-panel">
-            <p class="panel-kicker">Calendar</p>
-            <h3 class="calendar-title elegant">{{ calendarMonthLabel }}</h3>
-            <div class="calendar-weekdays">
-              <span v-for="weekday in weekDays" :key="weekday">{{ weekday }}</span>
-            </div>
-            <div class="calendar-grid">
-              <span
-                v-for="(day, index) in calendarDays"
-                :key="`${day.value || 'empty'}-${index}`"
-                :class="['calendar-day', { muted: !day.value, wedding: day.value === 4 }]"
-              >
-                {{ day.value }}
-              </span>
-            </div>
-            <button class="btn-outline calendar-btn" type="button">Add to Calendar</button>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- ===== OUR STORY SECTION ===== -->
-    <section id="our-story" class="story-section fade-in-section" ref="storySection">
-      <div class="container story-shell">
-        <h2 class="section-title">Our Love Story</h2>
-        <p class="section-subtitle">A journey that led us to forever</p>
-
-        <div class="timeline">
-          <div class="timeline-item" v-for="(event, index) in storyTimeline" :key="index">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <h3 class="timeline-title cursive">{{ event.title }}</h3>
-              <p class="timeline-date elegant">{{ event.date }}</p>
-              <p class="timeline-desc">{{ event.description }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- ===== GALLERY SECTION ===== -->
     <section id="gallery" class="gallery-section fade-in-section" ref="gallerySection">
@@ -135,6 +137,9 @@
           <div class="detail-card ceremony-card">
             <div class="detail-body">
               <div class="detail-content">
+                <div class="venue-photo-shell">
+                  <img src="/photos/couple-1.jpg" alt="Church preview" loading="lazy" />
+                </div>
                 <h3 class="detail-title split-title cursive"><span>C</span>eremony</h3>
                 <p class="detail-time elegant">2:00 PM Ceremony Start</p>
                 <p class="detail-venue">Church Name Here</p>
@@ -154,6 +159,9 @@
           <div class="detail-card reception-card">
             <div class="detail-body">
               <div class="detail-content">
+                <div class="venue-photo-shell">
+                  <img src="/photos/couple-2.jpg" alt="Reception preview" loading="lazy" />
+                </div>
                 <h3 class="detail-title split-title cursive"><span>R</span>eception</h3>
                 <p class="detail-time elegant">5:00 PM Reception Program</p>
                 <p class="detail-venue">Reception Venue Name</p>
@@ -625,6 +633,15 @@ onUnmounted(() => {
   position: relative;
 }
 
+.forever-background {
+  background-image:
+    linear-gradient(180deg, rgba(240, 244, 248, 0.42), rgba(240, 244, 248, 0.42)),
+    url('/photos/prenup-7.jpg');
+  background-position: center top;
+  background-size: 100% auto;
+  background-repeat: repeat-y;
+}
+
 .main-page::before,
 .main-page::after {
   content: '❀';
@@ -751,9 +768,7 @@ onUnmounted(() => {
 /* ===== COUNTDOWN ===== */
 .countdown-section {
   padding: var(--section-padding);
-  background:
-    linear-gradient(130deg, rgba(240, 244, 248, 0.9), rgba(240, 244, 248, 0.95)),
-    url('/photos/prenup-7.jpg') center/cover no-repeat;
+  background: transparent;
   text-align: center;
 }
 
@@ -765,7 +780,7 @@ onUnmounted(() => {
 
 .countdown-panel,
 .calendar-panel {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   border-radius: 18px;
   padding: 24px;
   box-shadow: 0 8px 28px rgba(28, 60, 100, 0.12);
@@ -871,13 +886,11 @@ onUnmounted(() => {
 /* ===== OUR STORY ===== */
 .story-section {
   padding: var(--section-padding);
-  background:
-    linear-gradient(180deg, rgba(240, 244, 248, 0.9), rgba(240, 244, 248, 0.95)),
-    url('/photos/prenup-7.jpg') center/cover fixed no-repeat;
+  background: transparent;
 }
 
 .story-shell {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 24px;
   padding: 28px 24px;
 }
@@ -951,11 +964,14 @@ onUnmounted(() => {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 84px;
-  gap: 16px;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-rows: 86px;
+  gap: 10px;
   margin-bottom: 40px;
   align-items: start;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gallery-item {
@@ -964,20 +980,20 @@ onUnmounted(() => {
   overflow: hidden;
   cursor: pointer;
   background: #fff;
-  padding: 10px;
+  padding: 8px;
   aspect-ratio: auto;
   box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
 
-.gallery-item.tile-a { grid-column: 1 / span 3; grid-row: 1 / span 3; }
-.gallery-item.tile-b { grid-column: 4 / span 3; grid-row: 1 / span 2; }
-.gallery-item.tile-c { grid-column: 7 / span 3; grid-row: 1 / span 2; }
-.gallery-item.tile-d { grid-column: 10 / span 3; grid-row: 1 / span 3; }
-.gallery-item.tile-e { grid-column: 4 / span 3; grid-row: 3 / span 2; }
-.gallery-item.tile-center { grid-column: 7 / span 3; grid-row: 3 / span 3; }
-.gallery-item.tile-f { grid-column: 1 / span 3; grid-row: 4 / span 2; }
-.gallery-item.tile-g { grid-column: 10 / span 3; grid-row: 4 / span 2; }
-.gallery-item.tile-h { grid-column: 4 / span 3; grid-row: 5 / span 1; }
+.gallery-item.tile-a { grid-column: 1 / span 2; grid-row: 1 / span 2; transform: rotate(-2.5deg); }
+.gallery-item.tile-b { grid-column: 3 / span 2; grid-row: 1 / span 2; transform: rotate(1.8deg); }
+.gallery-item.tile-c { grid-column: 5 / span 2; grid-row: 1 / span 2; transform: rotate(-1.2deg); }
+.gallery-item.tile-d { grid-column: 7 / span 2; grid-row: 1 / span 2; transform: rotate(2deg); }
+.gallery-item.tile-e { grid-column: 2 / span 2; grid-row: 3 / span 2; transform: rotate(-1.5deg); }
+.gallery-item.tile-center { grid-column: 4 / span 2; grid-row: 2 / span 3; transform: scale(1.04); z-index: 2; }
+.gallery-item.tile-f { grid-column: 6 / span 2; grid-row: 3 / span 2; transform: rotate(1.5deg); }
+.gallery-item.tile-g { grid-column: 1 / span 2; grid-row: 4 / span 2; transform: rotate(-1deg); }
+.gallery-item.tile-h { grid-column: 3 / span 2; grid-row: 5 / span 1; transform: rotate(1deg); }
 
 .gallery-item img {
   width: 100%;
@@ -989,7 +1005,11 @@ onUnmounted(() => {
   background: #fff;
 }
 .gallery-item:hover img {
-  transform: scale(1.05);
+  transform: scale(1.02);
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px) rotate(0deg) !important;
 }
 
 .gallery-overlay {
@@ -1131,6 +1151,22 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.86);
   border-radius: 16px;
   padding: 20px;
+}
+
+.venue-photo-shell {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 2px solid rgba(101, 139, 181, 0.22);
+  background: rgba(227, 237, 247, 0.95);
+}
+
+.venue-photo-shell img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .detail-title {
@@ -1487,6 +1523,7 @@ onUnmounted(() => {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero-names { font-size: 3rem; }
+  .forever-background { background-size: auto 100%; }
   .save-date-layout { grid-template-columns: 1fr; }
   .countdown-grid { gap: 12px; }
   .countdown-item { min-width: 80px; padding: 16px 12px; }

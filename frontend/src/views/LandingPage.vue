@@ -5,21 +5,23 @@
         <div class="sparkle" v-for="i in 12" :key="i" :style="sparkleStyle(i)"></div>
       </div>
 
-      <div class="floating-photo photo-left" aria-hidden="true">
-        <img src="/photos/prenup-8.jpg" alt="" loading="lazy" />
-      </div>
+      <transition name="surprise-fade">
+        <div class="surprise-photos" v-if="envelopeOpened" aria-hidden="true">
+          <div class="floating-photo photo-left">
+            <img src="/photos/prenup-8.jpg" alt="" loading="lazy" />
+          </div>
 
-      <div class="floating-photo photo-right" aria-hidden="true">
-        <img src="/photos/prenup-10.jpg" alt="" loading="lazy" />
-      </div>
+          <div class="floating-photo photo-right">
+            <img src="/photos/prenup-10.jpg" alt="" loading="lazy" />
+          </div>
+
+          <div class="floating-photo photo-center">
+            <img src="/photos/prenup-6.jpg" alt="" loading="lazy" />
+          </div>
+        </div>
+      </transition>
 
       <div class="envelope-stage" :class="{ opened: envelopeOpened }">
-        <img
-          class="letter-inside"
-          src="/photos/Screenshot_2026-03-20_221318-removebg-preview.png"
-          alt="Invitation letter"
-          loading="eager"
-        />
         <img
           class="envelope-closed"
           src="/photos/Red and White Elegant Wedding Save the Date Invitation Video (2).png"
@@ -119,8 +121,7 @@ const sparkleStyle = (i) => ({
 }
 
 .envelope-closed,
-.envelope-open,
-.letter-inside {
+.envelope-open {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -135,19 +136,9 @@ const sparkleStyle = (i) => ({
 
 .envelope-open {
   opacity: 0;
-  z-index: 4;
-  transition: opacity 0.4s ease;
-}
-
-.letter-inside {
-  width: 84%;
-  transform: translateY(26%);
-  transition: transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
   z-index: 2;
-}
-
-.opened .letter-inside {
-  transform: translateY(-20%);
+  transform: translateY(6px) scale(0.94);
+  transition: opacity 0.45s ease, transform 0.7s ease;
 }
 
 .opened .envelope-closed {
@@ -156,11 +147,19 @@ const sparkleStyle = (i) => ({
 
 .opened .envelope-open {
   opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.surprise-photos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .floating-photo {
   position: absolute;
-  width: min(200px, 28vw);
+  width: min(190px, 25vw);
   border-radius: 18px;
   border: 6px solid rgba(255, 255, 255, 0.85);
   box-shadow: 0 16px 40px rgba(23, 45, 74, 0.18);
@@ -177,15 +176,31 @@ const sparkleStyle = (i) => ({
 
 .photo-left {
   left: 8%;
-  top: 22%;
+  top: 20%;
   transform: rotate(-6deg);
 }
 
 .photo-right {
   right: 8%;
-  top: 34%;
+  top: 30%;
   transform: rotate(7deg);
 }
+
+.photo-center {
+  left: 50%;
+  top: 16%;
+  transform: translateX(-50%) rotate(2deg);
+}
+
+.surprise-fade-enter-active,
+.surprise-fade-leave-active {
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.surprise-fade-enter-from,
+.surprise-fade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 
 .sparkles-container {
   position: absolute;
@@ -248,11 +263,12 @@ const sparkleStyle = (i) => ({
   font-family: var(--font-elegant);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--text-medium);
+  color: #4a6788;
   font-style: italic;
   animation: pulse 2s ease-in-out infinite;
   transition: opacity 0.5s;
   z-index: 10;
+  margin-top: 220px;
 }
 .tap-text.hidden {
   opacity: 0;
@@ -293,6 +309,11 @@ const sparkleStyle = (i) => ({
     right: -8px;
     top: 46%;
   }
+
+  .photo-center {
+    top: 8%;
+    width: min(140px, 24vw);
+  }
 }
 
 @media (max-width: 480px) {
@@ -311,6 +332,10 @@ const sparkleStyle = (i) => ({
 
   .photo-right {
     top: 53%;
+  }
+
+  .photo-center {
+    top: 10%;
   }
 
   .invitation-popup {
