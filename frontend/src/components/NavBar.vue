@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar" :class="{ scrolled: isScrolled, open: menuOpen }">
     <div class="nav-container">
-      <router-link to="/home" class="nav-logo cursive">MJ &amp; R</router-link>
+      <router-link to="/home" class="nav-logo cursive">MJ&amp;Ryan</router-link>
 
       <!-- Hamburger -->
       <button class="hamburger" @click="toggleMenu" :class="{ active: menuOpen }" aria-label="Menu">

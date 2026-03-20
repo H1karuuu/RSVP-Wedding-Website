@@ -5,7 +5,7 @@
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-subtitle elegant">Together with their families</p>
-        <h1 class="hero-names cursive">MJ & Ryan</h1>
+        <h1 class="hero-names cursive">MJ&Ryan</h1>
         <div class="hero-divider">
           <span class="ornament">—</span>
           <span class="ornament-center">♡</span>
@@ -109,34 +109,48 @@
         <div class="details-grid">
           <!-- Ceremony -->
           <div class="detail-card">
-            <div class="detail-icon">⛪</div>
-            <h3 class="detail-title cursive">Ceremony</h3>
-            <p class="detail-time elegant">2:00 PM</p>
-            <p class="detail-venue">Church Name Here</p>
-            <p class="detail-address">123 Church Street, City, Province</p>
-            <a
-              href="https://maps.google.com/?q=Church+Name+Here"
-              target="_blank"
-              class="btn-outline detail-btn"
-            >
-              View Map
-            </a>
+            <div class="detail-body">
+              <div class="detail-photo-wrap">
+                <img class="detail-photo" src="/photos/prenup-2.jpg" alt="Ceremony photo" loading="lazy" />
+              </div>
+              <div class="detail-content">
+                <div class="detail-icon">⛪</div>
+                <h3 class="detail-title cursive">Ceremony</h3>
+                <p class="detail-time elegant">2:00 PM</p>
+                <p class="detail-venue">Church Name Here</p>
+                <p class="detail-address">123 Church Street, City, Province</p>
+                <a
+                  href="https://maps.google.com/?q=Church+Name+Here"
+                  target="_blank"
+                  class="btn-outline detail-btn"
+                >
+                  View Map
+                </a>
+              </div>
+            </div>
           </div>
 
           <!-- Reception -->
           <div class="detail-card">
-            <div class="detail-icon">🥂</div>
-            <h3 class="detail-title cursive">Reception</h3>
-            <p class="detail-time elegant">5:00 PM</p>
-            <p class="detail-venue">Reception Venue Name</p>
-            <p class="detail-address">456 Venue Road, City, Province</p>
-            <a
-              href="https://maps.google.com/?q=Reception+Venue+Name"
-              target="_blank"
-              class="btn-outline detail-btn"
-            >
-              View Map
-            </a>
+            <div class="detail-body">
+              <div class="detail-photo-wrap">
+                <img class="detail-photo" src="/photos/prenup-3.jpg" alt="Reception photo" loading="lazy" />
+              </div>
+              <div class="detail-content">
+                <div class="detail-icon">🥂</div>
+                <h3 class="detail-title cursive">Reception</h3>
+                <p class="detail-time elegant">5:00 PM</p>
+                <p class="detail-venue">Reception Venue Name</p>
+                <p class="detail-address">456 Venue Road, City, Province</p>
+                <a
+                  href="https://maps.google.com/?q=Reception+Venue+Name"
+                  target="_blank"
+                  class="btn-outline detail-btn"
+                >
+                  View Map
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -200,15 +214,21 @@
             <p class="role-name elegant" v-for="sponsor in secondarySponsors" :key="sponsor">{{ sponsor }}</p>
           </div>
 
-          <!-- Best Man & Maid of Honor -->
-          <div class="entourage-pair">
+          <div class="bestman-row">
             <div class="entourage-role-card">
               <h4 class="role-title">Best Man</h4>
               <p class="role-name elegant">{{ bestMan }}</p>
             </div>
+          </div>
+
+          <div class="entourage-pair honor-pair">
             <div class="entourage-role-card">
               <h4 class="role-title">Maid of Honor</h4>
               <p class="role-name elegant">{{ maidOfHonor }}</p>
+            </div>
+            <div class="entourage-role-card">
+              <h4 class="role-title">Maiden of Honor</h4>
+              <p class="role-name elegant">{{ maidenOfHonor }}</p>
             </div>
           </div>
 
@@ -307,7 +327,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-hearts">♡ ♡ ♡</div>
-        <p class="footer-names cursive">MJ & Ryan</p>
+        <p class="footer-names cursive">MJ&Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
         <p class="footer-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
         <div class="footer-divider"></div>
@@ -461,6 +481,7 @@ const secondarySponsors = ref([
 
 const bestMan = ref('Arjay Lopez')
 const maidOfHonor = ref('Bernadeth Villa')
+const maidenOfHonor = ref('Sharria Canciano')
 
 const groomsmen = ref([
   'JC Lopez',
@@ -814,23 +835,23 @@ onUnmounted(() => {
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  min-height: 240px;
+  background: #fff;
+  padding: 10px;
 }
 .gallery-item.wide {
-  grid-column: span 2;
-  min-height: 240px;
+  grid-column: span 1;
 }
 .gallery-item.tall {
-  grid-row: span 2;
-  min-height: 500px;
+  grid-row: span 1;
 }
 
 .gallery-item img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   object-position: center;
   transition: transform 0.5s ease;
+  border-radius: 8px;
 }
 .gallery-item:hover img {
   transform: scale(1.05);
@@ -936,7 +957,7 @@ onUnmounted(() => {
 .detail-card {
   background: #fff;
   border-radius: 16px;
-  padding: 40px 28px;
+  padding: 24px;
   text-align: center;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s;
@@ -947,7 +968,29 @@ onUnmounted(() => {
 
 .detail-icon {
   font-size: 2.5rem;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+}
+
+.detail-body {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.detail-photo-wrap {
+  width: 100%;
+}
+
+.detail-photo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.detail-content {
+  text-align: left;
 }
 
 .detail-title {
@@ -1071,6 +1114,15 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 8px 20px;
+}
+
+.bestman-row {
+  max-width: 360px;
+  margin: 0 auto 16px;
+}
+
+.honor-pair {
+  margin-top: 0;
 }
 
 .sponsors-grid {
@@ -1273,8 +1325,10 @@ onUnmounted(() => {
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .gallery-item.wide { grid-column: span 2; }
-  .gallery-item.tall { min-height: 260px; }
+  .gallery-item.wide { grid-column: span 1; }
+  .gallery-item.tall { min-height: unset; }
+  .detail-body { grid-template-columns: 1fr; }
+  .detail-content { text-align: center; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
@@ -1290,7 +1344,7 @@ onUnmounted(() => {
   .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
   .gallery-item,
   .gallery-item.wide,
-  .gallery-item.tall { min-height: 160px; grid-column: span 1; grid-row: span 1; }
+  .gallery-item.tall { grid-column: span 1; grid-row: span 1; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
   .palette-swatch { width: 70px; height: 90px; }

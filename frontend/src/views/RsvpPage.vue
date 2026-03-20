@@ -106,7 +106,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-hearts">♡ ♡ ♡</div>
-        <p class="footer-names cursive">MJ & Ryan</p>
+        <p class="footer-names cursive">MJ&Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
         <p class="footer-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
         <div class="footer-divider"></div>

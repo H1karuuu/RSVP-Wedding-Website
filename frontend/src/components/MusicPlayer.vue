@@ -8,15 +8,55 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const isPlaying = ref(false)
 let audio = null
+
+const startMusic = async () => {
+  if (!audio || isPlaying.value) return
+  try {
+    await audio.play()
+    isPlaying.value = true
+    removeAutoplayFallbackListeners()
+  } catch {
+    isPlaying.value = false
+  }
+}
+
+const autoplayFallbackHandler = () => {
+  startMusic()
+}
+
+const addAutoplayFallbackListeners = () => {
+  document.addEventListener('pointerdown', autoplayFallbackHandler, { once: true })
+  document.addEventListener('touchstart', autoplayFallbackHandler, { once: true })
+  document.addEventListener('keydown', autoplayFallbackHandler, { once: true })
+}
+
+const removeAutoplayFallbackListeners = () => {
+  document.removeEventListener('pointerdown', autoplayFallbackHandler)
+  document.removeEventListener('touchstart', autoplayFallbackHandler)
+  document.removeEventListener('keydown', autoplayFallbackHandler)
+}
 
 onMounted(() => {
   audio = new Audio('/music/bg-music.mp3')
   audio.loop = true
   audio.volume = 0.3
+  startMusic().then(() => {
+    if (!isPlaying.value) {
+      addAutoplayFallbackListeners()
+    }
+  })
+})
+
+onUnmounted(() => {
+  removeAutoplayFallbackListeners()
+  if (audio) {
+    audio.pause()
+    audio = null
+  }
 })
 
 const toggleMusic = () => {

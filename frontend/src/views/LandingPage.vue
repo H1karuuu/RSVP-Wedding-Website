@@ -31,17 +31,17 @@
       <div class="polaroid-photos" :class="{ 'photos-aside': envelopeOpened }">
         <div class="polaroid polaroid-1">
           <div class="polaroid-inner">
-            <img :src="photoSrc(1)" alt="MJ & Ryan" @error="handleImgError" />
+            <img :src="photoSrc(1)" alt="MJ&Ryan" @error="handleImgError" />
           </div>
         </div>
         <div class="polaroid polaroid-2">
           <div class="polaroid-inner">
-            <img :src="photoSrc(2)" alt="MJ & Ryan" @error="handleImgError" />
+            <img :src="photoSrc(2)" alt="MJ&Ryan" @error="handleImgError" />
           </div>
         </div>
         <div class="polaroid polaroid-3">
           <div class="polaroid-inner">
-            <img :src="photoSrc(3)" alt="MJ & Ryan" @error="handleImgError" />
+            <img :src="photoSrc(3)" alt="MJ&Ryan" @error="handleImgError" />
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
             <div class="card-divider">
               <span class="divider-ornament">✦</span>
             </div>
-            <h1 class="card-names cursive">MJ & Ryan</h1>
+            <h1 class="card-names cursive">MJ&Ryan</h1>
             <p class="card-date elegant">June 04, 2026</p>
           </div>
         </div>
@@ -75,7 +75,7 @@
       <transition name="popup-fade">
         <div class="invitation-popup" v-if="showPhotoPopup" @click.stop>
           <div class="popup-photos">
-            <div class="popup-photo" v-for="n in 3" :key="n">
+            <div class="popup-photo" :class="`popup-photo-${index + 1}`" v-for="(n, index) in [1, 2, 3]" :key="n">
               <img :src="photoSrc(n)" :alt="`Memory ${n}`" @error="handleImgError" />
             </div>
           </div>
@@ -96,7 +96,7 @@
     <section class="names-section" :class="{ visible: envelopeOpened }">
       <div class="names-content">
         <div class="names-ornament">— ✦ —</div>
-        <h1 class="couple-names cursive">MJ & Ryan</h1>
+        <h1 class="couple-names cursive">MJ&Ryan</h1>
         <p class="wedding-date elegant">June 04, 2026 &bull; Thursday</p>
         <p class="wedding-tagline elegant">"Two hearts, one love"</p>
         <p class="wedding-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
@@ -276,7 +276,9 @@ const sparkleStyle = (i) => ({
 .polaroid-inner img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: #fff;
   display: block;
 }
 
@@ -352,7 +354,7 @@ const sparkleStyle = (i) => ({
   height: 55%;
   background: linear-gradient(180deg, #a2c4de, #90b8d4);
   border-radius: 0 0 8px 8px;
-  z-index: 3;
+  z-index: 4;
 }
 .envelope-front::before {
   content: '';
@@ -395,50 +397,68 @@ const sparkleStyle = (i) => ({
   height: 85%;
   background: linear-gradient(135deg, #fffff8, #fafcff);
   border-radius: 6px;
-  z-index: 2;
+  z-index: 6;
   transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
   box-shadow: 0 2px 12px rgba(30, 60, 100, 0.08);
   overflow: hidden;
 }
 .card.risen {
-  transform: translateY(-85%);
+  transform: translateY(-100%);
 }
 
 .invitation-popup {
   position: absolute;
-  top: 54%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 12;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 18px;
-  padding: 14px 16px 18px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 18px 40px rgba(30, 60, 100, 0.18);
+  width: min(92vw, 540px);
+  pointer-events: none;
 }
 
 .popup-photos {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 14px;
+  position: relative;
+  height: 200px;
 }
 
 .popup-photo {
-  width: 92px;
-  height: 110px;
+  position: absolute;
+  width: 110px;
+  height: 130px;
+  background: #fff;
+  padding: 6px 6px 20px;
   border-radius: 10px;
   overflow: hidden;
-  border: 3px solid #fff;
   box-shadow: 0 8px 18px rgba(30, 60, 100, 0.14);
+  animation: popOut 0.6s ease both;
+}
+
+.popup-photo-1 {
+  top: 30px;
+  left: 6%;
+  transform: rotate(-8deg);
+}
+
+.popup-photo-2 {
+  top: -8px;
+  left: 39%;
+  transform: rotate(2deg);
+  animation-delay: 0.08s;
+}
+
+.popup-photo-3 {
+  top: 34px;
+  right: 6%;
+  transform: rotate(9deg);
+  animation-delay: 0.16s;
 }
 
 .popup-photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  background: #fff;
 }
 
 .proceed-btn {
@@ -447,6 +467,8 @@ const sparkleStyle = (i) => ({
   gap: 8px;
   font-size: 1rem;
   padding: 12px 26px;
+  margin: 8px auto 0;
+  pointer-events: auto;
 }
 
 .popup-fade-enter-active,
@@ -457,7 +479,17 @@ const sparkleStyle = (i) => ({
 .popup-fade-enter-from,
 .popup-fade-leave-to {
   opacity: 0;
-  transform: translate(-50%, -46%);
+  transform: translate(-50%, -42%);
+}
+
+@keyframes popOut {
+  0% {
+    opacity: 0;
+    transform: translateY(45px) scale(0.75);
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .card-inner {
@@ -602,6 +634,10 @@ const sparkleStyle = (i) => ({
   .polaroid-2 { width: 80px; height: 95px; top: 5%; right: 20%; }
   .polaroid-3 { width: 75px; height: 90px; top: 25%; right: 2%; }
   .couple-names { font-size: 3rem; }
+  .popup-photo { width: 96px; height: 116px; }
+  .popup-photo-1 { left: 2%; }
+  .popup-photo-2 { left: 37%; }
+  .popup-photo-3 { right: 2%; }
 }
 
 @media (max-width: 480px) {
@@ -619,12 +655,15 @@ const sparkleStyle = (i) => ({
   .floral-corner { width: 80px; height: 80px; }
   .invitation-popup {
     width: 92%;
-    top: 56%;
+    top: 52%;
   }
+  .popup-photos { height: 168px; }
   .popup-photo {
-    width: 80px;
-    height: 96px;
+    width: 78px;
+    height: 98px;
+    padding: 4px 4px 14px;
   }
+  .popup-photo-2 { left: 36%; top: 0; }
   .landing-page::before,
   .landing-page::after { display: none; }
 }
