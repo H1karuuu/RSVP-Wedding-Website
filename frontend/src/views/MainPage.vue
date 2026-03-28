@@ -13,7 +13,7 @@
         </div>
         <p class="hero-date elegant">June 04, 2026 &bull; Thursday</p>
         <p class="hero-tagline elegant">"Two souls, one heart"</p>
-        <p class="hero-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
+        <p class="hero-hashtag elegant">#GODsentTheRYghtoneforMJ</p>
       </div>
       <div class="scroll-indicator">
         <div class="scroll-arrow"></div>
@@ -138,14 +138,14 @@
             <div class="detail-body">
               <div class="detail-content">
                 <div class="venue-photo-shell">
-                  <img src="/photos/couple-1.jpg" alt="Church preview" loading="lazy" />
+                  <img src="/photos/Ceremony.png" alt="Ceremony venue" loading="lazy" />
                 </div>
                 <h3 class="detail-title split-title cursive"><span>C</span>eremony</h3>
                 <p class="detail-time elegant">2:00 PM Ceremony Start</p>
-                <p class="detail-venue">Church Name Here</p>
-                <p class="detail-address">123 Church Street, City, Province</p>
+                <p class="detail-venue">Signal Village, Taguig City</p>
+                <p class="detail-address">{{ ceremonyAddress }}</p>
                 <a
-                  href="https://maps.google.com/?q=Church+Name+Here"
+                  :href="ceremonyMapUrl"
                   target="_blank"
                   class="btn-outline detail-btn"
                 >
@@ -160,14 +160,14 @@
             <div class="detail-body">
               <div class="detail-content">
                 <div class="venue-photo-shell">
-                  <img src="/photos/couple-2.jpg" alt="Reception preview" loading="lazy" />
+                  <img src="/photos/Reception1.jpg" alt="Reception venue" loading="lazy" />
                 </div>
                 <h3 class="detail-title split-title cursive"><span>R</span>eception</h3>
                 <p class="detail-time elegant">5:00 PM Reception Program</p>
-                <p class="detail-venue">Reception Venue Name</p>
-                <p class="detail-address">456 Venue Road, City, Province</p>
+                <p class="detail-venue">Ususan, Taguig City</p>
+                <p class="detail-address">{{ receptionAddress }}</p>
                 <a
-                  href="https://maps.google.com/?q=Reception+Venue+Name"
+                  :href="receptionMapUrl"
                   target="_blank"
                   class="btn-outline detail-btn"
                 >
@@ -185,10 +185,12 @@
             <div class="qr-item">
               <QrcodeVue :value="ceremonyMapUrl" :size="150" level="M" />
               <p class="qr-label elegant">Ceremony</p>
+              <p class="qr-address">{{ ceremonyAddress }}</p>
             </div>
             <div class="qr-item">
               <QrcodeVue :value="receptionMapUrl" :size="150" level="M" />
               <p class="qr-label elegant">Reception</p>
+              <p class="qr-address">{{ receptionAddress }}</p>
             </div>
           </div>
         </div>
@@ -319,29 +321,30 @@
       <div class="container">
         <h2 class="section-title">Dress Code</h2>
         <p class="section-subtitle">Guests: Ladies (Maxi Dress/Long Gown), Gentlemen (Barong/Black Slacks)</p>
+        <p class="dress-theme-line elegant">Attire: Formal &amp; Semi-Formal | Theme: Church Wedding</p>
 
-        <div class="dress-visualizer">
-          <div class="look-card" v-for="look in dressVisualizer" :key="look.label">
-            <img :src="look.image" :alt="look.label" loading="lazy" />
-            <p class="look-label elegant">{{ look.label }}</p>
-          </div>
-        </div>
+        <div class="motif-role-grid">
+          <div class="motif-role-card" v-for="role in colorMotifByRole" :key="role.role">
+            <div class="motif-role-head">
+              <span class="motif-figure" aria-hidden="true">{{ role.figure }}</span>
+              <h3 class="motif-role-title elegant">{{ role.role }}</h3>
+            </div>
 
-        <p class="dress-visualizer-note elegant">You can replace these with exact outfit peg photos anytime.</p>
-
-        <div class="dresscode-palette">
-          <div
-            class="palette-swatch"
-            v-for="color in dressCodeColors"
-            :key="color.hex"
-            :style="{ background: color.hex }"
-          >
-            <span class="swatch-name" :style="{ color: color.textColor }">{{ color.name }}</span>
+            <div class="motif-swatches">
+              <div
+                class="motif-swatch"
+                v-for="color in role.colors"
+                :key="`${role.role}-${color.name}`"
+                :style="{ background: color.hex }"
+              >
+                <span class="swatch-name" :style="{ color: color.textColor }">{{ color.name }}</span>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="dresscode-notes">
-          <p class="elegant dresscode-note">Please wear attire in the shades shown above.</p>
+          <p class="elegant dresscode-note">Color motif is grouped by role for easier coordination.</p>
           <p class="elegant dresscode-note">For entourage attire pegs, the bride and groom will message separately.</p>
         </div>
       </div>
@@ -351,7 +354,7 @@
     <section class="rsvp-cta-section fade-in-section" ref="rsvpCtaSection">
       <div class="container rsvp-cta-content">
         <h2 class="section-title" style="color: #fff;">RSVP</h2>
-        <p class="rsvp-cta-text elegant">Kindly let us know if you can make it to our special day</p>
+        <p class="rsvp-cta-text elegant">Kindly let us know if you can make it to our special day on or before May 1, 2026.</p>
         <router-link to="/rsvp" class="btn-primary rsvp-cta-btn">
           Respond Now
         </router-link>
@@ -364,7 +367,7 @@
         <div class="footer-hearts">♡ ♡ ♡</div>
         <p class="footer-names cursive">MJ&Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
-        <p class="footer-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
+        <p class="footer-hashtag elegant">#GODsentTheRYghtoneforMJ</p>
         <div class="footer-divider"></div>
         <p class="footer-made">Made with ♡ by <strong>JC Lopez</strong></p>
         <p class="footer-copy">&copy; 2026 All rights reserved</p>
@@ -485,8 +488,11 @@ const prevPhoto = () => {
 }
 
 // ===== MAP URLS =====
-const ceremonyMapUrl = 'https://maps.google.com/?q=Church+Name+Here'
-const receptionMapUrl = 'https://maps.google.com/?q=Reception+Venue+Name'
+const ceremonyAddress = 'Sampaloc Street, Zone 1, Signal Village, Taguig City, 1631 Metro Manila, Philippines'
+const receptionAddress = '37 Bagong Calzada Street, Ususan, Taguig City, Metro Manila, 1632'
+
+const ceremonyMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ceremonyAddress)}`
+const receptionMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(receptionAddress)}`
 
 // ===== WEDDING ENTOURAGE =====
 const groomFamily = ref([
@@ -583,19 +589,45 @@ const symbolBearers = ref([
 const singer = ref('Joseph Cabigon')
 
 // ===== DRESS CODE =====
-const dressCodeColors = ref([
-  { name: 'Dusty Blue', hex: '#7096c4', textColor: '#fff' },
-  { name: 'Powder Blue', hex: '#b0cce1', textColor: '#2a4a6b' },
-  { name: 'Navy', hex: '#2c3e6b', textColor: '#fff' },
-  { name: 'Silver', hex: '#c0c8d0', textColor: '#2a3a4a' },
-  { name: 'Ivory', hex: '#f5f0e8', textColor: '#4a5568' },
-  { name: 'Champagne', hex: '#e8dcc8', textColor: '#4a4035' }
-])
-
-const dressVisualizer = ref([
-  { label: 'Ladies: Maxi Dress / Long Gown', image: '/photos/couple-1.jpg' },
-  { label: 'Gentlemen: Barong / Black Slacks', image: '/photos/couple-2.jpg' },
-  { label: 'Formal Garden Style Inspiration', image: '/photos/couple-3.jpg' }
+const colorMotifByRole = ref([
+  {
+    role: 'Parents',
+    figure: '◍',
+    colors: [
+      { name: 'Navy Blue', hex: '#1f2f67', textColor: '#ffffff' }
+    ]
+  },
+  {
+    role: 'Principal Sponsors',
+    figure: '◍',
+    colors: [
+      { name: 'Gray', hex: '#b8c0ca', textColor: '#243446' },
+      { name: 'Silver', hex: '#d3d9de', textColor: '#3a4552' }
+    ]
+  },
+  {
+    role: 'Maid of Honor & Best Man',
+    figure: '◍',
+    colors: [
+      { name: 'Blue', hex: '#5b7fa8', textColor: '#ffffff' }
+    ]
+  },
+  {
+    role: 'Bridesmaids & Groomsmen',
+    figure: '◍',
+    colors: [
+      { name: 'Powder Blue', hex: '#b7d2e6', textColor: '#2d4f6c' },
+      { name: 'Black', hex: '#161616', textColor: '#f4f4f4' }
+    ]
+  },
+  {
+    role: 'Flower Girls & Bearers',
+    figure: '◍',
+    colors: [
+      { name: 'Dusty Blue', hex: '#8ea2bf', textColor: '#ffffff' },
+      { name: 'Navy Blue', hex: '#1f2f67', textColor: '#ffffff' }
+    ]
+  }
 ])
 
 // ===== INTERSECTION OBSERVER FOR FADE-IN =====
@@ -1133,11 +1165,11 @@ onUnmounted(() => {
 }
 
 .ceremony-card::before {
-  background: url('/photos/prenup-2.jpg') center/cover no-repeat;
+  background: url('/photos/Ceremony.png') center/cover no-repeat;
 }
 
 .reception-card::before {
-  background: url('/photos/prenup-3.jpg') center/cover no-repeat;
+  background: url('/photos/Reception2.jpg') center/cover no-repeat;
 }
 
 .detail-body {
@@ -1231,11 +1263,19 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  max-width: 320px;
 }
 .qr-label {
   font-size: 1rem;
   color: var(--text-medium);
   letter-spacing: 1px;
+}
+
+.qr-address {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  line-height: 1.5;
+  max-width: 290px;
 }
 
 /* ===== RSVP CTA ===== */
@@ -1398,64 +1438,62 @@ onUnmounted(() => {
   text-align: center;
 }
 
-.dress-visualizer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-bottom: 18px;
-}
-
-.look-card {
-  background: #fff;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(27, 58, 92, 0.1);
-}
-
-.look-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-}
-
-.look-label {
-  font-size: 1.02rem;
+.dress-theme-line {
+  font-size: 1.08rem;
   color: var(--text-medium);
-  padding: 12px;
+  margin-bottom: 20px;
   font-weight: 700;
 }
 
-.dress-visualizer-note {
-  font-size: 1rem;
-  color: var(--text-light);
-  margin-bottom: 18px;
+.motif-role-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
-.dresscode-palette {
+.motif-role-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(27, 58, 92, 0.08);
+}
+
+.motif-role-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.motif-figure {
+  font-size: 1.4rem;
+  color: var(--pastel-gold);
+}
+
+.motif-role-title {
+  font-size: 1.15rem;
+  color: var(--text-accent);
+  font-weight: 700;
+}
+
+.motif-swatches {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 32px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-.palette-swatch {
-  width: 100px;
-  height: 120px;
-  border-radius: 16px;
+.motif-swatch {
+  width: 120px;
+  height: 68px;
+  border-radius: 12px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 12px;
-  box-shadow: 0 4px 16px rgba(30, 60, 100, 0.1);
-  transition: transform 0.3s ease;
-  cursor: default;
-}
-.palette-swatch:hover {
-  transform: translateY(-4px);
+  padding-bottom: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45), 0 4px 12px rgba(30, 60, 100, 0.12);
 }
 
 .swatch-name {
@@ -1552,8 +1590,8 @@ onUnmounted(() => {
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
   .sponsors-grid { grid-template-columns: 1fr; gap: 8px 0; }
-  .dress-visualizer { grid-template-columns: 1fr; }
-  .palette-swatch { width: 80px; height: 100px; }
+  .motif-role-grid { grid-template-columns: 1fr; }
+  .motif-swatch { width: 108px; height: 62px; }
 }
 
 @media (max-width: 480px) {
@@ -1564,7 +1602,7 @@ onUnmounted(() => {
   .gallery-grid { gap: 10px; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
-  .palette-swatch { width: 70px; height: 90px; }
+  .motif-swatch { width: 92px; height: 58px; }
   .main-page::before,
   .main-page::after { display: none; }
 }

@@ -114,7 +114,7 @@
         <div class="footer-hearts">♡ ♡ ♡</div>
         <p class="footer-names cursive">MJ&Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
-        <p class="footer-hashtag elegant">#GodsentTheRYghtOneForMJ</p>
+        <p class="footer-hashtag elegant">#GODsentTheRYghtoneforMJ</p>
         <div class="footer-divider"></div>
         <p class="footer-made">Made with ♡ by <strong>JC Lopez</strong></p>
         <p class="footer-copy">&copy; 2026 All rights reserved</p>
