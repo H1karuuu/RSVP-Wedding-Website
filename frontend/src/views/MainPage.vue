@@ -320,31 +320,56 @@
     <section id="dress-code" class="dresscode-section fade-in-section" ref="dresscodeSection">
       <div class="container">
         <h2 class="section-title">Dress Code</h2>
-        <p class="section-subtitle">Guests: Ladies (Maxi Dress/Long Gown), Gentlemen (Barong/Black Slacks)</p>
-        <p class="dress-theme-line elegant">Attire: Formal &amp; Semi-Formal | Theme: Church Wedding</p>
+        <p class="section-subtitle">Formal &amp; Semi-Formal Attire for a Church Wedding</p>
 
-        <div class="motif-role-grid">
-          <div class="motif-role-card" v-for="role in colorMotifByRole" :key="role.role">
-            <div class="motif-role-head">
-              <span class="motif-figure" aria-hidden="true">{{ role.figure }}</span>
-              <h3 class="motif-role-title elegant">{{ role.role }}</h3>
+        <div class="attire-guide-card">
+          <p class="attire-guide-kicker">Attire Guide</p>
+          <p class="attire-guide-text">We would love to see you in formal attire that suits our color motif.</p>
+
+          <div class="motif-circle-row">
+            <span
+              class="motif-circle"
+              v-for="color in motifShowcaseColors"
+              :key="color.name"
+              :style="{ background: color.hex }"
+              :title="color.name"
+            ></span>
+          </div>
+
+          <div class="dress-role-layout">
+            <div class="dress-role-block">
+              <h3 class="motif-role-title elegant">Guest</h3>
+              <p class="dress-role-line"><strong>Gentlemen:</strong> Barong or Black Slacks with necktie/bow tie in motif shades</p>
+              <p class="dress-role-line"><strong>Ladies:</strong> Formal Gown / Maxi Dress in motif shades</p>
             </div>
 
-            <div class="motif-swatches">
-              <div
-                class="motif-swatch"
-                v-for="color in role.colors"
-                :key="`${role.role}-${color.name}`"
-                :style="{ background: color.hex }"
-              >
-                <span class="swatch-name" :style="{ color: color.textColor }">{{ color.name }}</span>
+            <div class="dress-role-block">
+              <h3 class="motif-role-title elegant">By Role Color Motif</h3>
+              <div class="motif-role-grid">
+                <div class="motif-role-card" v-for="role in colorMotifByRole" :key="role.role">
+                  <div class="motif-role-head">
+                    <span class="motif-figure" aria-hidden="true">{{ role.figure }}</span>
+                    <h4 class="motif-role-name">{{ role.role }}</h4>
+                  </div>
+
+                  <div class="motif-swatches">
+                    <div
+                      class="motif-swatch"
+                      v-for="color in role.colors"
+                      :key="`${role.role}-${color.name}`"
+                      :style="{ background: color.hex }"
+                    >
+                      <span class="swatch-name" :style="{ color: color.textColor }">{{ color.name }}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="dresscode-notes">
-          <p class="elegant dresscode-note">Color motif is grouped by role for easier coordination.</p>
+          <p class="elegant dresscode-note">Please follow the assigned role motif for a coordinated wedding look.</p>
           <p class="elegant dresscode-note">For entourage attire pegs, the bride and groom will message separately.</p>
         </div>
       </div>
@@ -488,8 +513,8 @@ const prevPhoto = () => {
 }
 
 // ===== MAP URLS =====
-const ceremonyAddress = 'Sto. Nino de Taguig Parish Church (14.514415496368652, 121.05402886441746)'
-const receptionAddress = 'Alta Guia (14.535985252005055, 121.06984540859224)'
+const ceremonyAddress = 'Sto. Nino de Taguig Parish Church'
+const receptionAddress = 'Alta Guia'
 
 const ceremonyMapUrl = 'https://www.google.com/maps/place/Sto.+Ni%C3%B1o+de+Taguig+Parish+Church/@14.5142597,121.0540235,17z/data=!4m14!1m7!3m6!1s0x3397cf35a861e809:0x815fd8cee6629c1!2sSto.+Ni%C3%B1o+de+Taguig+Parish+Church!8m2!3d14.5142597!4d121.0540235!16s%2Fg%2F1vzf_sm2!3m5!1s0x3397cf35a861e809:0x815fd8cee6629c1!8m2!3d14.5142597!4d121.0540235!16s%2Fg%2F1vzf_sm2!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D'
 const receptionMapUrl = 'https://www.google.com/maps/place/Alta+Guia/@14.5358087,121.0697864,17z/data=!3m1!4b1!4m6!3m5!1s0x3397c8a409ed2663:0x7d875bff9f39c74c!8m2!3d14.5358087!4d121.0697864!16s%2Fg%2F1hc1snyhm!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D'
@@ -589,6 +614,15 @@ const symbolBearers = ref([
 const singer = ref('Joseph Cabigon')
 
 // ===== DRESS CODE =====
+const motifShowcaseColors = ref([
+  { name: 'Dark Navy', hex: '#07274a' },
+  { name: 'Navy Blue', hex: '#1f2f67' },
+  { name: 'Blue', hex: '#5b7fa8' },
+  { name: 'Dusty Blue', hex: '#8ea2bf' },
+  { name: 'Powder Blue', hex: '#b7d2e6' },
+  { name: 'Silver', hex: '#d3d9de' }
+])
+
 const colorMotifByRole = ref([
   {
     role: 'Parents',
@@ -1438,25 +1472,77 @@ onUnmounted(() => {
   text-align: center;
 }
 
-.dress-theme-line {
-  font-size: 1.08rem;
+.attire-guide-card {
+  background: linear-gradient(160deg, #ffffff 0%, #f5f8fc 52%, #eef3f9 100%);
+  border-radius: 22px;
+  padding: 26px 20px;
+  box-shadow: 0 10px 30px rgba(27, 58, 92, 0.08);
+  margin-bottom: 22px;
+}
+
+.attire-guide-kicker {
+  font-size: 2.3rem;
+  font-family: var(--font-cursive);
+  color: #1f4675;
+  margin-bottom: 8px;
+}
+
+.attire-guide-text {
+  font-size: 1.05rem;
+  letter-spacing: 0.8px;
   color: var(--text-medium);
-  margin-bottom: 20px;
-  font-weight: 700;
+  text-transform: uppercase;
+  font-weight: 600;
+  max-width: 720px;
+  margin: 0 auto 16px;
+}
+
+.motif-circle-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.motif-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5), 0 4px 10px rgba(17, 39, 69, 0.15);
+}
+
+.dress-role-layout {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 14px;
+}
+
+.dress-role-block {
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 16px;
+  border: 1px solid rgba(146, 170, 194, 0.25);
+  padding: 14px;
+}
+
+.dress-role-line {
+  font-size: 0.98rem;
+  color: var(--text-medium);
+  line-height: 1.65;
+  margin-top: 8px;
 }
 
 .motif-role-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(260px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 10px;
 }
 
 .motif-role-card {
   background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 8px 24px rgba(27, 58, 92, 0.08);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 5px 14px rgba(27, 58, 92, 0.08);
 }
 
 .motif-role-head {
@@ -1473,7 +1559,13 @@ onUnmounted(() => {
 }
 
 .motif-role-title {
-  font-size: 1.15rem;
+  font-size: 1.42rem;
+  color: var(--text-accent);
+  font-weight: 700;
+}
+
+.motif-role-name {
+  font-size: 1rem;
   color: var(--text-accent);
   font-weight: 700;
 }
@@ -1486,8 +1578,8 @@ onUnmounted(() => {
 }
 
 .motif-swatch {
-  width: 120px;
-  height: 68px;
+  width: 98px;
+  height: 62px;
   border-radius: 12px;
   display: flex;
   align-items: flex-end;
@@ -1590,7 +1682,9 @@ onUnmounted(() => {
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
   .sponsors-grid { grid-template-columns: 1fr; gap: 8px 0; }
+  .dress-role-layout { grid-template-columns: 1fr; }
   .motif-role-grid { grid-template-columns: 1fr; }
+  .motif-circle { width: 44px; height: 44px; }
   .motif-swatch { width: 108px; height: 62px; }
 }
 
@@ -1602,6 +1696,9 @@ onUnmounted(() => {
   .gallery-grid { gap: 10px; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
+  .attire-guide-kicker { font-size: 2rem; }
+  .attire-guide-text { font-size: 0.92rem; }
+  .motif-circle { width: 40px; height: 40px; }
   .motif-swatch { width: 92px; height: 58px; }
   .main-page::before,
   .main-page::after { display: none; }
