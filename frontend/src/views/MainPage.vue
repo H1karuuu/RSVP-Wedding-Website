@@ -325,6 +325,7 @@
         <div class="attire-guide-card">
           <p class="attire-guide-kicker">Attire Guide</p>
           <p class="attire-guide-text">We would love to see you in formal attire that suits our color motif.</p>
+          <div class="attire-guide-divider" aria-hidden="true"></div>
 
           <div class="motif-circle-row">
             <span
@@ -339,8 +340,48 @@
           <div class="dress-role-layout">
             <div class="dress-role-block">
               <h3 class="motif-role-title elegant">Guest</h3>
-              <p class="dress-role-line"><strong>Gentlemen:</strong> Barong or Black Slacks with necktie/bow tie in motif shades</p>
-              <p class="dress-role-line"><strong>Ladies:</strong> Formal Gown / Maxi Dress in motif shades</p>
+
+              <div class="guest-figure-row">
+                <div class="guest-figure-card">
+                  <div class="figure-silhouette suit-figure" aria-hidden="true">
+                    <span class="fig-head"></span>
+                    <span class="fig-torso"></span>
+                    <span class="fig-legs"></span>
+                  </div>
+                  <p class="guest-figure-title">Gentlemen</p>
+                  <p class="dress-role-line">Barong or Black Slacks with necktie/bow tie in motif shades</p>
+                  <div class="guest-chip-row">
+                    <span
+                      class="guest-chip"
+                      v-for="color in menGuestPalette"
+                      :key="color.name"
+                      :style="{ background: color.hex, color: color.textColor }"
+                    >
+                      {{ color.name }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="guest-figure-card">
+                  <div class="figure-silhouette gown-figure" aria-hidden="true">
+                    <span class="fig-head"></span>
+                    <span class="fig-bodice"></span>
+                    <span class="fig-skirt"></span>
+                  </div>
+                  <p class="guest-figure-title">Ladies</p>
+                  <p class="dress-role-line">Formal Gown / Maxi Dress in motif shades</p>
+                  <div class="guest-chip-row">
+                    <span
+                      class="guest-chip"
+                      v-for="color in ladiesGuestPalette"
+                      :key="color.name"
+                      :style="{ background: color.hex, color: color.textColor }"
+                    >
+                      {{ color.name }}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="dress-role-block">
@@ -620,7 +661,20 @@ const motifShowcaseColors = ref([
   { name: 'Blue', hex: '#5b7fa8' },
   { name: 'Dusty Blue', hex: '#8ea2bf' },
   { name: 'Powder Blue', hex: '#b7d2e6' },
-  { name: 'Silver', hex: '#d3d9de' }
+  { name: 'Silver', hex: '#d3d9de' },
+  { name: 'Warm Beige', hex: '#d8c8b2' }
+])
+
+const menGuestPalette = ref([
+  { name: 'Navy', hex: '#1f2f67', textColor: '#f6f8fb' },
+  { name: 'Beige', hex: '#d6c4ab', textColor: '#3d3328' },
+  { name: 'Sand', hex: '#c7b398', textColor: '#3f3429' }
+])
+
+const ladiesGuestPalette = ref([
+  { name: 'Dusty Blue', hex: '#8ea2bf', textColor: '#f2f6fb' },
+  { name: 'Powder Blue', hex: '#b7d2e6', textColor: '#274965' },
+  { name: 'Silver', hex: '#d3d9de', textColor: '#3a4552' }
 ])
 
 const colorMotifByRole = ref([
@@ -1473,9 +1527,13 @@ onUnmounted(() => {
 }
 
 .attire-guide-card {
-  background: linear-gradient(160deg, #ffffff 0%, #f5f8fc 52%, #eef3f9 100%);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(193, 214, 233, 0.3), transparent 40%),
+    radial-gradient(circle at 94% 100%, rgba(220, 205, 182, 0.28), transparent 38%),
+    linear-gradient(160deg, #ffffff 0%, #f5f8fc 52%, #eef3f9 100%);
   border-radius: 22px;
-  padding: 26px 20px;
+  border: 1px solid rgba(135, 162, 189, 0.26);
+  padding: 30px 24px;
   box-shadow: 0 10px 30px rgba(27, 58, 92, 0.08);
   margin-bottom: 22px;
 }
@@ -1489,12 +1547,19 @@ onUnmounted(() => {
 
 .attire-guide-text {
   font-size: 1.05rem;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
   color: var(--text-medium);
   text-transform: uppercase;
   font-weight: 600;
   max-width: 720px;
-  margin: 0 auto 16px;
+  margin: 0 auto 14px;
+}
+
+.attire-guide-divider {
+  width: min(240px, 72%);
+  height: 1px;
+  margin: 0 auto 18px;
+  background: linear-gradient(90deg, transparent, rgba(74, 111, 149, 0.5), transparent);
 }
 
 .motif-circle-row {
@@ -1515,21 +1580,122 @@ onUnmounted(() => {
 .dress-role-layout {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 14px;
+  gap: 18px;
 }
 
 .dress-role-block {
-  background: rgba(255, 255, 255, 0.72);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 18px;
   border: 1px solid rgba(146, 170, 194, 0.25);
-  padding: 14px;
+  padding: 16px;
 }
 
 .dress-role-line {
   font-size: 0.98rem;
   color: var(--text-medium);
-  line-height: 1.65;
-  margin-top: 8px;
+  line-height: 1.55;
+  margin-top: 6px;
+}
+
+.guest-figure-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.guest-figure-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 4px 10px rgba(27, 58, 92, 0.08);
+}
+
+.figure-silhouette {
+  position: relative;
+  width: 68px;
+  height: 116px;
+  margin: 0 auto 10px;
+}
+
+.fig-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #90a8c2;
+}
+
+.suit-figure .fig-torso {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 38px;
+  height: 52px;
+  transform: translateX(-50%);
+  border-radius: 10px 10px 8px 8px;
+  background: linear-gradient(160deg, #1f2f67, #2f4c7a);
+}
+
+.suit-figure .fig-legs {
+  position: absolute;
+  top: 74px;
+  left: 50%;
+  width: 30px;
+  height: 38px;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background: linear-gradient(180deg, #d6c4ab 0%, #bda486 100%);
+}
+
+.gown-figure .fig-bodice {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  width: 26px;
+  height: 28px;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  background: #7897bc;
+}
+
+.gown-figure .fig-skirt {
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  width: 56px;
+  height: 62px;
+  transform: translateX(-50%);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #8ea2bf 0%, #6e89ab 100%);
+}
+
+.guest-figure-title {
+  font-family: var(--font-elegant);
+  font-size: 1.18rem;
+  color: var(--text-accent);
+  font-weight: 700;
+}
+
+.guest-chip-row {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+}
+
+.guest-chip {
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.3px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .motif-role-grid {
@@ -1683,6 +1849,7 @@ onUnmounted(() => {
   .entourage-pair { grid-template-columns: 1fr; }
   .sponsors-grid { grid-template-columns: 1fr; gap: 8px 0; }
   .dress-role-layout { grid-template-columns: 1fr; }
+  .guest-figure-row { grid-template-columns: 1fr; }
   .motif-role-grid { grid-template-columns: 1fr; }
   .motif-circle { width: 44px; height: 44px; }
   .motif-swatch { width: 108px; height: 62px; }
