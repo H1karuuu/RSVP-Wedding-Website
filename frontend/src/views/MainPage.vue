@@ -142,7 +142,7 @@
                 </div>
                 <h3 class="detail-title split-title cursive"><span>C</span>eremony</h3>
                 <p class="detail-time elegant">2:00 PM Ceremony Start</p>
-                <p class="detail-venue">Signal Village, Taguig City</p>
+                <p class="detail-venue">Sto. Nino de Taguig Parish Church</p>
                 <p class="detail-address">{{ ceremonyAddress }}</p>
                 <a
                   :href="ceremonyMapUrl"
@@ -164,7 +164,7 @@
                 </div>
                 <h3 class="detail-title split-title cursive"><span>R</span>eception</h3>
                 <p class="detail-time elegant">5:00 PM Reception Program</p>
-                <p class="detail-venue">Ususan, Taguig City</p>
+                <p class="detail-venue">Alta Guia</p>
                 <p class="detail-address">{{ receptionAddress }}</p>
                 <a
                   :href="receptionMapUrl"
@@ -488,11 +488,11 @@ const prevPhoto = () => {
 }
 
 // ===== MAP URLS =====
-const ceremonyAddress = 'Sampaloc Street, Zone 1, Signal Village, Taguig City, 1631 Metro Manila, Philippines'
-const receptionAddress = '37 Bagong Calzada Street, Ususan, Taguig City, Metro Manila, 1632'
+const ceremonyAddress = 'Sto. Nino de Taguig Parish Church (14.514415496368652, 121.05402886441746)'
+const receptionAddress = 'Alta Guia (14.535985252005055, 121.06984540859224)'
 
-const ceremonyMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ceremonyAddress)}`
-const receptionMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(receptionAddress)}`
+const ceremonyMapUrl = 'https://www.google.com/maps/place/Sto.+Ni%C3%B1o+de+Taguig+Parish+Church/@14.5142597,121.0540235,17z/data=!4m14!1m7!3m6!1s0x3397cf35a861e809:0x815fd8cee6629c1!2sSto.+Ni%C3%B1o+de+Taguig+Parish+Church!8m2!3d14.5142597!4d121.0540235!16s%2Fg%2F1vzf_sm2!3m5!1s0x3397cf35a861e809:0x815fd8cee6629c1!8m2!3d14.5142597!4d121.0540235!16s%2Fg%2F1vzf_sm2!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D'
+const receptionMapUrl = 'https://www.google.com/maps/place/Alta+Guia/@14.5358087,121.0697864,17z/data=!3m1!4b1!4m6!3m5!1s0x3397c8a409ed2663:0x7d875bff9f39c74c!8m2!3d14.5358087!4d121.0697864!16s%2Fg%2F1hc1snyhm!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D'
 
 // ===== WEDDING ENTOURAGE =====
 const groomFamily = ref([
