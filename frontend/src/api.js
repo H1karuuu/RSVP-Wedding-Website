@@ -10,10 +10,20 @@ export async function submitRsvp(formData) {
     body: JSON.stringify(formData),
   })
 
-  const data = await response.json()
+  let data = null
+  try {
+    data = await response.json()
+  } catch {
+    // Non-JSON body (usually wrong API URL or rewrite fallback)
+    data = null
+  }
 
   if (!response.ok) {
-    throw new Error(data.error || 'Failed to submit RSVP')
+    throw new Error(data?.error || `Failed to submit RSVP (HTTP ${response.status})`)
+  }
+
+  if (!data) {
+    throw new Error('Unexpected response from API. Check VITE_API_URL configuration.')
   }
 
   return data
@@ -21,10 +31,19 @@ export async function submitRsvp(formData) {
 
 export async function getRsvpStats() {
   const response = await fetch(`${API_BASE}/api/rsvp/stats`)
-  const data = await response.json()
+  let data = null
+  try {
+    data = await response.json()
+  } catch {
+    data = null
+  }
 
   if (!response.ok) {
-    throw new Error(data.error || 'Failed to fetch stats')
+    throw new Error(data?.error || `Failed to fetch stats (HTTP ${response.status})`)
+  }
+
+  if (!data) {
+    throw new Error('Unexpected response from API. Check VITE_API_URL configuration.')
   }
 
   return data

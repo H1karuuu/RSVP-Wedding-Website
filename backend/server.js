@@ -7,9 +7,11 @@ import { createClient } from '@supabase/supabase-js'
 const PORT = process.env.PORT || 3001
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY
+const normalizeOrigin = (value = '') => value.trim().replace(/\/+$/, '').toLowerCase()
+
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
-  .map((o) => o.trim())
+  .map((o) => normalizeOrigin(o))
   .filter(Boolean)
 
 // ===== SUPABASE CLIENT =====
@@ -22,8 +24,10 @@ const app = express()
 app.use(
   cors({
     origin: (origin, callback) => {
+      const requestOrigin = normalizeOrigin(origin || '')
+
       // Allow requests with no origin (curl, Postman, etc.) in dev
-      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      if (!origin || ALLOWED_ORIGINS.includes(requestOrigin)) {
         callback(null, true)
       } else {
         callback(new Error('Not allowed by CORS'))
@@ -41,6 +45,16 @@ app.use(express.json())
 // Health check
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
+// Root info endpoint (helpful on Render URL)
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'Wedding RSVP API',
+    status: 'ok',
+    health: '/api/health',
+    submitRsvp: 'POST /api/rsvp',
+  })
 })
 
 // Submit RSVP

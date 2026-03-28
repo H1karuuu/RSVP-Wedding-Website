@@ -164,7 +164,7 @@ const handleSubmit = async () => {
     submitted.value = true
   } catch (err) {
     console.error('RSVP Error:', err)
-    errorMsg.value = 'Something went wrong. Please try again or contact the couple directly.'
+    errorMsg.value = err?.message || 'Something went wrong. Please try again or contact the couple directly.'
   } finally {
     loading.value = false
   }
