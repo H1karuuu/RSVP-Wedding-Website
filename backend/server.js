@@ -14,6 +14,8 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
   .map((o) => normalizeOrigin(o))
   .filter(Boolean)
 
+const hasConfiguredOrigins = ALLOWED_ORIGINS.length > 0
+
 // ===== SUPABASE CLIENT =====
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
@@ -27,7 +29,8 @@ app.use(
       const requestOrigin = normalizeOrigin(origin || '')
 
       // Allow requests with no origin (curl, Postman, etc.) in dev
-      if (!origin || ALLOWED_ORIGINS.includes(requestOrigin)) {
+      // If ALLOWED_ORIGINS is not configured, allow all browser origins.
+      if (!origin || !hasConfiguredOrigins || ALLOWED_ORIGINS.includes(requestOrigin)) {
         callback(null, true)
       } else {
         callback(new Error('Not allowed by CORS'))

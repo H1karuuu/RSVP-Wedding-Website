@@ -76,6 +76,12 @@
               </div>
             </div>
           </div>
+
+          <div class="story-photo-strip">
+            <div class="story-photo-card" v-for="(photo, index) in storyPhotos" :key="photo.src + index">
+              <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -498,37 +504,62 @@ const calendarDays = computed(() => {
 const storyTimeline = ref([
   {
     title: 'How We Met',
-    date: 'Month, Year',
-    description: 'Write your story here — how did you two first meet? Replace this text with your own love story.'
+    date: 'Senior High School',
+    description: "They call us 'college sweethearts,' but our story actually began in the hallways of Senior High. It started with a simple 'Hi' and a shy 'Hello' - just two teenagers with no idea that those two words would be the start of a lifetime. From navigating high school exams to surviving college deadlines, we've grown up side-by-side. Who would've thought that a casual greeting would turn into our Forever."
   },
   {
     title: 'First Date',
-    date: 'Month, Year',
-    description: 'Describe your first date together. Where did you go? What made it special?'
+    date: 'Senior High School',
+    description: "They say the best things in life are free, and our first date was proof. Back in Senior High, Ryan invited MJ to Mall of Asia with the magic words: 'It's free.' MJ didn't hesitate for a second. We grew up together through our college years, turning that simple beginning into a beautiful journey. We started with a 'Hi,' survived the stress of school, and found our Forever in each other."
   },
   {
     title: 'The Proposal',
-    date: 'Month, Year',
-    description: 'Tell the story of the proposal. How did it happen? Was it a surprise?'
+    date: 'Christmas Eve',
+    description: "An unexpected Christmas Eve miracle. Our proposal was intimate, emotional, and exactly what MJ always imagined. There were tears, plenty of laughter, and a very big 'Yes!' to a lifetime of happiness."
   },
   {
     title: 'The Wedding',
     date: 'June 04, 2026',
-    description: 'And the journey continues… We can\'t wait to celebrate our love with you!'
+    description: "Planning our wedding was a whirlwind of excitement and mixed emotions, but through every stress and decision, our faith in God remained our anchor. We moved forward with the unshakable belief that God will provide, and He truly did. From the hallways of Senior High to the altar, we never doubted His timing. Our wedding isn't just a celebration of our love, but a testimony to His faithfulness."
   }
+])
+
+const storyPhotos = ref([
+  { src: '/photos/prenup-11.jpeg', alt: 'Story Photo 11' },
+  { src: '/photos/prenup-12.jpeg', alt: 'Story Photo 12' },
+  { src: '/photos/prenup-13.jpeg', alt: 'Story Photo 13' },
+  { src: '/photos/prenup-14.jpeg', alt: 'Story Photo 14' },
+  { src: '/photos/prenup-15.jpeg', alt: 'Story Photo 15' },
+  { src: '/photos/prenup-16.jpeg', alt: 'Story Photo 16' }
 ])
 
 // ===== GALLERY =====
 const galleryPhotos = ref([
   { src: '/photos/prenup-1.jpg', alt: 'Prenup Photo 1', size: '', layout: 'tile-a' },
-  { src: '/photos/prenup-2.jpg', alt: 'Prenup Photo 2', size: '', layout: 'tile-b' },
+  { src: '/photos/IMG_6349.jpeg', alt: 'Gallery Photo 1', size: '', layout: 'tile-b' },
   { src: '/photos/prenup-3.jpg', alt: 'Prenup Photo 3', size: '', layout: 'tile-c' },
-  { src: '/photos/prenup-4.jpg', alt: 'Prenup Photo 4', size: '', layout: 'tile-d' },
+  { src: '/photos/IMG_6350.jpeg', alt: 'Gallery Photo 2', size: '', layout: 'tile-d' },
   { src: '/photos/prenup-5.jpg', alt: 'Prenup Photo 5', size: '', layout: 'tile-e' },
   { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6', size: '', layout: 'tile-center' },
-  { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8', size: '', layout: 'tile-f' },
-  { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9', size: '', layout: 'tile-g' },
-  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10', size: '', layout: 'tile-h' },
+  { src: '/photos/IMG_6351.jpeg', alt: 'Gallery Photo 3', size: '', layout: 'tile-f' },
+  { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8', size: '', layout: 'tile-g' },
+  { src: '/photos/IMG_6352.jpeg', alt: 'Gallery Photo 4', size: '', layout: 'tile-h' },
+  { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9', size: '', layout: 'tile-i' },
+  { src: '/photos/IMG_6353.jpeg', alt: 'Gallery Photo 5', size: '', layout: 'tile-j' },
+  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10', size: '', layout: 'tile-k' },
+  { src: '/photos/IMG_6354.jpeg', alt: 'Gallery Photo 6', size: '', layout: 'tile-l' },
+  { src: '/photos/prenup-11.jpeg', alt: 'Prenup Photo 11', size: '', layout: '' },
+  { src: '/photos/prenup-12.jpeg', alt: 'Prenup Photo 12', size: '', layout: '' },
+  { src: '/photos/prenup-13.jpeg', alt: 'Prenup Photo 13', size: '', layout: '' },
+  { src: '/photos/prenup-14.jpeg', alt: 'Prenup Photo 14', size: '', layout: '' },
+  { src: '/photos/prenup-15.jpeg', alt: 'Prenup Photo 15', size: '', layout: '' },
+  { src: '/photos/prenup-16.jpeg', alt: 'Prenup Photo 16', size: '', layout: '' },
+  { src: '/photos/prenup-17.jpeg', alt: 'Prenup Photo 17', size: '', layout: '' },
+  { src: '/photos/prenup-18.jpeg', alt: 'Prenup Photo 18', size: '', layout: '' },
+  { src: '/photos/prenup-19.jpeg', alt: 'Prenup Photo 19', size: '', layout: '' },
+  { src: '/photos/prenup-20.jpeg', alt: 'Prenup Photo 20', size: '', layout: '' },
+  { src: '/photos/prenup-21.jpeg', alt: 'Prenup Photo 21', size: '', layout: '' },
+  { src: '/photos/prenup-22.jpeg', alt: 'Prenup Photo 22', size: '', layout: '' }
 ])
 
 const videoUrl = ref('') // e.g. 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
@@ -1076,6 +1107,37 @@ onUnmounted(() => {
   font-weight: 500;
 }
 
+.story-photo-strip {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.story-photo-card {
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 6px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(25, 56, 90, 0.12);
+}
+
+.story-photo-card:nth-child(odd) {
+  transform: rotate(-1.8deg);
+}
+
+.story-photo-card:nth-child(even) {
+  transform: rotate(1.8deg);
+}
+
+.story-photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 /* ===== GALLERY ===== */
 .gallery-section {
   padding: var(--section-padding);
@@ -1084,18 +1146,20 @@ onUnmounted(() => {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-auto-rows: 86px;
-  gap: 10px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 74px;
+  gap: 12px;
   margin-bottom: 40px;
   align-items: start;
-  max-width: 920px;
+  max-width: 1060px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .gallery-item {
   position: relative;
+  grid-column: span 3;
+  grid-row: span 3;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -1105,20 +1169,24 @@ onUnmounted(() => {
   box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
 
-.gallery-item.tile-a { grid-column: 1 / span 2; grid-row: 1 / span 2; transform: rotate(-2.5deg); }
-.gallery-item.tile-b { grid-column: 3 / span 2; grid-row: 1 / span 2; transform: rotate(1.8deg); }
-.gallery-item.tile-c { grid-column: 5 / span 2; grid-row: 1 / span 2; transform: rotate(-1.2deg); }
-.gallery-item.tile-d { grid-column: 7 / span 2; grid-row: 1 / span 2; transform: rotate(2deg); }
-.gallery-item.tile-e { grid-column: 2 / span 2; grid-row: 3 / span 2; transform: rotate(-1.5deg); }
-.gallery-item.tile-center { grid-column: 4 / span 2; grid-row: 2 / span 3; transform: scale(1.04); z-index: 2; }
-.gallery-item.tile-f { grid-column: 6 / span 2; grid-row: 3 / span 2; transform: rotate(1.5deg); }
-.gallery-item.tile-g { grid-column: 1 / span 2; grid-row: 4 / span 2; transform: rotate(-1deg); }
-.gallery-item.tile-h { grid-column: 3 / span 2; grid-row: 5 / span 1; transform: rotate(1deg); }
+.gallery-item.tile-a { grid-column: 1 / span 3; grid-row: 1 / span 3; transform: rotate(-2.4deg); }
+.gallery-item.tile-b { grid-column: 4 / span 2; grid-row: 1 / span 2; transform: rotate(1.5deg); }
+.gallery-item.tile-c { grid-column: 6 / span 3; grid-row: 1 / span 3; transform: rotate(-1.2deg); }
+.gallery-item.tile-d { grid-column: 9 / span 2; grid-row: 1 / span 2; transform: rotate(2.2deg); }
+.gallery-item.tile-e { grid-column: 11 / span 2; grid-row: 1 / span 3; transform: rotate(-1deg); }
+.gallery-item.tile-center { grid-column: 3 / span 4; grid-row: 3 / span 4; transform: scale(1.03); z-index: 2; }
+.gallery-item.tile-f { grid-column: 7 / span 3; grid-row: 3 / span 3; transform: rotate(1.2deg); }
+.gallery-item.tile-g { grid-column: 10 / span 3; grid-row: 4 / span 3; transform: rotate(-1.8deg); }
+.gallery-item.tile-h { grid-column: 1 / span 2; grid-row: 4 / span 2; transform: rotate(0.8deg); }
+.gallery-item.tile-i { grid-column: 1 / span 3; grid-row: 6 / span 3; transform: rotate(-1.3deg); }
+.gallery-item.tile-j { grid-column: 4 / span 2; grid-row: 7 / span 2; transform: rotate(1.6deg); }
+.gallery-item.tile-k { grid-column: 6 / span 3; grid-row: 6 / span 3; transform: rotate(-0.7deg); }
+.gallery-item.tile-l { grid-column: 9 / span 4; grid-row: 7 / span 2; transform: rotate(1.1deg); }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   transition: transform 0.5s ease;
   border-radius: 8px;
@@ -1833,17 +1901,9 @@ onUnmounted(() => {
   .countdown-grid { gap: 12px; }
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
+  .story-photo-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
-  .gallery-item,
-  .gallery-item.tile-a,
-  .gallery-item.tile-b,
-  .gallery-item.tile-c,
-  .gallery-item.tile-d,
-  .gallery-item.tile-e,
-  .gallery-item.tile-center,
-  .gallery-item.tile-f,
-  .gallery-item.tile-g,
-  .gallery-item.tile-h { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 3; }
+  .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
@@ -1860,6 +1920,7 @@ onUnmounted(() => {
   .hero-date { font-size: 1.1rem; }
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
+  .story-photo-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gallery-grid { gap: 10px; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }

@@ -1,7 +1,8 @@
-// API base URL — points to your Render backend in production
-// In local dev, Vite proxy handles /api → http://localhost:3001
-
-const API_BASE = import.meta.env.VITE_API_URL || ''
+// API base URL — points to Render backend in production.
+// In local dev, Vite proxy handles /api -> http://localhost:3001.
+const configuredBaseUrl = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '')
+const isLocalHost = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+const API_BASE = configuredBaseUrl || (isLocalHost ? '' : 'https://wedding-rsvp-api.onrender.com')
 
 export async function submitRsvp(formData) {
   const response = await fetch(`${API_BASE}/api/rsvp`, {
