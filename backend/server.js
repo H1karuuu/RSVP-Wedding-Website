@@ -87,7 +87,19 @@ app.post('/api/rsvp', async (req, res) => {
 
     if (error) {
       console.error('Supabase insert error:', error)
-      return res.status(500).json({ error: 'Failed to save RSVP. Please try again.' })
+
+      let message = 'Failed to save RSVP. Please try again.'
+      const errText = (error.message || '').toLowerCase()
+
+      if (errText.includes('row-level security') || errText.includes('policy')) {
+        message = 'Database policy blocked RSVP insert. Check Supabase RLS INSERT policy for anon role.'
+      } else if (errText.includes('does not exist')) {
+        message = 'RSVP table is missing. Run supabase-setup.sql in Supabase SQL editor.'
+      } else if (error.message) {
+        message = `Failed to save RSVP: ${error.message}`
+      }
+
+      return res.status(500).json({ error: message })
     }
 
     res.status(201).json({ success: true, message: 'RSVP submitted successfully!', data })
