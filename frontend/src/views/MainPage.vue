@@ -66,19 +66,32 @@
           <h2 class="section-title">Our Love Story</h2>
           <p class="section-subtitle">A journey that led us to forever</p>
 
-          <div class="timeline">
-            <div class="timeline-item" v-for="(event, index) in storyTimeline" :key="index">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <h3 class="timeline-title cursive">{{ event.title }}</h3>
-                <p class="timeline-date elegant">{{ event.date }}</p>
-                <p class="timeline-desc">{{ event.description }}</p>
+          <div class="story-layout">
+            <div class="timeline">
+              <div class="timeline-item" v-for="(event, index) in storyTimeline" :key="index">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <h3 class="timeline-title cursive">{{ event.title }}</h3>
+                  <p class="timeline-date elegant">{{ event.date }}</p>
+                  <p class="timeline-desc">{{ event.description }}</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="story-photo-strip">
-            <div class="story-photo-card" v-for="(photo, index) in storyPhotos" :key="photo.src + index">
+            <aside class="story-side-gallery" aria-label="Story photos">
+              <div class="story-side-photo" v-for="(photo, index) in storySidePhotos" :key="photo.src + index">
+                <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== HIGHLIGHT MEMORIES ===== -->
+      <section class="memory-strip-section fade-in-section">
+        <div class="container">
+          <div class="memory-strip">
+            <div class="memory-item" v-for="(photo, index) in memoryStripPhotos" :key="photo.src + index">
               <img :src="photo.src" :alt="photo.alt" loading="lazy" />
             </div>
           </div>
@@ -97,7 +110,7 @@
             class="gallery-item"
             v-for="(photo, index) in galleryPhotos"
             :key="index"
-            :class="[photo.size, photo.layout]"
+            :class="galleryClass(index)"
             @click="openLightbox(index)"
           >
             <img :src="photo.src" :alt="photo.alt" loading="lazy" />
@@ -524,43 +537,56 @@ const storyTimeline = ref([
   }
 ])
 
-const storyPhotos = ref([
-  { src: '/photos/prenup-11.jpeg', alt: 'Story Photo 11' },
-  { src: '/photos/prenup-12.jpeg', alt: 'Story Photo 12' },
-  { src: '/photos/prenup-13.jpeg', alt: 'Story Photo 13' },
-  { src: '/photos/prenup-14.jpeg', alt: 'Story Photo 14' },
-  { src: '/photos/prenup-15.jpeg', alt: 'Story Photo 15' },
-  { src: '/photos/prenup-16.jpeg', alt: 'Story Photo 16' }
+const storySidePhotos = ref([
+  { src: '/photos/couple-1.jpg', alt: 'Couple portrait by the bridge' },
+  { src: '/photos/couple-2.jpg', alt: 'Candid smile together' },
+  { src: '/photos/couple-3.jpg', alt: 'Tender moment together' },
+  { src: '/photos/prenup-11.jpeg', alt: 'Prenup memory 11' },
+  { src: '/photos/prenup-12.jpeg', alt: 'Prenup memory 12' },
+  { src: '/photos/prenup-13.jpeg', alt: 'Prenup memory 13' }
+])
+
+const memoryStripPhotos = ref([
+  { src: '/photos/prenup-14.jpeg', alt: 'Memory strip photo 14' },
+  { src: '/photos/prenup-15.jpeg', alt: 'Memory strip photo 15' },
+  { src: '/photos/prenup-16.jpeg', alt: 'Memory strip photo 16' },
+  { src: '/photos/prenup-17.jpeg', alt: 'Memory strip photo 17' },
+  { src: '/photos/prenup-18.jpeg', alt: 'Memory strip photo 18' }
 ])
 
 // ===== GALLERY =====
 const galleryPhotos = ref([
-  { src: '/photos/prenup-1.jpg', alt: 'Prenup Photo 1', size: '', layout: 'tile-a' },
-  { src: '/photos/IMG_6349.jpeg', alt: 'Gallery Photo 1', size: '', layout: 'tile-b' },
-  { src: '/photos/prenup-3.jpg', alt: 'Prenup Photo 3', size: '', layout: 'tile-c' },
-  { src: '/photos/IMG_6350.jpeg', alt: 'Gallery Photo 2', size: '', layout: 'tile-d' },
-  { src: '/photos/prenup-5.jpg', alt: 'Prenup Photo 5', size: '', layout: 'tile-e' },
-  { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6', size: '', layout: 'tile-center' },
-  { src: '/photos/IMG_6351.jpeg', alt: 'Gallery Photo 3', size: '', layout: 'tile-f' },
-  { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8', size: '', layout: 'tile-g' },
-  { src: '/photos/IMG_6352.jpeg', alt: 'Gallery Photo 4', size: '', layout: 'tile-h' },
-  { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9', size: '', layout: 'tile-i' },
-  { src: '/photos/IMG_6353.jpeg', alt: 'Gallery Photo 5', size: '', layout: 'tile-j' },
-  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10', size: '', layout: 'tile-k' },
-  { src: '/photos/IMG_6354.jpeg', alt: 'Gallery Photo 6', size: '', layout: 'tile-l' },
-  { src: '/photos/prenup-11.jpeg', alt: 'Prenup Photo 11', size: '', layout: '' },
-  { src: '/photos/prenup-12.jpeg', alt: 'Prenup Photo 12', size: '', layout: '' },
-  { src: '/photos/prenup-13.jpeg', alt: 'Prenup Photo 13', size: '', layout: '' },
-  { src: '/photos/prenup-14.jpeg', alt: 'Prenup Photo 14', size: '', layout: '' },
-  { src: '/photos/prenup-15.jpeg', alt: 'Prenup Photo 15', size: '', layout: '' },
-  { src: '/photos/prenup-16.jpeg', alt: 'Prenup Photo 16', size: '', layout: '' },
-  { src: '/photos/prenup-17.jpeg', alt: 'Prenup Photo 17', size: '', layout: '' },
-  { src: '/photos/prenup-18.jpeg', alt: 'Prenup Photo 18', size: '', layout: '' },
-  { src: '/photos/prenup-19.jpeg', alt: 'Prenup Photo 19', size: '', layout: '' },
-  { src: '/photos/prenup-20.jpeg', alt: 'Prenup Photo 20', size: '', layout: '' },
-  { src: '/photos/prenup-21.jpeg', alt: 'Prenup Photo 21', size: '', layout: '' },
-  { src: '/photos/prenup-22.jpeg', alt: 'Prenup Photo 22', size: '', layout: '' }
+  { src: '/photos/prenup-1.jpg', alt: 'Prenup Photo 1' },
+  { src: '/photos/prenup-2.jpg', alt: 'Prenup Photo 2' },
+  { src: '/photos/prenup-3.jpg', alt: 'Prenup Photo 3' },
+  { src: '/photos/prenup-4.jpg', alt: 'Prenup Photo 4' },
+  { src: '/photos/prenup-5.jpg', alt: 'Prenup Photo 5' },
+  { src: '/photos/prenup-6.jpg', alt: 'Prenup Photo 6' },
+  { src: '/photos/prenup-7.jpg', alt: 'Prenup Photo 7' },
+  { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8' },
+  { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9' },
+  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10' },
+  { src: '/photos/prenup-11.jpeg', alt: 'Prenup Photo 11' },
+  { src: '/photos/prenup-12.jpeg', alt: 'Prenup Photo 12' },
+  { src: '/photos/prenup-13.jpeg', alt: 'Prenup Photo 13' },
+  { src: '/photos/prenup-14.jpeg', alt: 'Prenup Photo 14' },
+  { src: '/photos/prenup-15.jpeg', alt: 'Prenup Photo 15' },
+  { src: '/photos/prenup-16.jpeg', alt: 'Prenup Photo 16' },
+  { src: '/photos/prenup-17.jpeg', alt: 'Prenup Photo 17' },
+  { src: '/photos/prenup-18.jpeg', alt: 'Prenup Photo 18' },
+  { src: '/photos/prenup-19.jpeg', alt: 'Prenup Photo 19' },
+  { src: '/photos/prenup-20.jpeg', alt: 'Prenup Photo 20' },
+  { src: '/photos/prenup-21.jpeg', alt: 'Prenup Photo 21' },
+  { src: '/photos/prenup-22.jpeg', alt: 'Prenup Photo 22' },
+  { src: '/photos/couple-1.jpg', alt: 'Couple moment 1' },
+  { src: '/photos/couple-2.jpg', alt: 'Couple moment 2' },
+  { src: '/photos/couple-3.jpg', alt: 'Couple moment 3' }
 ])
+
+const galleryClass = (index) => {
+  const pattern = ['frame-standard', 'frame-tall', 'frame-standard', 'frame-wide', 'frame-standard', 'frame-feature']
+  return pattern[index % pattern.length]
+}
 
 const videoUrl = ref('') // e.g. 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
 
@@ -1046,10 +1072,17 @@ onUnmounted(() => {
   padding: 28px 24px;
 }
 
+.story-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
+  gap: 24px;
+  align-items: start;
+}
+
 .timeline {
   position: relative;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding-left: 40px;
 }
 .timeline::before {
@@ -1107,35 +1140,67 @@ onUnmounted(() => {
   font-weight: 500;
 }
 
-.story-photo-strip {
-  margin-top: 26px;
+.story-side-gallery {
+  position: sticky;
+  top: 90px;
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-content: start;
 }
 
-.story-photo-card {
+.story-side-photo {
   aspect-ratio: 3 / 4;
   border-radius: 12px;
   overflow: hidden;
-  padding: 6px;
+  padding: 5px;
   background: #ffffff;
-  box-shadow: 0 8px 20px rgba(25, 56, 90, 0.12);
+  box-shadow: 0 8px 20px rgba(25, 56, 90, 0.14);
 }
 
-.story-photo-card:nth-child(odd) {
-  transform: rotate(-1.8deg);
+.story-side-photo:nth-child(3n + 1) {
+  transform: rotate(-2deg);
 }
 
-.story-photo-card:nth-child(even) {
-  transform: rotate(1.8deg);
+.story-side-photo:nth-child(3n + 2) {
+  transform: rotate(1.5deg);
 }
 
-.story-photo-card img {
+.story-side-photo:nth-child(3n + 3) {
+  transform: rotate(-0.8deg);
+}
+
+.story-side-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.memory-strip-section {
+  padding: 0 0 42px;
+}
+
+.memory-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 8px 24px rgba(25, 56, 90, 0.1);
+}
+
+.memory-item {
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.memory-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* ===== GALLERY ===== */
@@ -1147,7 +1212,7 @@ onUnmounted(() => {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 74px;
+  grid-auto-rows: 56px;
   gap: 12px;
   margin-bottom: 40px;
   align-items: start;
@@ -1169,19 +1234,10 @@ onUnmounted(() => {
   box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
 
-.gallery-item.tile-a { grid-column: 1 / span 3; grid-row: 1 / span 3; transform: rotate(-2.4deg); }
-.gallery-item.tile-b { grid-column: 4 / span 2; grid-row: 1 / span 2; transform: rotate(1.5deg); }
-.gallery-item.tile-c { grid-column: 6 / span 3; grid-row: 1 / span 3; transform: rotate(-1.2deg); }
-.gallery-item.tile-d { grid-column: 9 / span 2; grid-row: 1 / span 2; transform: rotate(2.2deg); }
-.gallery-item.tile-e { grid-column: 11 / span 2; grid-row: 1 / span 3; transform: rotate(-1deg); }
-.gallery-item.tile-center { grid-column: 3 / span 4; grid-row: 3 / span 4; transform: scale(1.03); z-index: 2; }
-.gallery-item.tile-f { grid-column: 7 / span 3; grid-row: 3 / span 3; transform: rotate(1.2deg); }
-.gallery-item.tile-g { grid-column: 10 / span 3; grid-row: 4 / span 3; transform: rotate(-1.8deg); }
-.gallery-item.tile-h { grid-column: 1 / span 2; grid-row: 4 / span 2; transform: rotate(0.8deg); }
-.gallery-item.tile-i { grid-column: 1 / span 3; grid-row: 6 / span 3; transform: rotate(-1.3deg); }
-.gallery-item.tile-j { grid-column: 4 / span 2; grid-row: 7 / span 2; transform: rotate(1.6deg); }
-.gallery-item.tile-k { grid-column: 6 / span 3; grid-row: 6 / span 3; transform: rotate(-0.7deg); }
-.gallery-item.tile-l { grid-column: 9 / span 4; grid-row: 7 / span 2; transform: rotate(1.1deg); }
+.gallery-item.frame-standard { grid-column: span 3; grid-row: span 4; transform: rotate(-1deg); }
+.gallery-item.frame-tall { grid-column: span 3; grid-row: span 6; transform: rotate(1deg); }
+.gallery-item.frame-wide { grid-column: span 4; grid-row: span 4; transform: rotate(-0.5deg); }
+.gallery-item.frame-feature { grid-column: span 5; grid-row: span 6; transform: rotate(0.9deg); z-index: 2; }
 
 .gallery-item img {
   width: 100%;
@@ -1901,7 +1957,9 @@ onUnmounted(() => {
   .countdown-grid { gap: 12px; }
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
-  .story-photo-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .story-layout { grid-template-columns: 1fr; }
+  .story-side-gallery { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .memory-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
   .qr-grid { gap: 24px; }
@@ -1920,7 +1978,8 @@ onUnmounted(() => {
   .hero-date { font-size: 1.1rem; }
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
-  .story-photo-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .story-side-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .memory-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gallery-grid { gap: 10px; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }

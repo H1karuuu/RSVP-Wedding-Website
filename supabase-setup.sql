@@ -1,76 +1,89 @@
 -- =============================================
 -- SUPABASE SQL SCRIPT FOR WEDDING RSVP WEBSITE
 -- =============================================
--- Run this in your Supabase SQL Editor:
--- Go to https://supabase.com/dashboard → Select your project → SQL Editor → New Query
--- Paste this entire script and click "Run"
+-- Safe to run multiple times (idempotent where possible).
+-- Run this entire script in Supabase SQL Editor.
 
--- 1) Create the RSVP responses table
-CREATE TABLE IF NOT EXISTS rsvp_responses (
-    id              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    full_name       TEXT NOT NULL,
-    email           TEXT,
-    phone           TEXT,
-    attending       BOOLEAN NOT NULL DEFAULT false,
-    guest_count     INTEGER NOT NULL DEFAULT 1,
+BEGIN;
+
+-- 1) Table
+CREATE TABLE IF NOT EXISTS public.rsvp_responses (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    full_name TEXT NOT NULL,
+    email TEXT,
+    phone TEXT,
+    attending BOOLEAN NOT NULL DEFAULT false,
+    guest_count INTEGER NOT NULL DEFAULT 1,
     dietary_restrictions TEXT,
-    song_request    TEXT,
-    message         TEXT,
-    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    song_request TEXT,
+    message TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 2) Add a comment for documentation
-COMMENT ON TABLE rsvp_responses IS 'Stores wedding RSVP form submissions from guests';
+COMMENT ON TABLE public.rsvp_responses IS 'Stores wedding RSVP form submissions from guests';
 
--- 3) Create an index on created_at for sorting
-CREATE INDEX IF NOT EXISTS idx_rsvp_created_at ON rsvp_responses (created_at DESC);
+-- 2) Indexes
+CREATE INDEX IF NOT EXISTS idx_rsvp_created_at ON public.rsvp_responses (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_rsvp_attending ON public.rsvp_responses (attending);
 
--- 4) Create an index on attending for filtering
-CREATE INDEX IF NOT EXISTS idx_rsvp_attending ON rsvp_responses (attending);
+-- 3) Permissions required by PostgREST (API)
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT INSERT ON TABLE public.rsvp_responses TO anon;
+GRANT SELECT ON TABLE public.rsvp_responses TO authenticated;
+GRANT USAGE, SELECT ON SEQUENCE public.rsvp_responses_id_seq TO anon, authenticated;
 
--- 5) Enable Row Level Security (RLS)
-ALTER TABLE rsvp_responses ENABLE ROW LEVEL SECURITY;
+-- 4) Row Level Security
+ALTER TABLE public.rsvp_responses ENABLE ROW LEVEL SECURITY;
 
--- 6) Policy: Allow anyone (anonymous users) to INSERT new RSVP responses
---    This is needed because guests submit the form without logging in
-DROP POLICY IF EXISTS "Allow anonymous inserts" ON rsvp_responses;
+DROP POLICY IF EXISTS "Allow anonymous inserts" ON public.rsvp_responses;
 CREATE POLICY "Allow anonymous inserts"
-    ON rsvp_responses
+    ON public.rsvp_responses
     FOR INSERT
     TO anon
     WITH CHECK (true);
 
--- 7) Policy: Allow only authenticated users (you, the admin) to SELECT all responses
---    This means only you can view the RSVP list from the Supabase dashboard
-DROP POLICY IF EXISTS "Allow authenticated select" ON rsvp_responses;
+DROP POLICY IF EXISTS "Allow authenticated select" ON public.rsvp_responses;
 CREATE POLICY "Allow authenticated select"
-    ON rsvp_responses
+    ON public.rsvp_responses
     FOR SELECT
     TO authenticated
     USING (true);
 
--- 8) Optional: If you also want anonymous users to see a success confirmation,
---    you can allow them to read their own row. Uncomment below if needed:
--- CREATE POLICY "Allow anon to read own row"
---     ON rsvp_responses
---     FOR SELECT
---     TO anon
---     USING (true);
-
--- =============================================
--- OPTIONAL: Create a view for quick stats
--- =============================================
-CREATE OR REPLACE VIEW rsvp_stats AS
+-- 5) Optional admin-friendly stats view
+CREATE OR REPLACE VIEW public.rsvp_stats AS
 SELECT
     COUNT(*) AS total_responses,
     COUNT(*) FILTER (WHERE attending = true) AS total_attending,
     COUNT(*) FILTER (WHERE attending = false) AS total_declined,
     COALESCE(SUM(guest_count) FILTER (WHERE attending = true), 0) AS total_guests
-FROM rsvp_responses;
+FROM public.rsvp_responses;
 
--- Grant the authenticated role access to the view
-GRANT SELECT ON rsvp_stats TO authenticated;
+GRANT SELECT ON public.rsvp_stats TO authenticated;
 
--- =============================================
--- DONE! Your Supabase backend is ready.
--- =============================================
+-- 6) RPC used by backend: get_rsvp_stats
+CREATE OR REPLACE FUNCTION public.get_rsvp_stats()
+RETURNS TABLE (
+    total_responses BIGINT,
+    total_attending BIGINT,
+    total_declined BIGINT,
+    total_guests BIGINT
+)
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+    SELECT
+        COUNT(*)::BIGINT AS total_responses,
+        COUNT(*) FILTER (WHERE attending = true)::BIGINT AS total_attending,
+        COUNT(*) FILTER (WHERE attending = false)::BIGINT AS total_declined,
+        COALESCE(SUM(guest_count) FILTER (WHERE attending = true), 0)::BIGINT AS total_guests
+    FROM public.rsvp_responses;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.get_rsvp_stats() TO anon, authenticated;
+
+COMMIT;
+
+-- Optional verification:
+-- SELECT * FROM public.rsvp_stats;
+-- SELECT * FROM public.get_rsvp_stats();
