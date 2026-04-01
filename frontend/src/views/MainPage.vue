@@ -355,6 +355,15 @@
           <p class="attire-guide-text">We would love to see you in formal attire that suits our color motif.</p>
           <div class="attire-guide-divider" aria-hidden="true"></div>
 
+          <figure class="dresscode-graphic-shell">
+            <img
+              src="/photos/DressCode.png"
+              alt="Wedding dress code visual guide"
+              class="dresscode-graphic"
+              loading="lazy"
+            />
+          </figure>
+
           <div class="motif-circle-row">
             <span
               class="motif-circle"
@@ -1794,6 +1803,22 @@ onUnmounted(() => {
   background: linear-gradient(90deg, transparent, rgba(74, 111, 149, 0.5), transparent);
 }
 
+.dresscode-graphic-shell {
+  margin: 0 auto 22px;
+  width: min(1040px, 100%);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(140, 166, 191, 0.35);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 26px rgba(24, 55, 92, 0.12);
+}
+
+.dresscode-graphic {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
 .motif-circle-row {
   display: flex;
   justify-content: center;
@@ -2081,6 +2106,7 @@ onUnmounted(() => {
   .motif-role-grid { grid-template-columns: 1fr; }
   .motif-circle { width: 44px; height: 44px; }
   .motif-swatch { width: 108px; height: 62px; }
+  .dresscode-graphic-shell { border-radius: 14px; margin-bottom: 18px; }
 }
 
 @media (max-width: 480px) {
