@@ -32,7 +32,7 @@
               <p class="panel-kicker">Wedding Countdown</p>
               <div class="countdown-grid">
                 <div class="countdown-item" v-for="item in countdownItems" :key="item.label">
-            <div class="gallery-overlay" :class="{ 'gallery-overlay-photo': item.type === 'photo' }">
+                  <div class="countdown-number">{{ item.value }}</div>
                   <div class="countdown-label">{{ item.label }}</div>
                 </div>
               </div>
