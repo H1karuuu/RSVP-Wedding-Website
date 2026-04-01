@@ -364,11 +364,6 @@
             />
           </figure>
         </div>
-
-        <div class="dresscode-notes">
-          <p class="elegant dresscode-note">Please follow the assigned role motif for a coordinated wedding look.</p>
-          <p class="elegant dresscode-note">For entourage attire pegs, the bride and groom will message separately.</p>
-        </div>
       </div>
     </section>
 
@@ -1215,10 +1210,11 @@ onUnmounted(() => {
   gap: 16px;
   margin-bottom: 18px;
   align-items: start;
-  width: min(1460px, calc(100vw - 30px));
+  width: min(1420px, calc(100vw - 30px));
   margin-left: auto;
   margin-right: auto;
   justify-items: center;
+  transform: translateX(-18px);
 }
 
 .gallery-item {
@@ -1239,17 +1235,17 @@ onUnmounted(() => {
 
 .gallery-slot-a { grid-column: 2 / span 3; grid-row: 1 / span 3; }
 .gallery-slot-b { grid-column: 5 / span 3; grid-row: 1 / span 3; }
-.gallery-slot-c { grid-column: 10 / span 3; grid-row: 1 / span 3; }
-.gallery-slot-d { grid-column: 13 / span 3; grid-row: 1 / span 3; }
+.gallery-slot-c { grid-column: 9 / span 3; grid-row: 1 / span 3; }
+.gallery-slot-d { grid-column: 12 / span 3; grid-row: 1 / span 3; }
 .gallery-slot-e { grid-column: 1 / span 3; grid-row: 5 / span 3; }
 .gallery-slot-f { grid-column: 1 / span 3; grid-row: 9 / span 3; }
-.gallery-slot-g { grid-column: 14 / span 3; grid-row: 5 / span 3; }
-.gallery-slot-h { grid-column: 14 / span 3; grid-row: 9 / span 3; }
-.gallery-slot-i { grid-column: 5 / span 3; grid-row: 12 / span 3; }
-.gallery-slot-j { grid-column: 9 / span 3; grid-row: 12 / span 3; }
+.gallery-slot-g { grid-column: 13 / span 3; grid-row: 5 / span 3; }
+.gallery-slot-h { grid-column: 13 / span 3; grid-row: 9 / span 3; }
+.gallery-slot-i { grid-column: 4 / span 3; grid-row: 12 / span 3; }
+.gallery-slot-j { grid-column: 8 / span 3; grid-row: 12 / span 3; }
 
 .gallery-feature-video {
-  grid-column: 5 / span 8;
+  grid-column: 4 / span 8;
   grid-row: 4 / span 8;
   transform: none !important;
   z-index: 3;
@@ -1724,12 +1720,13 @@ onUnmounted(() => {
 
 .dresscode-graphic-shell {
   margin: 0 auto 22px;
-  width: min(1040px, 100%);
+  width: min(1220px, calc(100vw - 24px));
   border-radius: 0;
   overflow: visible;
   border: 0;
   background: transparent;
   box-shadow: none;
+  transform: translateX(-18px);
 }
 
 .dresscode-graphic {
@@ -2013,7 +2010,7 @@ onUnmounted(() => {
   .story-collage { position: relative; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 100%; }
   .story-side-photo.story-photo-wide { grid-column: span 2; }
   .story-side-photo.story-photo-tall { aspect-ratio: 3 / 4; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(980px, calc(100vw - 12px)); gap: 10px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(980px, calc(100vw - 12px)); gap: 10px; transform: none; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
   .gallery-feature-video { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 16 / 10; }
   .qr-grid { gap: 24px; }
@@ -2025,7 +2022,7 @@ onUnmounted(() => {
   .motif-role-grid { grid-template-columns: 1fr; }
   .motif-circle { width: 44px; height: 44px; }
   .motif-swatch { width: 108px; height: 62px; }
-  .dresscode-graphic-shell { border-radius: 14px; margin-bottom: 18px; }
+  .dresscode-graphic-shell { border-radius: 14px; margin-bottom: 18px; transform: none; width: min(960px, calc(100vw - 18px)); }
 }
 
 @media (max-width: 480px) {
