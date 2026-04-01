@@ -117,7 +117,7 @@
             class="gallery-item"
             v-for="(item, index) in galleryItems"
             :key="`${item.type}-${index}`"
-            :class="[item.type === 'video' ? 'gallery-feature-video' : galleryClass(item.photoIndex), item.className]"
+            :class="[item.type === 'video' ? 'gallery-feature-video' : 'gallery-photo-frame', item.className]"
             :role="item.type === 'photo' ? 'button' : undefined"
             @click="item.type === 'photo' ? openLightbox(item.photoIndex) : undefined"
           >
@@ -363,87 +363,6 @@
               loading="lazy"
             />
           </figure>
-
-          <div class="motif-circle-row">
-            <span
-              class="motif-circle"
-              v-for="color in motifShowcaseColors"
-              :key="color.name"
-              :style="{ background: color.hex }"
-              :title="color.name"
-            ></span>
-          </div>
-
-          <div class="dress-role-layout">
-            <div class="dress-role-block">
-              <h3 class="motif-role-title elegant">Guest</h3>
-
-              <div class="guest-figure-row">
-                <div class="guest-figure-card">
-                  <div class="figure-silhouette suit-figure" aria-hidden="true">
-                    <span class="fig-head"></span>
-                    <span class="fig-torso"></span>
-                    <span class="fig-legs"></span>
-                  </div>
-                  <p class="guest-figure-title">Gentlemen</p>
-                  <p class="dress-role-line">Barong or Black Slacks with necktie/bow tie in motif shades</p>
-                  <div class="guest-chip-row">
-                    <span
-                      class="guest-chip"
-                      v-for="color in menGuestPalette"
-                      :key="color.name"
-                      :style="{ background: color.hex, color: color.textColor }"
-                    >
-                      {{ color.name }}
-                    </span>
-                  </div>
-                </div>
-
-                <div class="guest-figure-card">
-                  <div class="figure-silhouette gown-figure" aria-hidden="true">
-                    <span class="fig-head"></span>
-                    <span class="fig-bodice"></span>
-                    <span class="fig-skirt"></span>
-                  </div>
-                  <p class="guest-figure-title">Ladies</p>
-                  <p class="dress-role-line">Formal Gown / Maxi Dress in motif shades</p>
-                  <div class="guest-chip-row">
-                    <span
-                      class="guest-chip"
-                      v-for="color in ladiesGuestPalette"
-                      :key="color.name"
-                      :style="{ background: color.hex, color: color.textColor }"
-                    >
-                      {{ color.name }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="dress-role-block">
-              <h3 class="motif-role-title elegant">By Role Color Motif</h3>
-              <div class="motif-role-grid">
-                <div class="motif-role-card" v-for="role in colorMotifByRole" :key="role.role">
-                  <div class="motif-role-head">
-                    <span class="motif-figure" aria-hidden="true">{{ role.figure }}</span>
-                    <h4 class="motif-role-name">{{ role.role }}</h4>
-                  </div>
-
-                  <div class="motif-swatches">
-                    <div
-                      class="motif-swatch"
-                      v-for="color in role.colors"
-                      :key="`${role.role}-${color.name}`"
-                      :style="{ background: color.hex }"
-                    >
-                      <span class="swatch-name" :style="{ color: color.textColor }">{{ color.name }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="dresscode-notes">
@@ -1296,9 +1215,10 @@ onUnmounted(() => {
   gap: 16px;
   margin-bottom: 18px;
   align-items: start;
-  width: min(1680px, calc(100vw - 16px));
+  width: min(1460px, calc(100vw - 30px));
   margin-left: auto;
   margin-right: auto;
+  justify-items: center;
 }
 
 .gallery-item {
@@ -1313,21 +1233,20 @@ onUnmounted(() => {
   box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
 
-.gallery-item.frame-standard { grid-column: span 3; grid-row: span 3; transform: rotate(-0.9deg); }
-.gallery-item.frame-tall { grid-column: span 3; grid-row: span 4; transform: rotate(0.8deg); }
-.gallery-item.frame-wide { grid-column: span 4; grid-row: span 3; transform: rotate(-0.7deg); }
-.gallery-item.frame-feature { grid-column: span 5; grid-row: span 5; transform: rotate(0.4deg); z-index: 2; }
+.gallery-photo-frame {
+  transform: rotate(0deg) !important;
+}
 
-.gallery-slot-a { grid-column: 1 / span 3; grid-row: 1 / span 3; transform: rotate(-1.2deg); }
-.gallery-slot-b { grid-column: 4 / span 3; grid-row: 1 / span 3; transform: rotate(0.8deg); }
-.gallery-slot-c { grid-column: 14 / span 3; grid-row: 1 / span 3; transform: rotate(1.2deg); }
-.gallery-slot-d { grid-column: 14 / span 3; grid-row: 5 / span 3; transform: rotate(-1deg); }
-.gallery-slot-e { grid-column: 1 / span 3; grid-row: 5 / span 3; transform: rotate(1deg); }
-.gallery-slot-f { grid-column: 1 / span 3; grid-row: 9 / span 3; transform: rotate(-1.1deg); }
-.gallery-slot-g { grid-column: 14 / span 3; grid-row: 9 / span 3; transform: rotate(1deg); }
-.gallery-slot-h { grid-column: 4 / span 3; grid-row: 13 / span 3; transform: rotate(-0.8deg); }
-.gallery-slot-i { grid-column: 10 / span 3; grid-row: 13 / span 3; transform: rotate(0.9deg); }
-.gallery-slot-j { grid-column: 7 / span 3; grid-row: 14 / span 3; transform: rotate(-0.6deg); }
+.gallery-slot-a { grid-column: 2 / span 3; grid-row: 1 / span 3; }
+.gallery-slot-b { grid-column: 5 / span 3; grid-row: 1 / span 3; }
+.gallery-slot-c { grid-column: 10 / span 3; grid-row: 1 / span 3; }
+.gallery-slot-d { grid-column: 13 / span 3; grid-row: 1 / span 3; }
+.gallery-slot-e { grid-column: 1 / span 3; grid-row: 5 / span 3; }
+.gallery-slot-f { grid-column: 1 / span 3; grid-row: 9 / span 3; }
+.gallery-slot-g { grid-column: 14 / span 3; grid-row: 5 / span 3; }
+.gallery-slot-h { grid-column: 14 / span 3; grid-row: 9 / span 3; }
+.gallery-slot-i { grid-column: 5 / span 3; grid-row: 12 / span 3; }
+.gallery-slot-j { grid-column: 9 / span 3; grid-row: 12 / span 3; }
 
 .gallery-feature-video {
   grid-column: 5 / span 8;
@@ -1806,11 +1725,11 @@ onUnmounted(() => {
 .dresscode-graphic-shell {
   margin: 0 auto 22px;
   width: min(1040px, 100%);
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(140, 166, 191, 0.35);
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 10px 26px rgba(24, 55, 92, 0.12);
+  border-radius: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .dresscode-graphic {
