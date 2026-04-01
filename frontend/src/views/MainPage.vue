@@ -32,7 +32,7 @@
               <p class="panel-kicker">Wedding Countdown</p>
               <div class="countdown-grid">
                 <div class="countdown-item" v-for="item in countdownItems" :key="item.label">
-                  <div class="countdown-number">{{ item.value }}</div>
+            <div class="gallery-overlay" :class="{ 'gallery-overlay-photo': item.type === 'photo' }">
                   <div class="countdown-label">{{ item.label }}</div>
                 </div>
               </div>
@@ -602,6 +602,21 @@ const galleryClass = (index) => {
   return pattern[index % pattern.length]
 }
 
+const toggleFeaturedVideo = async () => {
+  const video = featuredVideo.value
+  if (!video) return
+
+  try {
+    if (video.paused) {
+      await video.play()
+    } else {
+      video.pause()
+    }
+  } catch (error) {
+    console.error('Unable to toggle featured video:', error)
+  }
+}
+
 // Lightbox
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
@@ -1113,15 +1128,15 @@ onUnmounted(() => {
 
 .story-scene {
   display: grid;
-  grid-template-columns: minmax(220px, 0.86fr) minmax(0, 1.28fr) minmax(220px, 0.86fr);
-  gap: 28px;
+  grid-template-columns: minmax(240px, 0.95fr) minmax(0, 1.25fr) minmax(240px, 0.95fr);
+  gap: 18px;
   align-items: start;
 }
 
 .story-shell {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 24px;
-  padding: 34px 28px;
+  padding: 34px 30px;
 }
 
 .story-layout {
@@ -1193,7 +1208,7 @@ onUnmounted(() => {
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
   align-content: start;
   align-self: start;
 }
@@ -1218,6 +1233,16 @@ onUnmounted(() => {
 
 .story-side-photo.story-photo-square {
   aspect-ratio: 1 / 1;
+}
+
+.story-collage-left .story-side-photo:nth-child(3n + 1),
+.story-collage-right .story-side-photo:nth-child(3n + 1) {
+  margin-left: 10px;
+}
+
+.story-collage-left .story-side-photo:nth-child(3n + 2),
+.story-collage-right .story-side-photo:nth-child(3n + 2) {
+  margin-right: 10px;
 }
 
 .story-collage-left .story-side-photo:nth-child(odd) {
@@ -1253,12 +1278,12 @@ onUnmounted(() => {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 44px;
+  grid-auto-rows: 38px;
   grid-auto-flow: dense;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 40px;
   align-items: start;
-  max-width: 1220px;
+  max-width: 1320px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1271,7 +1296,7 @@ onUnmounted(() => {
   overflow: hidden;
   cursor: pointer;
   background: #fff;
-  padding: 8px;
+  padding: 6px;
   box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
 
@@ -1281,8 +1306,8 @@ onUnmounted(() => {
 .gallery-item.frame-feature { grid-column: span 5; grid-row: span 7; transform: rotate(0.6deg); z-index: 2; }
 
 .gallery-feature-video {
-  grid-column: span 6;
-  grid-row: span 8;
+  grid-column: 3 / span 8;
+  grid-row: span 10;
   transform: none !important;
   z-index: 3;
 }
@@ -1304,10 +1329,12 @@ onUnmounted(() => {
   object-position: center;
   border-radius: 8px;
   background: #fff;
+  cursor: pointer;
 }
 
 .gallery-feature-video .gallery-overlay {
   background: rgba(18, 33, 55, 0.08);
+  pointer-events: none;
 }
 
 .gallery-feature-video .gallery-zoom {
@@ -1329,6 +1356,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   transition: background 0.3s;
+  pointer-events: none;
 }
 .gallery-item:hover .gallery-overlay {
   background: rgba(139, 110, 90, 0.2);

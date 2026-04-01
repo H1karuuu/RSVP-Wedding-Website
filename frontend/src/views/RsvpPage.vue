@@ -25,9 +25,6 @@
                 Your response has been recorded.<br>
                 We look forward to celebrating with you!
               </p>
-              <button class="btn-outline" @click="resetForm" style="margin-top: 20px;">
-                Submit Another Response
-              </button>
             </div>
           </transition>
 
