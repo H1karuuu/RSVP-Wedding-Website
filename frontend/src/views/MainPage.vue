@@ -2,16 +2,6 @@
   <div class="main-page">
     <!-- ===== HERO SECTION ===== -->
     <section class="hero-section">
-      <video
-        ref="heroVideo"
-        class="hero-video"
-        src="/photos/Prenup-vid.mp4"
-        autoplay
-        muted
-        playsinline
-        controls
-        preload="metadata"
-      ></video>
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-subtitle elegant">Together with their families</p>
@@ -74,7 +64,12 @@
       <section id="our-story" class="story-section fade-in-section" ref="storySection">
         <div class="container story-scene">
           <aside class="story-collage story-collage-left" aria-label="Story collage left">
-            <div class="story-side-photo" v-for="(photo, index) in storySidePhotosLeft" :key="photo.src + index">
+            <div
+              class="story-side-photo"
+              v-for="(photo, index) in storySidePhotosLeft"
+              :key="photo.src + index"
+              :class="photo.className"
+            >
               <img :src="photo.src" :alt="photo.alt" loading="lazy" />
             </div>
           </aside>
@@ -98,7 +93,12 @@
           </div>
 
           <aside class="story-collage story-collage-right" aria-label="Story collage right">
-            <div class="story-side-photo" v-for="(photo, index) in storySidePhotosRight" :key="photo.src + index">
+            <div
+              class="story-side-photo"
+              v-for="(photo, index) in storySidePhotosRight"
+              :key="photo.src + index"
+              :class="photo.className"
+            >
               <img :src="photo.src" :alt="photo.alt" loading="lazy" />
             </div>
           </aside>
@@ -115,12 +115,25 @@
         <div class="gallery-grid">
           <div
             class="gallery-item"
-            v-for="(photo, index) in galleryPhotos"
-            :key="index"
-            :class="galleryClass(index)"
-            @click="openLightbox(index)"
+            v-for="(item, index) in galleryItems"
+            :key="`${item.type}-${index}`"
+            :class="[item.type === 'video' ? 'gallery-feature-video' : galleryClass(item.photoIndex), item.className]"
+            :role="item.type === 'photo' ? 'button' : undefined"
+            @click="item.type === 'photo' ? openLightbox(item.photoIndex) : undefined"
           >
-            <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+            <img v-if="item.type === 'photo'" :src="item.src" :alt="item.alt" loading="lazy" />
+            <video
+              v-else
+              ref="featuredVideo"
+              class="gallery-feature-video-player"
+              :src="item.src"
+              autoplay
+              muted
+              loop
+              playsinline
+              controls
+              preload="metadata"
+            ></video>
             <div class="gallery-overlay">
               <span class="gallery-zoom">✦</span>
             </div>
@@ -534,21 +547,21 @@ const storyTimeline = ref([
 ])
 
 const storySidePhotosLeft = ref([
-  { src: '/photos/prenup-11.jpeg', alt: 'Story collage left photo 11' },
-  { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12' },
-  { src: '/photos/prenup-13.jpeg', alt: 'Story collage left photo 13' },
-  { src: '/photos/prenup-14.jpeg', alt: 'Story collage left photo 14' },
-  { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15' },
-  { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16' }
+  { src: '/photos/prenup-11.jpeg', alt: 'Story collage left photo 11', className: 'story-photo-wide' },
+  { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12', className: 'story-photo-tall' },
+  { src: '/photos/prenup-13.jpeg', alt: 'Story collage left photo 13', className: 'story-photo-square' },
+  { src: '/photos/prenup-14.jpeg', alt: 'Story collage left photo 14', className: 'story-photo-wide' },
+  { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15', className: 'story-photo-tall' },
+  { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16', className: 'story-photo-square' }
 ])
 
 const storySidePhotosRight = ref([
-  { src: '/photos/prenup-17.jpeg', alt: 'Story collage right photo 17' },
-  { src: '/photos/prenup-18.jpeg', alt: 'Story collage right photo 18' },
-  { src: '/photos/prenup-19.jpeg', alt: 'Story collage right photo 19' },
-  { src: '/photos/prenup-20.jpeg', alt: 'Story collage right photo 20' },
-  { src: '/photos/prenup-21.jpeg', alt: 'Story collage right photo 21' },
-  { src: '/photos/prenup-22.jpeg', alt: 'Story collage right photo 22' }
+  { src: '/photos/prenup-17.jpeg', alt: 'Story collage right photo 17', className: 'story-photo-square' },
+  { src: '/photos/prenup-18.jpeg', alt: 'Story collage right photo 18', className: 'story-photo-wide' },
+  { src: '/photos/prenup-19.jpeg', alt: 'Story collage right photo 19', className: 'story-photo-tall' },
+  { src: '/photos/prenup-20.jpeg', alt: 'Story collage right photo 20', className: 'story-photo-wide' },
+  { src: '/photos/prenup-21.jpeg', alt: 'Story collage right photo 21', className: 'story-photo-square' },
+  { src: '/photos/prenup-22.jpeg', alt: 'Story collage right photo 22', className: 'story-photo-tall' }
 ])
 
 // ===== GALLERY =====
@@ -564,6 +577,25 @@ const galleryPhotos = ref([
   { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9' },
   { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10' }
 ])
+
+const galleryItems = computed(() => {
+  const photos = galleryPhotos.value.map((photo, photoIndex) => ({
+    ...photo,
+    type: 'photo',
+    photoIndex
+  }))
+
+  return [
+    ...photos.slice(0, 4),
+    {
+      type: 'video',
+      src: '/photos/Prenup-vid.mp4',
+      alt: 'Prenup highlight video',
+      className: 'gallery-feature-video'
+    },
+    ...photos.slice(4)
+  ]
+})
 
 const galleryClass = (index) => {
   const pattern = ['frame-standard', 'frame-wide', 'frame-standard', 'frame-tall', 'frame-standard', 'frame-feature']
@@ -756,7 +788,7 @@ const colorMotifByRole = ref([
 ])
 
 // ===== INTERSECTION OBSERVER FOR FADE-IN =====
-const heroVideo = ref(null)
+const featuredVideo = ref(null)
 let observer
 
 const dispatchHeroVideoState = (isPlaying) => {
@@ -791,7 +823,7 @@ onMounted(() => {
     observer.observe(el)
   })
 
-  const video = heroVideo.value
+  const video = featuredVideo.value
   if (video) {
     video.addEventListener('play', handleHeroVideoPlay)
     video.addEventListener('pause', handleHeroVideoStop)
@@ -808,7 +840,7 @@ onUnmounted(() => {
   clearInterval(countdownInterval)
   if (observer) observer.disconnect()
 
-  const video = heroVideo.value
+  const video = featuredVideo.value
   if (video) {
     video.removeEventListener('play', handleHeroVideoPlay)
     video.removeEventListener('pause', handleHeroVideoStop)
@@ -870,16 +902,9 @@ onUnmounted(() => {
   overflow: hidden;
   text-align: center;
   padding-top: 80px;
-}
-
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
+  background:
+    linear-gradient(180deg, rgba(19, 35, 58, 0.18), rgba(19, 35, 58, 0.38)),
+    url('/photos/prenup-7.jpg') center/cover no-repeat;
 }
 
 .hero-overlay {
@@ -1088,15 +1113,15 @@ onUnmounted(() => {
 
 .story-scene {
   display: grid;
-  grid-template-columns: minmax(180px, 0.4fr) minmax(0, 1fr) minmax(180px, 0.4fr);
-  gap: 22px;
+  grid-template-columns: minmax(220px, 0.86fr) minmax(0, 1.28fr) minmax(220px, 0.86fr);
+  gap: 28px;
   align-items: start;
 }
 
 .story-shell {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 24px;
-  padding: 28px 24px;
+  padding: 34px 28px;
 }
 
 .story-layout {
@@ -1165,12 +1190,12 @@ onUnmounted(() => {
 }
 
 .story-collage {
-  position: sticky;
-  top: 84px;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
   align-content: start;
+  align-self: start;
 }
 
 .story-side-photo {
@@ -1180,6 +1205,19 @@ onUnmounted(() => {
   padding: 5px;
   background: #ffffff;
   box-shadow: 0 8px 20px rgba(25, 56, 90, 0.14);
+}
+
+.story-side-photo.story-photo-wide {
+  grid-column: span 2;
+  aspect-ratio: 4 / 3;
+}
+
+.story-side-photo.story-photo-tall {
+  aspect-ratio: 3 / 4.5;
+}
+
+.story-side-photo.story-photo-square {
+  aspect-ratio: 1 / 1;
 }
 
 .story-collage-left .story-side-photo:nth-child(odd) {
@@ -1216,10 +1254,11 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: 44px;
+  grid-auto-flow: dense;
   gap: 12px;
   margin-bottom: 40px;
   align-items: start;
-  max-width: 1060px;
+  max-width: 1220px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1241,6 +1280,13 @@ onUnmounted(() => {
 .gallery-item.frame-wide { grid-column: span 4; grid-row: span 5; transform: rotate(-0.7deg); }
 .gallery-item.frame-feature { grid-column: span 5; grid-row: span 7; transform: rotate(0.6deg); z-index: 2; }
 
+.gallery-feature-video {
+  grid-column: span 6;
+  grid-row: span 8;
+  transform: none !important;
+  z-index: 3;
+}
+
 .gallery-item img {
   width: 100%;
   height: 100%;
@@ -1249,6 +1295,23 @@ onUnmounted(() => {
   transition: transform 0.5s ease;
   border-radius: 8px;
   background: #fff;
+}
+
+.gallery-feature-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.gallery-feature-video .gallery-overlay {
+  background: rgba(18, 33, 55, 0.08);
+}
+
+.gallery-feature-video .gallery-zoom {
+  font-size: 1.85rem;
 }
 .gallery-item:hover img {
   transform: scale(1.02);
@@ -1960,9 +2023,12 @@ onUnmounted(() => {
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
   .story-scene { grid-template-columns: 1fr; }
-  .story-collage { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .story-collage { position: relative; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .story-side-photo.story-photo-wide { grid-column: span 2; }
+  .story-side-photo.story-photo-tall { aspect-ratio: 3 / 4; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
+  .gallery-feature-video { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 16 / 10; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
@@ -1980,6 +2046,7 @@ onUnmounted(() => {
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
   .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .story-side-photo.story-photo-wide { grid-column: span 2; }
   .gallery-grid { gap: 10px; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
