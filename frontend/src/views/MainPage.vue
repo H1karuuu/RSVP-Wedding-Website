@@ -1282,13 +1282,12 @@ onUnmounted(() => {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  grid-auto-rows: 34px;
-  grid-auto-flow: dense;
-  gap: 12px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  grid-auto-rows: 40px;
+  gap: 16px;
+  margin-bottom: 18px;
   align-items: start;
-  width: min(1600px, calc(100vw - 20px));
+  width: min(1680px, calc(100vw - 16px));
   margin-left: auto;
   margin-right: auto;
 }
@@ -1296,7 +1295,7 @@ onUnmounted(() => {
 .gallery-item {
   position: relative;
   grid-column: span 3;
-  grid-row: span 5;
+  grid-row: span 3;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -1305,25 +1304,25 @@ onUnmounted(() => {
   box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
 
-.gallery-item.frame-standard { grid-column: span 3; grid-row: span 5; transform: rotate(-0.9deg); }
-.gallery-item.frame-tall { grid-column: span 3; grid-row: span 7; transform: rotate(0.8deg); }
-.gallery-item.frame-wide { grid-column: span 4; grid-row: span 5; transform: rotate(-0.7deg); }
-.gallery-item.frame-feature { grid-column: span 5; grid-row: span 7; transform: rotate(0.6deg); z-index: 2; }
+.gallery-item.frame-standard { grid-column: span 3; grid-row: span 3; transform: rotate(-0.9deg); }
+.gallery-item.frame-tall { grid-column: span 3; grid-row: span 4; transform: rotate(0.8deg); }
+.gallery-item.frame-wide { grid-column: span 4; grid-row: span 3; transform: rotate(-0.7deg); }
+.gallery-item.frame-feature { grid-column: span 5; grid-row: span 5; transform: rotate(0.4deg); z-index: 2; }
 
-.gallery-slot-a { grid-column: 1 / span 3; grid-row: 1 / span 3; transform: rotate(-2deg); }
-.gallery-slot-b { grid-column: 4 / span 3; grid-row: 1 / span 3; transform: rotate(1deg); }
-.gallery-slot-c { grid-column: 10 / span 3; grid-row: 1 / span 3; transform: rotate(1.4deg); }
-.gallery-slot-d { grid-column: 12 / span 3; grid-row: 1 / span 3; transform: rotate(-1.8deg); }
-.gallery-slot-e { grid-column: 1 / span 3; grid-row: 5 / span 3; transform: rotate(1.6deg); }
-.gallery-slot-f { grid-column: 1 / span 3; grid-row: 9 / span 3; transform: rotate(-1.3deg); }
-.gallery-slot-g { grid-column: 12 / span 3; grid-row: 5 / span 3; transform: rotate(-1.2deg); }
-.gallery-slot-h { grid-column: 11 / span 3; grid-row: 9 / span 3; transform: rotate(1.2deg); }
-.gallery-slot-i { grid-column: 4 / span 3; grid-row: 12 / span 3; transform: rotate(-1deg); }
-.gallery-slot-j { grid-column: 8 / span 3; grid-row: 12 / span 3; transform: rotate(1.1deg); }
+.gallery-slot-a { grid-column: 1 / span 3; grid-row: 1 / span 3; transform: rotate(-1.2deg); }
+.gallery-slot-b { grid-column: 4 / span 3; grid-row: 1 / span 3; transform: rotate(0.8deg); }
+.gallery-slot-c { grid-column: 14 / span 3; grid-row: 1 / span 3; transform: rotate(1.2deg); }
+.gallery-slot-d { grid-column: 14 / span 3; grid-row: 5 / span 3; transform: rotate(-1deg); }
+.gallery-slot-e { grid-column: 1 / span 3; grid-row: 5 / span 3; transform: rotate(1deg); }
+.gallery-slot-f { grid-column: 1 / span 3; grid-row: 9 / span 3; transform: rotate(-1.1deg); }
+.gallery-slot-g { grid-column: 14 / span 3; grid-row: 9 / span 3; transform: rotate(1deg); }
+.gallery-slot-h { grid-column: 4 / span 3; grid-row: 13 / span 3; transform: rotate(-0.8deg); }
+.gallery-slot-i { grid-column: 10 / span 3; grid-row: 13 / span 3; transform: rotate(0.9deg); }
+.gallery-slot-j { grid-column: 7 / span 3; grid-row: 14 / span 3; transform: rotate(-0.6deg); }
 
 .gallery-feature-video {
-  grid-column: 4 / span 8;
-  grid-row: 4 / span 7;
+  grid-column: 5 / span 8;
+  grid-row: 4 / span 8;
   transform: none !important;
   z-index: 3;
 }
@@ -2070,7 +2069,7 @@ onUnmounted(() => {
   .story-collage { position: relative; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 100%; }
   .story-side-photo.story-photo-wide { grid-column: span 2; }
   .story-side-photo.story-photo-tall { aspect-ratio: 3 / 4; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(980px, calc(100vw - 12px)); }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(980px, calc(100vw - 12px)); gap: 10px; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
   .gallery-feature-video { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 16 / 10; }
   .qr-grid { gap: 24px; }
