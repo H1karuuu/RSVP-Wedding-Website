@@ -12,6 +12,8 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const isPlaying = ref(false)
 let audio = null
+let pausedByHeroVideo = false
+let userPaused = false
 
 const startMusic = async () => {
   if (!audio || isPlaying.value) return
@@ -40,10 +42,38 @@ const removeAutoplayFallbackListeners = () => {
   document.removeEventListener('keydown', autoplayFallbackHandler)
 }
 
+const handleHeroVideoState = (event) => {
+  const isHeroVideoPlaying = Boolean(event?.detail?.isPlaying)
+  if (!audio) return
+
+  if (isHeroVideoPlaying) {
+    if (!audio.paused) {
+      audio.pause()
+      isPlaying.value = false
+      pausedByHeroVideo = true
+    }
+    return
+  }
+
+  if (pausedByHeroVideo && !userPaused) {
+    audio.play().then(() => {
+      isPlaying.value = true
+      pausedByHeroVideo = false
+    }).catch(() => {
+      isPlaying.value = false
+      pausedByHeroVideo = false
+    })
+  } else {
+    pausedByHeroVideo = false
+  }
+}
+
 onMounted(() => {
   audio = new Audio('/music/bg-music.mp3')
   audio.loop = true
   audio.volume = 0.3
+  window.addEventListener('wedding:hero-video-state', handleHeroVideoState)
+
   startMusic().then(() => {
     if (!isPlaying.value) {
       addAutoplayFallbackListeners()
@@ -53,6 +83,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   removeAutoplayFallbackListeners()
+  window.removeEventListener('wedding:hero-video-state', handleHeroVideoState)
   if (audio) {
     audio.pause()
     audio = null
@@ -63,10 +94,17 @@ const toggleMusic = () => {
   if (!audio) return
   if (isPlaying.value) {
     audio.pause()
+    isPlaying.value = false
+    userPaused = true
   } else {
-    audio.play().catch(() => {})
+    audio.play().then(() => {
+      isPlaying.value = true
+      userPaused = false
+      pausedByHeroVideo = false
+    }).catch(() => {
+      isPlaying.value = false
+    })
   }
-  isPlaying.value = !isPlaying.value
 }
 </script>
 

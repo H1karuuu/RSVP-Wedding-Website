@@ -7,6 +7,7 @@ import { createClient } from '@supabase/supabase-js'
 const PORT = process.env.PORT || 3001
 const SUPABASE_URL = process.env.SUPABASE_URL
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
 const normalizeOrigin = (value = '') => value.trim().replace(/\/+$/, '').toLowerCase()
 
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
@@ -17,10 +18,15 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
 const hasConfiguredOrigins = ALLOWED_ORIGINS.length > 0
 
 // ===== SUPABASE CLIENT =====
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+const supabaseKey = SUPABASE_SERVICE_ROLE_KEY || SUPABASE_ANON_KEY
+const supabase = createClient(SUPABASE_URL, supabaseKey)
 
 // ===== EXPRESS APP =====
 const app = express()
+
+if (!SUPABASE_URL || !supabaseKey) {
+  console.warn('Supabase environment variables are missing. Check SUPABASE_URL and key configuration.')
+}
 
 // CORS — allow your Vercel frontend
 app.use(
@@ -75,18 +81,18 @@ app.post('/api/rsvp', async (req, res) => {
 
     const isAttending = attending === true || attending === 'yes'
 
-    const { data, error } = await supabase.from('rsvp_responses').insert([
+    const { error } = await supabase.from('rsvp_responses').insert([
       {
         full_name: fullName.trim(),
         email: email?.trim() || null,
         phone: phone?.trim() || null,
         attending: isAttending,
-        guest_count: isAttending ? parseInt(guestCount) || 1 : 0,
+        guest_count: isAttending ? parseInt(guestCount, 10) || 1 : 0,
         dietary_restrictions: dietary?.trim() || null,
         song_request: songRequest?.trim() || null,
         message: message?.trim() || null,
       },
-    ]).select()
+    ])
 
     if (error) {
       console.error('Supabase insert error:', error)
@@ -105,7 +111,7 @@ app.post('/api/rsvp', async (req, res) => {
       return res.status(500).json({ error: message })
     }
 
-    res.status(201).json({ success: true, message: 'RSVP submitted successfully!', data })
+    res.status(201).json({ success: true, message: 'RSVP submitted successfully!' })
   } catch (err) {
     console.error('Server error:', err)
     res.status(500).json({ error: 'Internal server error.' })

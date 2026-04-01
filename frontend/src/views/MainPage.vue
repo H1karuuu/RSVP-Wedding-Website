@@ -2,6 +2,16 @@
   <div class="main-page">
     <!-- ===== HERO SECTION ===== -->
     <section class="hero-section">
+      <video
+        ref="heroVideo"
+        class="hero-video"
+        src="/photos/Prenup-vid.mp4"
+        autoplay
+        muted
+        playsinline
+        controls
+        preload="metadata"
+      ></video>
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-subtitle elegant">Together with their families</p>
@@ -62,39 +72,36 @@
 
       <!-- ===== OUR STORY SECTION ===== -->
       <section id="our-story" class="story-section fade-in-section" ref="storySection">
-        <div class="container story-shell">
-          <h2 class="section-title">Our Love Story</h2>
-          <p class="section-subtitle">A journey that led us to forever</p>
+        <div class="container story-scene">
+          <aside class="story-collage story-collage-left" aria-label="Story collage left">
+            <div class="story-side-photo" v-for="(photo, index) in storySidePhotosLeft" :key="photo.src + index">
+              <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+            </div>
+          </aside>
 
-          <div class="story-layout">
-            <div class="timeline">
-              <div class="timeline-item" v-for="(event, index) in storyTimeline" :key="index">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                  <h3 class="timeline-title cursive">{{ event.title }}</h3>
-                  <p class="timeline-date elegant">{{ event.date }}</p>
-                  <p class="timeline-desc">{{ event.description }}</p>
+          <div class="story-shell">
+            <h2 class="section-title">Our Love Story</h2>
+            <p class="section-subtitle">A journey that led us to forever</p>
+
+            <div class="story-layout">
+              <div class="timeline">
+                <div class="timeline-item" v-for="(event, index) in storyTimeline" :key="index">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <h3 class="timeline-title cursive">{{ event.title }}</h3>
+                    <p class="timeline-date elegant">{{ event.date }}</p>
+                    <p class="timeline-desc">{{ event.description }}</p>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <aside class="story-side-gallery" aria-label="Story photos">
-              <div class="story-side-photo" v-for="(photo, index) in storySidePhotos" :key="photo.src + index">
-                <img :src="photo.src" :alt="photo.alt" loading="lazy" />
-              </div>
-            </aside>
           </div>
-        </div>
-      </section>
 
-      <!-- ===== HIGHLIGHT MEMORIES ===== -->
-      <section class="memory-strip-section fade-in-section">
-        <div class="container">
-          <div class="memory-strip">
-            <div class="memory-item" v-for="(photo, index) in memoryStripPhotos" :key="photo.src + index">
+          <aside class="story-collage story-collage-right" aria-label="Story collage right">
+            <div class="story-side-photo" v-for="(photo, index) in storySidePhotosRight" :key="photo.src + index">
               <img :src="photo.src" :alt="photo.alt" loading="lazy" />
             </div>
-          </div>
+          </aside>
         </div>
       </section>
     </div>
@@ -120,18 +127,7 @@
           </div>
         </div>
 
-        <!-- Video Embed Placeholder -->
-        <div class="video-section" v-if="videoUrl">
-          <h3 class="cursive video-title">Our Prenup Video</h3>
-          <div class="video-wrapper">
-            <iframe
-              :src="videoUrl"
-              frameborder="0"
-              allow="autoplay; encrypted-media"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
+
       </div>
     </section>
 
@@ -537,21 +533,22 @@ const storyTimeline = ref([
   }
 ])
 
-const storySidePhotos = ref([
-  { src: '/photos/couple-1.jpg', alt: 'Couple portrait by the bridge' },
-  { src: '/photos/couple-2.jpg', alt: 'Candid smile together' },
-  { src: '/photos/couple-3.jpg', alt: 'Tender moment together' },
-  { src: '/photos/prenup-11.jpeg', alt: 'Prenup memory 11' },
-  { src: '/photos/prenup-12.jpeg', alt: 'Prenup memory 12' },
-  { src: '/photos/prenup-13.jpeg', alt: 'Prenup memory 13' }
+const storySidePhotosLeft = ref([
+  { src: '/photos/prenup-11.jpeg', alt: 'Story collage left photo 11' },
+  { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12' },
+  { src: '/photos/prenup-13.jpeg', alt: 'Story collage left photo 13' },
+  { src: '/photos/prenup-14.jpeg', alt: 'Story collage left photo 14' },
+  { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15' },
+  { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16' }
 ])
 
-const memoryStripPhotos = ref([
-  { src: '/photos/prenup-14.jpeg', alt: 'Memory strip photo 14' },
-  { src: '/photos/prenup-15.jpeg', alt: 'Memory strip photo 15' },
-  { src: '/photos/prenup-16.jpeg', alt: 'Memory strip photo 16' },
-  { src: '/photos/prenup-17.jpeg', alt: 'Memory strip photo 17' },
-  { src: '/photos/prenup-18.jpeg', alt: 'Memory strip photo 18' }
+const storySidePhotosRight = ref([
+  { src: '/photos/prenup-17.jpeg', alt: 'Story collage right photo 17' },
+  { src: '/photos/prenup-18.jpeg', alt: 'Story collage right photo 18' },
+  { src: '/photos/prenup-19.jpeg', alt: 'Story collage right photo 19' },
+  { src: '/photos/prenup-20.jpeg', alt: 'Story collage right photo 20' },
+  { src: '/photos/prenup-21.jpeg', alt: 'Story collage right photo 21' },
+  { src: '/photos/prenup-22.jpeg', alt: 'Story collage right photo 22' }
 ])
 
 // ===== GALLERY =====
@@ -565,30 +562,13 @@ const galleryPhotos = ref([
   { src: '/photos/prenup-7.jpg', alt: 'Prenup Photo 7' },
   { src: '/photos/prenup-8.jpg', alt: 'Prenup Photo 8' },
   { src: '/photos/prenup-9.jpg', alt: 'Prenup Photo 9' },
-  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10' },
-  { src: '/photos/prenup-11.jpeg', alt: 'Prenup Photo 11' },
-  { src: '/photos/prenup-12.jpeg', alt: 'Prenup Photo 12' },
-  { src: '/photos/prenup-13.jpeg', alt: 'Prenup Photo 13' },
-  { src: '/photos/prenup-14.jpeg', alt: 'Prenup Photo 14' },
-  { src: '/photos/prenup-15.jpeg', alt: 'Prenup Photo 15' },
-  { src: '/photos/prenup-16.jpeg', alt: 'Prenup Photo 16' },
-  { src: '/photos/prenup-17.jpeg', alt: 'Prenup Photo 17' },
-  { src: '/photos/prenup-18.jpeg', alt: 'Prenup Photo 18' },
-  { src: '/photos/prenup-19.jpeg', alt: 'Prenup Photo 19' },
-  { src: '/photos/prenup-20.jpeg', alt: 'Prenup Photo 20' },
-  { src: '/photos/prenup-21.jpeg', alt: 'Prenup Photo 21' },
-  { src: '/photos/prenup-22.jpeg', alt: 'Prenup Photo 22' },
-  { src: '/photos/couple-1.jpg', alt: 'Couple moment 1' },
-  { src: '/photos/couple-2.jpg', alt: 'Couple moment 2' },
-  { src: '/photos/couple-3.jpg', alt: 'Couple moment 3' }
+  { src: '/photos/prenup-10.jpg', alt: 'Prenup Photo 10' }
 ])
 
 const galleryClass = (index) => {
-  const pattern = ['frame-standard', 'frame-tall', 'frame-standard', 'frame-wide', 'frame-standard', 'frame-feature']
+  const pattern = ['frame-standard', 'frame-wide', 'frame-standard', 'frame-tall', 'frame-standard', 'frame-feature']
   return pattern[index % pattern.length]
 }
-
-const videoUrl = ref('') // e.g. 'https://www.youtube.com/embed/YOUR_VIDEO_ID'
 
 // Lightbox
 const lightboxOpen = ref(false)
@@ -776,7 +756,20 @@ const colorMotifByRole = ref([
 ])
 
 // ===== INTERSECTION OBSERVER FOR FADE-IN =====
+const heroVideo = ref(null)
 let observer
+
+const dispatchHeroVideoState = (isPlaying) => {
+  window.dispatchEvent(new CustomEvent('wedding:hero-video-state', { detail: { isPlaying } }))
+}
+
+const handleHeroVideoPlay = () => {
+  dispatchHeroVideoState(true)
+}
+
+const handleHeroVideoStop = () => {
+  dispatchHeroVideoState(false)
+}
 
 onMounted(() => {
   countdownInterval = setInterval(() => {
@@ -797,11 +790,32 @@ onMounted(() => {
   document.querySelectorAll('.fade-in-section').forEach((el) => {
     observer.observe(el)
   })
+
+  const video = heroVideo.value
+  if (video) {
+    video.addEventListener('play', handleHeroVideoPlay)
+    video.addEventListener('pause', handleHeroVideoStop)
+    video.addEventListener('ended', handleHeroVideoStop)
+
+    // Keep music paused if the video starts automatically.
+    if (!video.paused) {
+      dispatchHeroVideoState(true)
+    }
+  }
 })
 
 onUnmounted(() => {
   clearInterval(countdownInterval)
   if (observer) observer.disconnect()
+
+  const video = heroVideo.value
+  if (video) {
+    video.removeEventListener('play', handleHeroVideoPlay)
+    video.removeEventListener('pause', handleHeroVideoStop)
+    video.removeEventListener('ended', handleHeroVideoStop)
+  }
+
+  dispatchHeroVideoState(false)
 })
 </script>
 
@@ -853,25 +867,31 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(135deg, var(--pastel-blush), var(--pastel-lavender), var(--pastel-peach));
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  overflow: hidden;
   text-align: center;
   padding-top: 80px;
 }
-/* If you add a background image, uncomment below: */
-/* .hero-section { background-image: url('/photos/hero-bg.jpg'); } */
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, rgba(18, 33, 55, 0.2), rgba(18, 33, 55, 0.4));
+  z-index: 1;
 }
 
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   padding: 0 20px;
 }
 
@@ -1066,6 +1086,13 @@ onUnmounted(() => {
   background: transparent;
 }
 
+.story-scene {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.4fr) minmax(0, 1fr) minmax(180px, 0.4fr);
+  gap: 22px;
+  align-items: start;
+}
+
 .story-shell {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 24px;
@@ -1073,10 +1100,7 @@ onUnmounted(() => {
 }
 
 .story-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
-  gap: 24px;
-  align-items: start;
+  display: block;
 }
 
 .timeline {
@@ -1140,12 +1164,12 @@ onUnmounted(() => {
   font-weight: 500;
 }
 
-.story-side-gallery {
+.story-collage {
   position: sticky;
-  top: 90px;
+  top: 84px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
   align-content: start;
 }
 
@@ -1158,49 +1182,28 @@ onUnmounted(() => {
   box-shadow: 0 8px 20px rgba(25, 56, 90, 0.14);
 }
 
-.story-side-photo:nth-child(3n + 1) {
-  transform: rotate(-2deg);
+.story-collage-left .story-side-photo:nth-child(odd) {
+  transform: rotate(-1.7deg);
 }
 
-.story-side-photo:nth-child(3n + 2) {
+.story-collage-left .story-side-photo:nth-child(even) {
+  transform: rotate(1.1deg);
+}
+
+.story-collage-right .story-side-photo:nth-child(odd) {
   transform: rotate(1.5deg);
 }
 
-.story-side-photo:nth-child(3n + 3) {
-  transform: rotate(-0.8deg);
+.story-collage-right .story-side-photo:nth-child(even) {
+  transform: rotate(-1.2deg);
 }
 
 .story-side-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   border-radius: 8px;
-}
-
-.memory-strip-section {
-  padding: 0 0 42px;
-}
-
-.memory-strip {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 14px;
-  padding: 10px;
-  box-shadow: 0 8px 24px rgba(25, 56, 90, 0.1);
-}
-
-.memory-item {
-  border-radius: 10px;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-}
-
-.memory-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 /* ===== GALLERY ===== */
@@ -1212,7 +1215,7 @@ onUnmounted(() => {
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: 56px;
+  grid-auto-rows: 44px;
   gap: 12px;
   margin-bottom: 40px;
   align-items: start;
@@ -1224,20 +1227,19 @@ onUnmounted(() => {
 .gallery-item {
   position: relative;
   grid-column: span 3;
-  grid-row: span 3;
+  grid-row: span 5;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   background: #fff;
   padding: 8px;
-  aspect-ratio: auto;
   box-shadow: 0 8px 24px rgba(25, 56, 90, 0.12);
 }
 
-.gallery-item.frame-standard { grid-column: span 3; grid-row: span 4; transform: rotate(-1deg); }
-.gallery-item.frame-tall { grid-column: span 3; grid-row: span 6; transform: rotate(1deg); }
-.gallery-item.frame-wide { grid-column: span 4; grid-row: span 4; transform: rotate(-0.5deg); }
-.gallery-item.frame-feature { grid-column: span 5; grid-row: span 6; transform: rotate(0.9deg); z-index: 2; }
+.gallery-item.frame-standard { grid-column: span 3; grid-row: span 5; transform: rotate(-0.9deg); }
+.gallery-item.frame-tall { grid-column: span 3; grid-row: span 7; transform: rotate(0.8deg); }
+.gallery-item.frame-wide { grid-column: span 4; grid-row: span 5; transform: rotate(-0.7deg); }
+.gallery-item.frame-feature { grid-column: span 5; grid-row: span 7; transform: rotate(0.6deg); z-index: 2; }
 
 .gallery-item img {
   width: 100%;
@@ -1957,9 +1959,8 @@ onUnmounted(() => {
   .countdown-grid { gap: 12px; }
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
-  .story-layout { grid-template-columns: 1fr; }
-  .story-side-gallery { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .memory-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .story-scene { grid-template-columns: 1fr; }
+  .story-collage { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
   .qr-grid { gap: 24px; }
@@ -1978,8 +1979,7 @@ onUnmounted(() => {
   .hero-date { font-size: 1.1rem; }
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
-  .story-side-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .memory-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gallery-grid { gap: 10px; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
