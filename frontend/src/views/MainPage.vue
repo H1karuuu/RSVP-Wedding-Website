@@ -478,7 +478,7 @@ const storyTimeline = ref([
 
 const storySidePhotosLeft = ref([
   { src: '/photos/prenup-11.jpeg', alt: 'Story collage left photo 11', className: 'story-photo-wide' },
-  { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12', className: 'story-photo-tall' },
+  { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12', className: 'story-photo-wide' },
   { src: '/photos/prenup-14.jpeg', alt: 'Story collage left photo 14', className: 'story-photo-wide' },
   { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15', className: 'story-photo-tall' },
   { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16', className: 'story-photo-square' }
@@ -1997,7 +1997,18 @@ onUnmounted(() => {
   .timeline::before { left: 5px; }
   .timeline-dot { left: -23px; }
   .timeline-content { padding: 22px 18px; }
-  .story-collage { position: relative; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 100%; }
+  .story-collage {
+    position: relative;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: min(560px, calc(100% - 4px));
+    margin-left: auto;
+    margin-right: auto;
+    gap: 10px;
+  }
+  .story-collage .story-side-photo {
+    margin: 0 !important;
+    transform: none !important;
+  }
   .story-side-photo.story-photo-wide { grid-column: span 2; }
   .story-side-photo.story-photo-tall { aspect-ratio: 3 / 4; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(520px, calc(100% - 24px)); gap: 10px; }
@@ -2030,7 +2041,7 @@ onUnmounted(() => {
   .timeline { padding-left: 22px; }
   .timeline::before { left: 3px; }
   .timeline-dot { left: -20px; }
-  .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .story-side-photo.story-photo-wide { grid-column: span 2; }
   .gallery-grid { gap: 8px; width: min(400px, calc(100% - 14px)); }
   .details-grid { grid-template-columns: 1fr; }
