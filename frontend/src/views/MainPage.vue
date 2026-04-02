@@ -60,6 +60,25 @@
         </div>
       </section>
 
+      <!-- ===== HIGHLIGHT VIDEO SECTION ===== -->
+      <section class="highlight-video-section fade-in-section" ref="videoSection">
+        <div class="container">
+          <div class="highlight-video-shell">
+            <video
+              ref="featuredVideo"
+              class="highlight-video-player"
+              src="/photos/Prenup-vid.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              controls
+              preload="metadata"
+            ></video>
+          </div>
+        </div>
+      </section>
+
       <!-- ===== OUR STORY SECTION ===== -->
       <section id="our-story" class="story-section fade-in-section" ref="storySection">
         <div class="container story-scene">
@@ -117,23 +136,11 @@
             class="gallery-item"
             v-for="(item, index) in galleryItems"
             :key="`${item.type}-${index}`"
-            :class="[item.type === 'video' ? 'gallery-feature-video' : 'gallery-photo-frame', item.className]"
-            :role="item.type === 'photo' ? 'button' : undefined"
-            @click="item.type === 'photo' ? openLightbox(item.photoIndex) : undefined"
+            :class="['gallery-photo-frame', item.className]"
+            role="button"
+            @click="openLightbox(item.photoIndex)"
           >
-            <img v-if="item.type === 'photo'" :src="item.src" :alt="item.alt" loading="lazy" />
-            <video
-              v-else
-              ref="featuredVideo"
-              class="gallery-feature-video-player"
-              :src="item.src"
-              autoplay
-              muted
-              loop
-              playsinline
-              controls
-              preload="metadata"
-            ></video>
+            <img :src="item.src" :alt="item.alt" loading="lazy" />
             <div class="gallery-overlay">
               <span class="gallery-zoom">✦</span>
             </div>
@@ -509,37 +516,8 @@ const galleryItems = computed(() => {
     className: ['gallery-slot-a', 'gallery-slot-b', 'gallery-slot-c', 'gallery-slot-d', 'gallery-slot-e', 'gallery-slot-f', 'gallery-slot-g', 'gallery-slot-h', 'gallery-slot-i', 'gallery-slot-j'][photoIndex]
   }))
 
-  return [
-    ...photos.slice(0, 4),
-    {
-      type: 'video',
-      src: '/photos/Prenup-vid.mp4',
-      alt: 'Prenup highlight video',
-      className: 'gallery-feature-video'
-    },
-    ...photos.slice(4)
-  ]
+  return photos
 })
-
-const galleryClass = (index) => {
-  const pattern = ['frame-standard', 'frame-wide', 'frame-standard', 'frame-tall', 'frame-standard', 'frame-feature']
-  return pattern[index % pattern.length]
-}
-
-const toggleFeaturedVideo = async () => {
-  const video = featuredVideo.value
-  if (!video) return
-
-  try {
-    if (video.paused) {
-      await video.play()
-    } else {
-      video.pause()
-    }
-  } catch (error) {
-    console.error('Unable to toggle featured video:', error)
-  }
-}
 
 // Lightbox
 const lightboxOpen = ref(false)
@@ -861,16 +839,18 @@ onUnmounted(() => {
 
 .hero-subtitle {
   font-size: 1.2rem;
-  color: var(--text-medium);
+  color: rgba(244, 250, 255, 0.95);
   margin-bottom: 12px;
   letter-spacing: 2px;
+  text-shadow: 0 4px 14px rgba(7, 16, 29, 0.45);
 }
 
 .hero-names {
   font-size: 4.5rem;
-  color: var(--text-accent);
+  color: #f5fbff;
   line-height: 1.1;
   margin-bottom: 16px;
+  text-shadow: 0 6px 18px rgba(8, 18, 32, 0.45);
 }
 
 .hero-divider {
@@ -886,24 +866,26 @@ onUnmounted(() => {
 
 .hero-date {
   font-size: 1.4rem;
-  color: var(--text-medium);
+  color: rgba(241, 248, 255, 0.96);
   letter-spacing: 3px;
   margin-bottom: 8px;
+  text-shadow: 0 4px 14px rgba(7, 16, 29, 0.4);
 }
 
 .hero-tagline {
   font-size: 1.1rem;
-  color: var(--text-light);
+  color: rgba(236, 245, 255, 0.95);
   font-style: italic;
+  text-shadow: 0 4px 14px rgba(7, 16, 29, 0.35);
 }
 
 .hero-hashtag {
   font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.95);
   letter-spacing: 1.5px;
   margin-top: 10px;
   font-weight: 600;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 4px 14px rgba(7, 16, 29, 0.4);
 }
 
 .scroll-indicator {
@@ -1042,6 +1024,30 @@ onUnmounted(() => {
 .calendar-btn {
   margin-top: 16px;
   font-size: 0.95rem;
+}
+
+/* ===== HIGHLIGHT VIDEO ===== */
+.highlight-video-section {
+  padding: 10px 0 8px;
+  background: transparent;
+}
+
+.highlight-video-shell {
+  width: min(860px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 28px rgba(22, 51, 84, 0.14);
+}
+
+.highlight-video-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  object-fit: cover;
+  background: #d9e5f0;
 }
 
 /* ===== OUR STORY ===== */
@@ -1207,14 +1213,13 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(16, minmax(0, 1fr));
   grid-auto-rows: 40px;
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 18px;
   align-items: start;
-  width: min(1420px, calc(100vw - 30px));
+  width: min(1120px, calc(100% - 56px));
   margin-left: auto;
   margin-right: auto;
   justify-items: center;
-  transform: translateX(-18px);
 }
 
 .gallery-item {
@@ -1244,13 +1249,6 @@ onUnmounted(() => {
 .gallery-slot-i { grid-column: 4 / span 3; grid-row: 12 / span 3; }
 .gallery-slot-j { grid-column: 8 / span 3; grid-row: 12 / span 3; }
 
-.gallery-feature-video {
-  grid-column: 4 / span 8;
-  grid-row: 4 / span 8;
-  transform: none !important;
-  z-index: 3;
-}
-
 .gallery-item img {
   width: 100%;
   height: 100%;
@@ -1261,24 +1259,6 @@ onUnmounted(() => {
   background: #fff;
 }
 
-.gallery-feature-video-player {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 8px;
-  background: #fff;
-  cursor: pointer;
-}
-
-.gallery-feature-video .gallery-overlay {
-  background: rgba(18, 33, 55, 0.08);
-  pointer-events: none;
-}
-
-.gallery-feature-video .gallery-zoom {
-  font-size: 1.85rem;
-}
 .gallery-item:hover img {
   transform: scale(1.02);
 }
@@ -1720,13 +1700,12 @@ onUnmounted(() => {
 
 .dresscode-graphic-shell {
   margin: 0 auto 22px;
-  width: min(1220px, calc(100vw - 24px));
+  width: min(1220px, calc(100% - 48px));
   border-radius: 0;
   overflow: visible;
   border: 0;
   background: transparent;
   box-shadow: none;
-  transform: translateX(-18px);
 }
 
 .dresscode-graphic {
@@ -2006,13 +1985,18 @@ onUnmounted(() => {
   .countdown-grid { gap: 12px; }
   .countdown-item { min-width: 80px; padding: 16px 12px; }
   .countdown-number { font-size: 2.2rem; }
-  .story-scene { grid-template-columns: 1fr; max-width: min(980px, calc(100vw - 18px)); }
+  .highlight-video-shell { width: min(920px, calc(100% - 22px)); padding: 6px; border-radius: 16px; }
+  .story-scene { grid-template-columns: 1fr; max-width: calc(100vw - 8px); }
+  .story-shell { padding: 28px 14px; }
+  .timeline { padding-left: 28px; }
+  .timeline::before { left: 5px; }
+  .timeline-dot { left: -23px; }
+  .timeline-content { padding: 22px 18px; }
   .story-collage { position: relative; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 100%; }
   .story-side-photo.story-photo-wide { grid-column: span 2; }
   .story-side-photo.story-photo-tall { aspect-ratio: 3 / 4; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(980px, calc(100vw - 12px)); gap: 10px; transform: none; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(560px, calc(100% - 24px)); gap: 10px; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
-  .gallery-feature-video { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 16 / 10; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
@@ -2022,17 +2006,28 @@ onUnmounted(() => {
   .motif-role-grid { grid-template-columns: 1fr; }
   .motif-circle { width: 44px; height: 44px; }
   .motif-swatch { width: 108px; height: 62px; }
-  .dresscode-graphic-shell { border-radius: 14px; margin-bottom: 18px; transform: none; width: min(960px, calc(100vw - 18px)); }
+  .dresscode-graphic-shell { border-radius: 14px; margin-bottom: 18px; width: min(960px, calc(100% - 22px)); }
 }
 
 @media (max-width: 480px) {
   .hero-names { font-size: 2.4rem; }
+  .hero-subtitle,
+  .hero-date,
+  .hero-tagline,
+  .hero-hashtag {
+    text-shadow: 0 5px 14px rgba(8, 18, 31, 0.48);
+  }
   .hero-date { font-size: 1.1rem; }
   .countdown-item { min-width: 70px; }
   .countdown-number { font-size: 1.8rem; }
+  .story-section { padding-left: 8px; padding-right: 8px; }
+  .story-shell { padding: 24px 10px; }
+  .timeline { padding-left: 22px; }
+  .timeline::before { left: 3px; }
+  .timeline-dot { left: -20px; }
   .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .story-side-photo.story-photo-wide { grid-column: span 2; }
-  .gallery-grid { gap: 8px; width: calc(100vw - 10px); }
+  .gallery-grid { gap: 8px; width: min(420px, calc(100% - 16px)); }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
   .attire-guide-kicker { font-size: 2rem; }
