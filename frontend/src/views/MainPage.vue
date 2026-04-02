@@ -1981,7 +1981,7 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .hero-section {
     background-size: cover;
-    background-position: 44% 38%;
+    background-position: 38% 46%;
     background-repeat: no-repeat;
   }
 

@@ -6,7 +6,7 @@
       <p class="section-subtitle">We would love to celebrate with you!</p>
 
       <div class="rsvp-photo-strip">
-        <div class="strip-item" v-for="photo in rsvpStripPhotos" :key="photo.src">
+        <div class="strip-item" v-for="photo in rsvpStripPhotos" :key="photo.src" :class="photo.className">
           <img :src="photo.src" :alt="photo.alt" loading="lazy" />
         </div>
       </div>
@@ -138,8 +138,7 @@ const form = reactive({
 
 const rsvpStripPhotos = [
   { src: '/photos/couple-1.jpg', alt: 'RSVP memory 1' },
-  { src: '/photos/couple-2.jpg', alt: 'RSVP memory 2' },
-  { src: '/photos/couple-3.jpg', alt: 'RSVP memory 3' },
+  { src: '/photos/couple-3.jpg', alt: 'RSVP memory 3', className: 'landscape' },
 ]
 
 const handleSubmit = async () => {
@@ -220,7 +219,7 @@ const resetForm = () => {
 .rsvp-photo-strip {
   margin: 26px auto 6px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
   max-width: 780px;
 }
@@ -239,8 +238,13 @@ const resetForm = () => {
   display: block;
 }
 
+.strip-item.landscape img {
+  aspect-ratio: 16 / 10;
+}
+
 @media (max-width: 768px) {
   .rsvp-photo-strip {
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 
