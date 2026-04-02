@@ -542,7 +542,7 @@ const galleryItems = computed(() => {
     photoIndex
   }))
 
-  return photos
+  return photos.slice(0, 9)
 })
 
 const lightboxPhotos = computed(() => {
@@ -1287,11 +1287,11 @@ onUnmounted(() => {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
   margin-bottom: 18px;
   align-items: start;
-  width: min(940px, calc(100% - 28px));
+  width: min(980px, calc(100% - 28px));
   margin-left: auto;
   margin-right: auto;
 }
@@ -1299,7 +1299,7 @@ onUnmounted(() => {
 .gallery-item {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
