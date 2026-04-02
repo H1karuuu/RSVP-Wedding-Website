@@ -479,7 +479,6 @@ const storyTimeline = ref([
 const storySidePhotosLeft = ref([
   { src: '/photos/prenup-11.jpeg', alt: 'Story collage left photo 11', className: 'story-photo-wide' },
   { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12', className: 'story-photo-tall' },
-  { src: '/photos/prenup-13.jpeg', alt: 'Story collage left photo 13', className: 'story-photo-square' },
   { src: '/photos/prenup-14.jpeg', alt: 'Story collage left photo 14', className: 'story-photo-wide' },
   { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15', className: 'story-photo-tall' },
   { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16', className: 'story-photo-square' }
@@ -490,8 +489,8 @@ const storySidePhotosRight = ref([
   { src: '/photos/prenup-18.jpeg', alt: 'Story collage right photo 18', className: 'story-photo-wide' },
   { src: '/photos/prenup-19.jpeg', alt: 'Story collage right photo 19', className: 'story-photo-wide' },
   { src: '/photos/prenup-20.jpeg', alt: 'Story collage right photo 20', className: 'story-photo-wide' },
-  { src: '/photos/prenup-21.jpeg', alt: 'Story collage right photo 21', className: 'story-photo-square' },
-  { src: '/photos/prenup-22.jpeg', alt: 'Story collage right photo 22', className: 'story-photo-tall' }
+  { src: '/photos/prenup-21.jpeg', alt: 'Story collage right photo 21', className: 'story-photo-wide' },
+  { src: '/photos/prenup-22.jpeg', alt: 'Story collage right photo 22', className: 'story-photo-wide' }
 ])
 
 // ===== GALLERY =====
@@ -1981,7 +1980,7 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .hero-section {
     background-size: cover;
-    background-position: 38% 46%;
+    background-position: 34% 50%;
     background-repeat: no-repeat;
   }
 
