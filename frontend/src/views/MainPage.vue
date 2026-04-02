@@ -567,7 +567,8 @@ const principalSponsors = ref({
     'Maan Zuñiga',
     'Jimmy Zuñiga',
     'Joel Zuñiga',
-    'Less Zuñiga'
+    'Less Zuñiga',
+    'Jessica Zuñiga-Capuno'
   ],
   right: [
     'Rolando Pasia',
@@ -586,7 +587,6 @@ const principalSponsors = ref({
 const secondarySponsors = ref([
   'Era Ganabban',
   'Rosa Paola Louise Sta. Ana',
-  'Jessica Zuñiga',
   'Francsico Zuñiga',
   'Acmad Bacolod',
   'Armando Ignacio',
