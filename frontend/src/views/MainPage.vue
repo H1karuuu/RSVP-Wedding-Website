@@ -587,6 +587,7 @@ const secondarySponsors = ref([
   'Era Ganabban',
   'Rosa Paola Louise Sta. Ana',
   'Jessica Zuñiga',
+  'Francsico Zuñiga',
   'Acmad Bacolod',
   'Armando Ignacio',
   'Jeffrey Cham',
@@ -1699,7 +1700,10 @@ onUnmounted(() => {
 
 .dresscode-graphic-shell {
   margin: 0 auto 22px;
-  width: min(1220px, calc(100% - 48px));
+  width: min(1220px, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 0;
   overflow: visible;
   border: 0;
@@ -1708,9 +1712,11 @@ onUnmounted(() => {
 }
 
 .dresscode-graphic {
-  width: 100%;
+  width: min(1120px, 100%);
   display: block;
   height: auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 .motif-circle-row {
@@ -2023,7 +2029,7 @@ onUnmounted(() => {
   .motif-role-grid { grid-template-columns: 1fr; }
   .motif-circle { width: 44px; height: 44px; }
   .motif-swatch { width: 108px; height: 62px; }
-  .dresscode-graphic-shell { border-radius: 14px; margin-bottom: 18px; width: min(960px, calc(100% - 22px)); }
+  .dresscode-graphic-shell { border-radius: 14px; margin-bottom: 18px; width: min(960px, 100%); }
 }
 
 @media (max-width: 480px) {
