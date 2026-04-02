@@ -91,6 +91,7 @@ const sparkleStyle = (i) => ({
 <style scoped>
 .landing-page {
   min-height: 100vh;
+  min-height: 100svh;
   background:
     radial-gradient(circle at top, rgba(199, 220, 241, 0.6), rgba(235, 242, 249, 0.95) 45%, #f0f4f8 100%);
   overflow-x: hidden;
@@ -99,6 +100,7 @@ const sparkleStyle = (i) => ({
 .envelope-section {
   position: relative;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;

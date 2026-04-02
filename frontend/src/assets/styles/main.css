@@ -95,11 +95,21 @@ img {
 
 /* ===== SECTION FADE-IN ANIMATION ===== */
 .fade-in-section {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 .fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-enhanced .fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.js-enhanced .fade-in-section.visible {
   opacity: 1;
   transform: translateY(0);
 }

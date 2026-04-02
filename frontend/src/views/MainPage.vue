@@ -5,14 +5,14 @@
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-subtitle elegant">Together with their families</p>
-        <h1 class="hero-names cursive">MJ&Ryan</h1>
+        <h1 class="hero-names cursive">MJ&nbsp;&amp;&nbsp;Ryan</h1>
         <div class="hero-divider">
           <span class="ornament">—</span>
           <span class="ornament-center">♡</span>
           <span class="ornament">—</span>
         </div>
         <p class="hero-date elegant">June 04, 2026 &bull; Thursday</p>
-        <p class="hero-tagline elegant">"Two souls, one heart"</p>
+        <p class="hero-tagline elegant">"Two souls, one heart, to forever"</p>
         <p class="hero-hashtag elegant">#GODsentTheRYghtoneforMJ</p>
       </div>
       <div class="scroll-indicator">
@@ -89,7 +89,7 @@
               :key="photo.src + index"
               :class="photo.className"
             >
-              <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+              <img :src="photo.src" :alt="photo.alt" loading="auto" decoding="async" />
             </div>
           </aside>
 
@@ -118,7 +118,7 @@
               :key="photo.src + index"
               :class="photo.className"
             >
-              <img :src="photo.src" :alt="photo.alt" loading="lazy" />
+              <img :src="photo.src" :alt="photo.alt" loading="auto" decoding="async" />
             </div>
           </aside>
         </div>
@@ -133,14 +133,13 @@
 
         <div class="gallery-grid">
           <div
-            class="gallery-item"
+            class="gallery-item gallery-photo-frame"
             v-for="(item, index) in galleryItems"
             :key="`${item.type}-${index}`"
-            :class="['gallery-photo-frame', item.className]"
             role="button"
             @click="openLightbox(item.photoIndex)"
           >
-            <img :src="item.src" :alt="item.alt" loading="lazy" />
+            <img :src="item.src" :alt="item.alt" loading="auto" decoding="async" />
             <div class="gallery-overlay">
               <span class="gallery-zoom">✦</span>
             </div>
@@ -389,7 +388,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-hearts">♡ ♡ ♡</div>
-        <p class="footer-names cursive">MJ&Ryan</p>
+        <p class="footer-names cursive">MJ &amp; Ryan</p>
         <p class="footer-date elegant">June 04, 2026</p>
         <p class="footer-hashtag elegant">#GODsentTheRYghtoneforMJ</p>
         <div class="footer-divider"></div>
@@ -480,12 +479,12 @@ const storySidePhotosLeft = ref([
   { src: '/photos/prenup-11.jpeg', alt: 'Story collage left photo 11', className: 'story-photo-wide' },
   { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12', className: 'story-photo-wide' },
   { src: '/photos/prenup-14.jpeg', alt: 'Story collage left photo 14', className: 'story-photo-wide' },
-  { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15', className: 'story-photo-tall' },
-  { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16', className: 'story-photo-square' }
+  { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15', className: 'story-photo-wide' },
+  { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16', className: 'story-photo-wide' }
 ])
 
 const storySidePhotosRight = ref([
-  { src: '/photos/prenup-17.jpeg', alt: 'Story collage right photo 17', className: 'story-photo-square' },
+  { src: '/photos/prenup-17.jpeg', alt: 'Story collage right photo 17', className: 'story-photo-wide' },
   { src: '/photos/prenup-18.jpeg', alt: 'Story collage right photo 18', className: 'story-photo-wide' },
   { src: '/photos/prenup-19.jpeg', alt: 'Story collage right photo 19', className: 'story-photo-wide' },
   { src: '/photos/prenup-20.jpeg', alt: 'Story collage right photo 20', className: 'story-photo-wide' },
@@ -511,8 +510,7 @@ const galleryItems = computed(() => {
   const photos = galleryPhotos.value.map((photo, photoIndex) => ({
     ...photo,
     type: 'photo',
-    photoIndex,
-    className: ['gallery-slot-a', 'gallery-slot-b', 'gallery-slot-c', 'gallery-slot-d', 'gallery-slot-e', 'gallery-slot-f', 'gallery-slot-g', 'gallery-slot-h', 'gallery-slot-i', 'gallery-slot-j'][photoIndex]
+    photoIndex
   }))
 
   return photos
@@ -599,7 +597,7 @@ const maidOfHonor = ref('Bernadeth Villa')
 const maidenOfHonor = ref('Sharria Canciano')
 
 const groomsmen = ref([
-  'JC Lopez',
+  'John Christian Lopez',
   'John Ernest',
   'Gino Villa',
   'Jared Zuñiga',
@@ -628,7 +626,7 @@ const bridesmaids = ref([
 
 const candle = ref(['John Ernest', 'Julia Antonio'])
 const veil = ref(['Arjay Lopez', 'Sharria Canciano'])
-const cord = ref(['JC Lopez', 'Leyan Cameron Villa'])
+const cord = ref(['John Christian Lopez', 'Leyan Cameron Villa'])
 
 const symbolBearers = ref([
   { role: 'Banner', names: ['Hughann Genesis Villa', 'Toni Marie Villa'] },
@@ -721,24 +719,34 @@ const handleHeroVideoStop = () => {
 }
 
 onMounted(() => {
+  document.documentElement.classList.add('js-enhanced')
+
   countdownInterval = setInterval(() => {
     now.value = new Date()
   }, 1000)
 
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible')
-        }
-      })
-    },
-    { threshold: 0.15 }
-  )
+  const sections = document.querySelectorAll('.fade-in-section')
+  const hasIntersectionObserver = typeof window !== 'undefined' && 'IntersectionObserver' in window
 
-  document.querySelectorAll('.fade-in-section').forEach((el) => {
-    observer.observe(el)
-  })
+  if (hasIntersectionObserver) {
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+          }
+        })
+      },
+      { threshold: 0.15 }
+    )
+
+    sections.forEach((el) => {
+      observer.observe(el)
+    })
+  } else {
+    // In-app browsers can miss this API; keep content visible as fallback.
+    sections.forEach((el) => el.classList.add('visible'))
+  }
 
   const video = featuredVideo.value
   if (video) {
@@ -756,6 +764,7 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(countdownInterval)
   if (observer) observer.disconnect()
+  document.documentElement.classList.remove('js-enhanced')
 
   const video = featuredVideo.value
   if (video) {
@@ -812,6 +821,7 @@ onUnmounted(() => {
 /* ===== HERO ===== */
 .hero-section {
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -850,6 +860,8 @@ onUnmounted(() => {
   color: #f5fbff;
   line-height: 1.1;
   margin-bottom: 16px;
+  letter-spacing: 4px;
+  word-spacing: 0.26em;
   text-shadow: 0 6px 18px rgba(8, 18, 32, 0.45);
 }
 
@@ -1140,7 +1152,7 @@ onUnmounted(() => {
 .story-collage {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   align-content: start;
   align-self: start;
@@ -1148,7 +1160,7 @@ onUnmounted(() => {
 }
 
 .story-side-photo {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   border-radius: 12px;
   overflow: hidden;
   padding: 5px;
@@ -1157,16 +1169,15 @@ onUnmounted(() => {
 }
 
 .story-side-photo.story-photo-wide {
-  grid-column: span 2;
   aspect-ratio: 4 / 3;
 }
 
 .story-side-photo.story-photo-tall {
-  aspect-ratio: 3 / 4.5;
+  aspect-ratio: 4 / 3;
 }
 
 .story-side-photo.story-photo-square {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
 }
 
 .story-collage-left .story-side-photo:nth-child(3n + 1),
@@ -1211,21 +1222,19 @@ onUnmounted(() => {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-auto-rows: 36px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
   margin-bottom: 18px;
   align-items: start;
-  width: min(900px, calc(100% - 44px));
+  width: min(940px, calc(100% - 28px));
   margin-left: auto;
   margin-right: auto;
-  justify-items: center;
 }
 
 .gallery-item {
   position: relative;
-  grid-column: span 3;
-  grid-row: span 3;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
@@ -1237,17 +1246,6 @@ onUnmounted(() => {
 .gallery-photo-frame {
   transform: rotate(0deg) !important;
 }
-
-.gallery-slot-a { grid-column: 1 / span 3; grid-row: 1 / span 3; }
-.gallery-slot-b { grid-column: 4 / span 3; grid-row: 1 / span 3; }
-.gallery-slot-c { grid-column: 7 / span 3; grid-row: 1 / span 3; }
-.gallery-slot-d { grid-column: 10 / span 3; grid-row: 1 / span 3; }
-.gallery-slot-e { grid-column: 1 / span 3; grid-row: 4 / span 3; }
-.gallery-slot-f { grid-column: 4 / span 4; grid-row: 4 / span 4; }
-.gallery-slot-g { grid-column: 8 / span 5; grid-row: 4 / span 4; }
-.gallery-slot-h { grid-column: 1 / span 4; grid-row: 9 / span 4; }
-.gallery-slot-i { grid-column: 5 / span 4; grid-row: 9 / span 4; }
-.gallery-slot-j { grid-column: 9 / span 4; grid-row: 9 / span 4; }
 
 .gallery-item img {
   width: 100%;
@@ -2015,11 +2013,10 @@ onUnmounted(() => {
     margin: 0 !important;
     transform: none !important;
   }
-  .story-side-photo.story-photo-wide { grid-column: span 2; }
-  .story-side-photo.story-photo-tall { aspect-ratio: 3 / 4; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(520px, calc(100% - 24px)); gap: 10px; }
+  .story-side-photo.story-photo-wide { grid-column: auto; }
+  .story-side-photo.story-photo-tall { aspect-ratio: 4 / 3; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); width: min(520px, calc(100% - 24px)); gap: 10px; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
-  .gallery-slot-f img { object-position: center 34%; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
@@ -2049,7 +2046,7 @@ onUnmounted(() => {
   .timeline::before { left: 3px; }
   .timeline-dot { left: -20px; }
   .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .story-side-photo.story-photo-wide { grid-column: span 2; }
+  .story-side-photo.story-photo-wide { grid-column: auto; }
   .gallery-grid { gap: 8px; width: min(400px, calc(100% - 14px)); }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
