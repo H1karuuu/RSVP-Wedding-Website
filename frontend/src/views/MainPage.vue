@@ -87,7 +87,7 @@
               class="story-side-photo"
               v-for="(photo, index) in storySidePhotosLeft"
               :key="photo.src + index"
-              :class="[photo.className, { 'story-last-centered': photo.src.includes('prenup-16') }]"
+              :class="photo.className"
               role="button"
               tabindex="0"
               @click="openStoryLightbox(photo.src)"
@@ -127,7 +127,7 @@
               class="story-side-photo"
               v-for="(photo, index) in storySidePhotosRight"
               :key="photo.src + index"
-              :class="[photo.className, { 'story-last-centered': photo.src.includes('prenup-16') }]"
+              :class="photo.className"
               role="button"
               tabindex="0"
               @click="openStoryLightbox(photo.src)"
@@ -1223,12 +1223,6 @@ onUnmounted(() => {
   box-shadow: 0 8px 20px rgba(25, 56, 90, 0.14);
 }
 
-.story-side-photo.story-last-centered {
-  grid-column: 1 / -1;
-  justify-self: center;
-  width: min(240px, 100%);
-}
-
 .story-side-photo.story-photo-wide {
   aspect-ratio: 4 / 3;
 }
@@ -2083,11 +2077,6 @@ onUnmounted(() => {
     transform: none !important;
   }
   .story-side-photo.story-photo-wide { grid-column: auto; }
-  .story-side-photo.story-last-centered {
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: min(260px, 100%);
-  }
   .story-side-photo.story-photo-tall { aspect-ratio: 4 / 3; }
   .story-side-photo img.story-prenup-15 { object-position: center 22%; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); width: min(520px, calc(100% - 24px)); gap: 10px; }
@@ -2123,11 +2112,6 @@ onUnmounted(() => {
   .timeline-dot { left: -20px; }
   .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .story-side-photo.story-photo-wide { grid-column: auto; }
-  .story-side-photo.story-last-centered {
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: min(240px, 100%);
-  }
   .story-side-photo img.story-prenup-15 { object-position: center 26%; }
   .gallery-grid { gap: 8px; width: min(400px, calc(100% - 14px)); }
   .gallery-item img.gallery-prenup-6 { object-position: center 30%; }
