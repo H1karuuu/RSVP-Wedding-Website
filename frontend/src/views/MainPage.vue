@@ -2013,6 +2013,7 @@ onUnmounted(() => {
   .story-side-photo.story-photo-tall { aspect-ratio: 3 / 4; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; width: min(520px, calc(100% - 24px)); gap: 10px; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
+  .gallery-slot-f img { object-position: center 60%; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
