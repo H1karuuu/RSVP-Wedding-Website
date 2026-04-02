@@ -252,6 +252,11 @@ const resetForm = () => {
   .strip-item {
     border-width: 3px;
   }
+
+  .strip-item.landscape img {
+    aspect-ratio: 1 / 1;
+    object-position: center 28%;
+  }
 }
 
 .rsvp-form-section {
