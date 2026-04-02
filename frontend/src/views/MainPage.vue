@@ -778,6 +778,8 @@ const handleHeroVideoFullscreenChange = () => {
 
   // Keep inline playback quiet so background music can continue.
   video.muted = !fullscreen
+  // Use full-frame rendering in fullscreen to avoid the cropped/zoomed look.
+  video.style.objectFit = fullscreen ? 'contain' : 'cover'
 
   dispatchHeroVideoFullscreenState(fullscreen)
 }
@@ -1125,6 +1127,15 @@ onUnmounted(() => {
   border-radius: 14px;
   object-fit: cover;
   background: #d9e5f0;
+}
+
+.highlight-video-player:fullscreen,
+.highlight-video-player:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  background: #000;
+  border-radius: 0;
 }
 
 /* ===== OUR STORY ===== */
