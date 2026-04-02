@@ -44,7 +44,7 @@
 
             <!-- Email (optional) -->
             <div class="form-group">
-              <label class="form-label elegant">Email</label>
+              <label class="form-label elegant">Email (optional)</label>
               <input
                 v-model="form.email"
                 type="email"
@@ -55,7 +55,7 @@
 
             <!-- Phone -->
             <div class="form-group">
-              <label class="form-label elegant">Phone Number</label>
+              <label class="form-label elegant">Phone Number (optional)</label>
               <input
                 v-model="form.phone"
                 type="tel"

@@ -49,6 +49,10 @@
       <p class="tap-text" :class="{ hidden: envelopeOpened }">
         <span class="tap-icon">✉</span> Tap to open your invitation
       </p>
+
+      <p class="browser-note" :class="{ hidden: envelopeOpened }">
+        Best viewed in your phone browser (Safari or Chrome) for a smoother experience.
+      </p>
     </section>
 
   </div>
@@ -280,6 +284,26 @@ const sparkleStyle = (i) => ({
   display: inline-block;
   animation: bounce 1.5s ease infinite;
 }
+
+.browser-note {
+  max-width: 420px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(65, 92, 120, 0.95);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(111, 144, 177, 0.28);
+  border-radius: 12px;
+  padding: 9px 14px;
+  backdrop-filter: blur(2px);
+  z-index: 10;
+  transition: opacity 0.5s;
+}
+
+.browser-note.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 @keyframes pulse {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
@@ -349,6 +373,11 @@ const sparkleStyle = (i) => ({
 
   .invitation-popup {
     top: 82%;
+  }
+
+  .browser-note {
+    max-width: 90vw;
+    font-size: 0.88rem;
   }
 }
 </style>

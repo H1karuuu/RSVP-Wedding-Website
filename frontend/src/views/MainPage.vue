@@ -1979,6 +1979,13 @@ onUnmounted(() => {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+  .hero-section {
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-color: #7f8f9f;
+  }
+
   .hero-names { font-size: 3rem; }
   .forever-background { background-size: auto 100%; }
   .save-date-layout { grid-template-columns: 1fr; }
