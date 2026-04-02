@@ -542,7 +542,7 @@ const galleryItems = computed(() => {
     photoIndex
   }))
 
-  return photos.slice(0, 9)
+  return photos
 })
 
 const lightboxPhotos = computed(() => {
@@ -1351,6 +1351,12 @@ onUnmounted(() => {
 .gallery-item:hover .gallery-zoom {
   opacity: 1;
   transform: scale(1);
+}
+
+@media (min-width: 769px) {
+  .gallery-item:nth-child(10) {
+    grid-column: 2;
+  }
 }
 
 /* Video */
