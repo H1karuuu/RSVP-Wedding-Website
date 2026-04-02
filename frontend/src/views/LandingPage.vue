@@ -24,14 +24,14 @@
       <div class="envelope-stage" :class="{ opened: envelopeOpened }">
         <img
           class="envelope-closed"
-          src="/photos/Red and White Elegant Wedding Save the Date Invitation Video (2).png"
+          src="/photos/Closed_Enve.png"
           alt="Closed envelope"
           loading="eager"
         />
 
         <img
           class="envelope-open"
-          src="/photos/Screenshot_2026-03-20_221318-removebg-preview.png"
+          src="/photos/Open_Enve.png"
           alt="Opened envelope"
           loading="eager"
         />
