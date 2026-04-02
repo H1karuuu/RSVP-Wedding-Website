@@ -89,7 +89,13 @@
               :key="photo.src + index"
               :class="photo.className"
             >
-              <img :src="photo.src" :alt="photo.alt" loading="auto" decoding="async" />
+              <img
+                :src="photo.src"
+                :alt="photo.alt"
+                loading="auto"
+                decoding="async"
+                :class="{ 'story-prenup-15': photo.src.includes('prenup-15') }"
+              />
             </div>
           </aside>
 
@@ -118,7 +124,13 @@
               :key="photo.src + index"
               :class="photo.className"
             >
-              <img :src="photo.src" :alt="photo.alt" loading="auto" decoding="async" />
+              <img
+                :src="photo.src"
+                :alt="photo.alt"
+                loading="auto"
+                decoding="async"
+                :class="{ 'story-prenup-15': photo.src.includes('prenup-15') }"
+              />
             </div>
           </aside>
         </div>
@@ -1220,6 +1232,10 @@ onUnmounted(() => {
   border-radius: 8px;
 }
 
+.story-side-photo img.story-prenup-15 {
+  object-position: center 18%;
+}
+
 /* ===== GALLERY ===== */
 .gallery-section {
   padding: var(--section-padding);
@@ -2025,6 +2041,7 @@ onUnmounted(() => {
   }
   .story-side-photo.story-photo-wide { grid-column: auto; }
   .story-side-photo.story-photo-tall { aspect-ratio: 4 / 3; }
+  .story-side-photo img.story-prenup-15 { object-position: center 22%; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); width: min(520px, calc(100% - 24px)); gap: 10px; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
   .gallery-item img.gallery-prenup-6 { object-position: center 26%; }
@@ -2058,6 +2075,7 @@ onUnmounted(() => {
   .timeline-dot { left: -20px; }
   .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .story-side-photo.story-photo-wide { grid-column: auto; }
+  .story-side-photo img.story-prenup-15 { object-position: center 26%; }
   .gallery-grid { gap: 8px; width: min(400px, calc(100% - 14px)); }
   .gallery-item img.gallery-prenup-6 { object-position: center 30%; }
   .details-grid { grid-template-columns: 1fr; }
