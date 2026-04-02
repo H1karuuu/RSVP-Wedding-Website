@@ -139,7 +139,13 @@
             role="button"
             @click="openLightbox(item.photoIndex)"
           >
-            <img :src="item.src" :alt="item.alt" loading="auto" decoding="async" />
+            <img
+              :src="item.src"
+              :alt="item.alt"
+              loading="auto"
+              decoding="async"
+              :class="{ 'gallery-prenup-6': item.photoIndex === 5 }"
+            />
             <div class="gallery-overlay">
               <span class="gallery-zoom">✦</span>
             </div>
@@ -630,7 +636,7 @@ const cord = ref(['John Christian Lopez', 'Leyan Cameron Villa'])
 
 const symbolBearers = ref([
   { role: 'Banner', names: ['Hughann Genesis Villa', 'Toni Marie Villa'] },
-  { role: 'Flower', names: ['Yajra Lopez', 'Yeliza Lopez', 'Aya Piamonte'] },
+  { role: 'Flower', names: ['Yajrabela Lopez', 'Yeliza Lopez', 'Aya Piamonte'] },
   { role: 'Bible', names: ['Zion Delos Santos'] },
   { role: 'Coin', names: ['Achilles Villa'] },
   { role: 'Ring', names: ['Gabriel Canciano'] }
@@ -1255,6 +1261,10 @@ onUnmounted(() => {
   transition: transform 0.5s ease;
   border-radius: 8px;
   background: #fff;
+}
+
+.gallery-item img.gallery-prenup-6 {
+  object-position: center 22%;
 }
 
 .gallery-item:hover img {
@@ -2017,6 +2027,7 @@ onUnmounted(() => {
   .story-side-photo.story-photo-tall { aspect-ratio: 4 / 3; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); width: min(520px, calc(100% - 24px)); gap: 10px; }
   .gallery-item { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 4 / 3; transform: none !important; }
+  .gallery-item img.gallery-prenup-6 { object-position: center 26%; }
   .qr-grid { gap: 24px; }
   .entourage-trio { grid-template-columns: 1fr; }
   .entourage-pair { grid-template-columns: 1fr; }
@@ -2048,6 +2059,7 @@ onUnmounted(() => {
   .story-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .story-side-photo.story-photo-wide { grid-column: auto; }
   .gallery-grid { gap: 8px; width: min(400px, calc(100% - 14px)); }
+  .gallery-item img.gallery-prenup-6 { object-position: center 30%; }
   .details-grid { grid-template-columns: 1fr; }
   .bearers-grid { flex-direction: column; align-items: center; }
   .attire-guide-kicker { font-size: 2rem; }
