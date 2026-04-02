@@ -761,16 +761,25 @@ const colorMotifByRole = ref([
 const featuredVideo = ref(null)
 let observer
 
-const dispatchHeroVideoState = (isPlaying) => {
-  window.dispatchEvent(new CustomEvent('wedding:hero-video-state', { detail: { isPlaying } }))
+const dispatchHeroVideoFullscreenState = (isFullscreen) => {
+  window.dispatchEvent(new CustomEvent('wedding:hero-video-fullscreen-state', { detail: { isFullscreen } }))
 }
 
-const handleHeroVideoPlay = () => {
-  dispatchHeroVideoState(true)
+const isVideoFullscreen = (video) => {
+  const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+  return fullscreenElement === video || Boolean(video?.webkitDisplayingFullscreen)
 }
 
-const handleHeroVideoStop = () => {
-  dispatchHeroVideoState(false)
+const handleHeroVideoFullscreenChange = () => {
+  const video = featuredVideo.value
+  if (!video) return
+
+  const fullscreen = isVideoFullscreen(video)
+
+  // Keep inline playback quiet so background music can continue.
+  video.muted = !fullscreen
+
+  dispatchHeroVideoFullscreenState(fullscreen)
 }
 
 onMounted(() => {
@@ -805,14 +814,14 @@ onMounted(() => {
 
   const video = featuredVideo.value
   if (video) {
-    video.addEventListener('play', handleHeroVideoPlay)
-    video.addEventListener('pause', handleHeroVideoStop)
-    video.addEventListener('ended', handleHeroVideoStop)
+    // Default to muted inline playback.
+    video.muted = true
+    video.addEventListener('webkitbeginfullscreen', handleHeroVideoFullscreenChange)
+    video.addEventListener('webkitendfullscreen', handleHeroVideoFullscreenChange)
+    document.addEventListener('fullscreenchange', handleHeroVideoFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleHeroVideoFullscreenChange)
 
-    // Keep music paused if the video starts automatically.
-    if (!video.paused) {
-      dispatchHeroVideoState(true)
-    }
+    handleHeroVideoFullscreenChange()
   }
 })
 
@@ -823,12 +832,13 @@ onUnmounted(() => {
 
   const video = featuredVideo.value
   if (video) {
-    video.removeEventListener('play', handleHeroVideoPlay)
-    video.removeEventListener('pause', handleHeroVideoStop)
-    video.removeEventListener('ended', handleHeroVideoStop)
+    video.removeEventListener('webkitbeginfullscreen', handleHeroVideoFullscreenChange)
+    video.removeEventListener('webkitendfullscreen', handleHeroVideoFullscreenChange)
+    document.removeEventListener('fullscreenchange', handleHeroVideoFullscreenChange)
+    document.removeEventListener('webkitfullscreenchange', handleHeroVideoFullscreenChange)
   }
 
-  dispatchHeroVideoState(false)
+  dispatchHeroVideoFullscreenState(false)
 })
 </script>
 

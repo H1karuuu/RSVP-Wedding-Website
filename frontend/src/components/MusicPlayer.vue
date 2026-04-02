@@ -12,7 +12,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const isPlaying = ref(false)
 let audio = null
-let pausedByHeroVideo = false
+let pausedByFullscreenVideo = false
 let userPaused = false
 
 const startMusic = async () => {
@@ -42,29 +42,29 @@ const removeAutoplayFallbackListeners = () => {
   document.removeEventListener('keydown', autoplayFallbackHandler)
 }
 
-const handleHeroVideoState = (event) => {
-  const isHeroVideoPlaying = Boolean(event?.detail?.isPlaying)
+const handleHeroVideoFullscreenState = (event) => {
+  const isHeroVideoFullscreen = Boolean(event?.detail?.isFullscreen)
   if (!audio) return
 
-  if (isHeroVideoPlaying) {
+  if (isHeroVideoFullscreen) {
     if (!audio.paused) {
       audio.pause()
       isPlaying.value = false
-      pausedByHeroVideo = true
+      pausedByFullscreenVideo = true
     }
     return
   }
 
-  if (pausedByHeroVideo && !userPaused) {
+  if (pausedByFullscreenVideo && !userPaused) {
     audio.play().then(() => {
       isPlaying.value = true
-      pausedByHeroVideo = false
+      pausedByFullscreenVideo = false
     }).catch(() => {
       isPlaying.value = false
-      pausedByHeroVideo = false
+      pausedByFullscreenVideo = false
     })
   } else {
-    pausedByHeroVideo = false
+    pausedByFullscreenVideo = false
   }
 }
 
@@ -72,7 +72,7 @@ onMounted(() => {
   audio = new Audio('/music/bg-music.mp3')
   audio.loop = true
   audio.volume = 0.3
-  window.addEventListener('wedding:hero-video-state', handleHeroVideoState)
+  window.addEventListener('wedding:hero-video-fullscreen-state', handleHeroVideoFullscreenState)
 
   startMusic().then(() => {
     if (!isPlaying.value) {
@@ -83,7 +83,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   removeAutoplayFallbackListeners()
-  window.removeEventListener('wedding:hero-video-state', handleHeroVideoState)
+  window.removeEventListener('wedding:hero-video-fullscreen-state', handleHeroVideoFullscreenState)
   if (audio) {
     audio.pause()
     audio = null
@@ -100,7 +100,7 @@ const toggleMusic = () => {
     audio.play().then(() => {
       isPlaying.value = true
       userPaused = false
-      pausedByHeroVideo = false
+      pausedByFullscreenVideo = false
     }).catch(() => {
       isPlaying.value = false
     })
