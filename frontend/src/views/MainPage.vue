@@ -1980,10 +1980,9 @@ onUnmounted(() => {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero-section {
-    background-size: contain;
-    background-position: center top;
+    background-size: cover;
+    background-position: 44% 38%;
     background-repeat: no-repeat;
-    background-color: #7f8f9f;
   }
 
   .hero-names { font-size: 3rem; }
