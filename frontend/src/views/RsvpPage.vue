@@ -138,6 +138,7 @@ const form = reactive({
 
 const rsvpStripPhotos = [
   { src: '/photos/couple-1.jpg', alt: 'RSVP memory 1' },
+  { src: '/photos/couple-2.jpg', alt: 'RSVP memory 2' },
   { src: '/photos/couple-3.jpg', alt: 'RSVP memory 3', className: 'landscape' },
 ]
 

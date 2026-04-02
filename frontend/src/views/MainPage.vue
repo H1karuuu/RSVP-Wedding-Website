@@ -488,7 +488,7 @@ const storySidePhotosLeft = ref([
 const storySidePhotosRight = ref([
   { src: '/photos/prenup-17.jpeg', alt: 'Story collage right photo 17', className: 'story-photo-square' },
   { src: '/photos/prenup-18.jpeg', alt: 'Story collage right photo 18', className: 'story-photo-wide' },
-  { src: '/photos/prenup-19.jpeg', alt: 'Story collage right photo 19', className: 'story-photo-tall' },
+  { src: '/photos/prenup-19.jpeg', alt: 'Story collage right photo 19', className: 'story-photo-wide' },
   { src: '/photos/prenup-20.jpeg', alt: 'Story collage right photo 20', className: 'story-photo-wide' },
   { src: '/photos/prenup-21.jpeg', alt: 'Story collage right photo 21', className: 'story-photo-square' },
   { src: '/photos/prenup-22.jpeg', alt: 'Story collage right photo 22', className: 'story-photo-tall' }
