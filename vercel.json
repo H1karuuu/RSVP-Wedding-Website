@@ -4,8 +4,9 @@
   "installCommand": "cd frontend && npm install",
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
-  "rewrites": [
-    { "source": "/share", "destination": "/share.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "^/share$", "dest": "/share.html" },
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }
