@@ -506,6 +506,7 @@ const storyTimeline = ref([
 const storySidePhotosLeft = ref([
   { src: '/photos/prenup-11.jpeg', alt: 'Story collage left photo 11', className: 'story-photo-wide' },
   { src: '/photos/prenup-12.jpeg', alt: 'Story collage left photo 12', className: 'story-photo-wide' },
+  { src: '/photos/prenup-13.jpeg', alt: 'Story collage left photo 13', className: 'story-photo-wide' },
   { src: '/photos/prenup-14.jpeg', alt: 'Story collage left photo 14', className: 'story-photo-wide' },
   { src: '/photos/prenup-15.jpeg', alt: 'Story collage left photo 15', className: 'story-photo-wide' },
   { src: '/photos/prenup-16.jpeg', alt: 'Story collage left photo 16', className: 'story-photo-wide' }
