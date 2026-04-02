@@ -87,7 +87,12 @@
               class="story-side-photo"
               v-for="(photo, index) in storySidePhotosLeft"
               :key="photo.src + index"
-              :class="photo.className"
+              :class="[photo.className, { 'story-last-centered': photo.src.includes('prenup-16') }]"
+              role="button"
+              tabindex="0"
+              @click="openStoryLightbox(photo.src)"
+              @keydown.enter="openStoryLightbox(photo.src)"
+              @keydown.space.prevent="openStoryLightbox(photo.src)"
             >
               <img
                 :src="photo.src"
@@ -122,7 +127,12 @@
               class="story-side-photo"
               v-for="(photo, index) in storySidePhotosRight"
               :key="photo.src + index"
-              :class="photo.className"
+              :class="[photo.className, { 'story-last-centered': photo.src.includes('prenup-16') }]"
+              role="button"
+              tabindex="0"
+              @click="openStoryLightbox(photo.src)"
+              @keydown.enter="openStoryLightbox(photo.src)"
+              @keydown.space.prevent="openStoryLightbox(photo.src)"
             >
               <img
                 :src="photo.src"
@@ -173,7 +183,7 @@
       <div class="lightbox" v-if="lightboxOpen" @click="closeLightbox">
         <button class="lightbox-close" @click="closeLightbox">&times;</button>
         <button class="lightbox-prev" @click.stop="prevPhoto">‹</button>
-        <img :src="galleryPhotos[lightboxIndex]?.src" class="lightbox-img" @click.stop />
+        <img :src="lightboxPhotos[lightboxIndex]?.src" class="lightbox-img" @click.stop />
         <button class="lightbox-next" @click.stop="nextPhoto">›</button>
       </div>
     </transition>
@@ -534,12 +544,38 @@ const galleryItems = computed(() => {
   return photos
 })
 
+const lightboxPhotos = computed(() => {
+  const mergedPhotos = [
+    ...galleryPhotos.value,
+    ...storySidePhotosLeft.value,
+    ...storySidePhotosRight.value,
+  ].map(({ src, alt }) => ({ src, alt }))
+
+  const seen = new Set()
+  return mergedPhotos.filter((photo) => {
+    if (seen.has(photo.src)) {
+      return false
+    }
+    seen.add(photo.src)
+    return true
+  })
+})
+
 // Lightbox
 const lightboxOpen = ref(false)
 const lightboxIndex = ref(0)
 
 const openLightbox = (index) => {
-  lightboxIndex.value = index
+  const targetSrc = galleryPhotos.value[index]?.src
+  const resolvedIndex = lightboxPhotos.value.findIndex((photo) => photo.src === targetSrc)
+  lightboxIndex.value = resolvedIndex >= 0 ? resolvedIndex : 0
+  lightboxOpen.value = true
+  document.body.style.overflow = 'hidden'
+}
+
+const openStoryLightbox = (src) => {
+  const resolvedIndex = lightboxPhotos.value.findIndex((photo) => photo.src === src)
+  lightboxIndex.value = resolvedIndex >= 0 ? resolvedIndex : 0
   lightboxOpen.value = true
   document.body.style.overflow = 'hidden'
 }
@@ -548,10 +584,10 @@ const closeLightbox = () => {
   document.body.style.overflow = ''
 }
 const nextPhoto = () => {
-  lightboxIndex.value = (lightboxIndex.value + 1) % galleryPhotos.value.length
+  lightboxIndex.value = (lightboxIndex.value + 1) % lightboxPhotos.value.length
 }
 const prevPhoto = () => {
-  lightboxIndex.value = (lightboxIndex.value - 1 + galleryPhotos.value.length) % galleryPhotos.value.length
+  lightboxIndex.value = (lightboxIndex.value - 1 + lightboxPhotos.value.length) % lightboxPhotos.value.length
 }
 
 // ===== MAP URLS =====
@@ -1184,6 +1220,12 @@ onUnmounted(() => {
   padding: 5px;
   background: #ffffff;
   box-shadow: 0 8px 20px rgba(25, 56, 90, 0.14);
+}
+
+.story-side-photo.story-last-centered {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(240px, 100%);
 }
 
 .story-side-photo.story-photo-wide {
