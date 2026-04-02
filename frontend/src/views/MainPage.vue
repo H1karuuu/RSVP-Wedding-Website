@@ -1213,7 +1213,7 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-auto-rows: 36px;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 18px;
   align-items: start;
   width: min(900px, calc(100% - 44px));
@@ -1245,9 +1245,9 @@ onUnmounted(() => {
 .gallery-slot-e { grid-column: 1 / span 3; grid-row: 4 / span 3; }
 .gallery-slot-f { grid-column: 4 / span 4; grid-row: 4 / span 4; }
 .gallery-slot-g { grid-column: 8 / span 5; grid-row: 4 / span 4; }
-.gallery-slot-h { grid-column: 1 / span 4; grid-row: 8 / span 4; }
-.gallery-slot-i { grid-column: 5 / span 4; grid-row: 8 / span 4; }
-.gallery-slot-j { grid-column: 9 / span 4; grid-row: 8 / span 4; }
+.gallery-slot-h { grid-column: 1 / span 4; grid-row: 9 / span 4; }
+.gallery-slot-i { grid-column: 5 / span 4; grid-row: 9 / span 4; }
+.gallery-slot-j { grid-column: 9 / span 4; grid-row: 9 / span 4; }
 
 .gallery-item img {
   width: 100%;
