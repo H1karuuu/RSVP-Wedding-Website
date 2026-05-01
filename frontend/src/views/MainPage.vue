@@ -203,7 +203,7 @@
                   <img src="/photos/Ceremony.png" alt="Ceremony venue" loading="lazy" />
                 </div>
                 <h3 class="detail-title split-title cursive"><span>C</span>eremony</h3>
-                <p class="detail-time elegant">2:00 PM Ceremony Start</p>
+                <p class="detail-time elegant">2:30 PM Ceremony Start</p>
                 <p class="detail-venue">Sto. Nino de Taguig Parish Church</p>
                 <p class="detail-address">{{ ceremonyAddress }}</p>
                 <a
